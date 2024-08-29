@@ -1,0 +1,78 @@
+/* You can add global styles to this file, and also import other style files */
+.tbl_height{
+    /* overflow: hidden; */
+    min-height: 200px;
+    /* z-index: 9000; */
+}
+
+
+/* Ensure the table row or cell has relative positioning */
+tr, td {
+    position: relative;
+}
+
+/* Dropdown button styling */
+.dropdown-btn {
+    background-color: transparent;
+    color: #1598e1;
+    border: 1px solid #1598e1;
+    text-align: center;
+    cursor: pointer;
+    padding: 0.3125rem 0.75rem;
+    font-size: .75rem;
+    border-radius: 0.125rem;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: block;
+    position: absolute; /* This should align the dropdown correctly */
+    bottom: calc(100% + 10px); /* Move the dropdown above the button with some spacing */
+    left: 0;
+    background-color: #f9f9f9;
+    color: black;
+    width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px 0; /* Added padding for better spacing */
+}
+
+/* Dropdown item styling */
+.dropdown-content a {
+    color: black;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #1598e1;
+    color: white;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+mat-select {
+    display: block;
+    width: 100%;
+    height: calc(1.5385em + .875rem + 2px);
+    padding: .4375rem .875rem;
+    /* font-size: .8125rem; */
+    font-weight: 400;
+    line-height: 1.5385;
+    color: #333;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ddd;
+    border-radius: .1875rem;
+    box-shadow: 0 0 0 0 transparent;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+
+  .header-filters {
+    display: flex;
+}

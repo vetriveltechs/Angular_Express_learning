@@ -1,0 +1,408 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html>
+   
+    <head>
+        <title>Peps Tech</title>
+
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo:400,400i,500,500i,600,600i,700,700i&amp;display=swap"/>
+
+        <link rel="stylesheet" href="../backend/bootstrap-5.3.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <link rel="stylesheet" href="../backend/bootstrap-5.3.0-dist/bootstrap.bundle.min.js" rel="stylesheet"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/fonts.css"/>
+
+        <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"> -->
+        {{!-- <link rel="stylesheet" type="text/css" href="../backend/css/font-awesome.min.css"/> --}}
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/fonts/font-awesome.css"/>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/icofont.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/style.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/select2.min.css"/>
+
+        <link rel="stylesheet" id="theme-change" type="text/css" href="#" />
+        <!-- Favicon Link -->
+        <link rel="shortcut icon" type="image/png" href="../backend/img/favicon.png"/>
+
+        <script src="../backend/js/boxicons.js"></script>
+
+        <script src="../backend/js/jquery.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/fontawesome.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/all.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/bootstrap-icons.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/fonts/font-awesome.css"/>
+
+        {{!-- <link rel="stylesheet" type="text/css" href="../backend/css/fonts/font-awesome.min.css"/> --}}
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/fonts/poppins.css"/>
+        
+        <link rel="stylesheet" type="text/css" href="../backend/css/datatables.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/auth.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/calender.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/jqvmap.min.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/nice-select.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/range.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/daterangepicker.css"/>
+
+        <link rel="stylesheet" type="text/css" href="../backend/css/sweetalert2.min.css"/>
+
+        {{!-- <link rel="stylesheet" type="text/css" href="../backend/css/styles.min.css"/> --}}
+
+
+        <!-- SweetAlert2 CSS -->
+
+        <!-- <link rel="stylesheet" type="text/css" href="../backend/css/icomoon/styles.min.css"/> -->
+
+
+    </head>
+    <body>
+        {{#if header_show}}
+            <div class="loader">
+                <div class="spinner">
+                    <img src="../backend/img/loader.gif" alt="" />
+                </div>
+            </div>
+
+            <div class="page-wrapper">
+                <!-- Header Start -->
+                <header class="header-wrapper main-header">
+                    <div class="header-inner-wrapper">
+                        <div class="header-right">
+                            <div class="serch-wrapper">
+                                <form>
+                                    <input type="text" placeholder="Search Here..."/>
+                                </form>
+                                <a class="search-close" href="javascript:void(0);"><span class="icofont-close-line"></span></a>
+                            </div>
+                            <div class="header-left">
+                                <div class="header-links">
+                                    <a href="javascript:void(0);" class="toggle-btn">
+                                        <span></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="user-info-wrapper header-links">
+                                <a href="javascript:void(0);" class="user-info">
+                                    <img src="../backend/img/user.jpg" alt="" class="user-img"/>
+                                    <div class="blink-animation">
+                                        <span class="blink-circle"></span>
+                                        <span class="main-circle"></span>
+                                    </div>
+                                </a>
+                                <div class="user-info-box">
+                                    <div class="drop-down-header">
+                                        <h4>John Brown</h4>
+                                        <p>UI | UX Designer</p>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <a href="/edit_profile">
+                                                <i class="far fa-edit"></i> Edit Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/general_settings/create">
+                                                <i class="fas fa-cog"></i> Settings
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" id="logout-link">
+                                                <i class="fas fa-sign-out-alt"></i> logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                </header>
+                <!-- Sidebar Start -->
+                <aside class="sidebar-wrapper">
+                    <div class="logo-wrapper">
+                        <a href="index.html" class="admin-logo">
+                            <img src="../uploads/image_settings/logo_1.jpg" alt=""class="sp_logo"/>
+                            <img src="../uploads/image_settings/logo_2.jpg" alt="" class="sp_mini_logo"/>
+                        </a>
+                    </div>
+                    <div class="side-menu-wrap">
+                        <ul class="main-menu">
+                            <li>
+                                <a href="/dashboard" class="active">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-home">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text"> Dashboard </span>
+                                </a>
+                                
+                            </li>
+
+                            <li>
+                                <a href="/carrers">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">Carrers</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/about">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">About</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/faq">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">FAQ</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/service_booking">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">Service Booking</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/blog">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">Blog</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/product">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">Product</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="/api">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-package">
+                                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text">API</span>
+                                </a>
+                            </li>
+
+                         
+                            <li>
+                                <a href="/users">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-users">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text"> Users</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/general_settings/create">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-users">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text"> Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/setup">
+                                    <span class="icon-menu feather-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-users">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="menu-text"> Setup</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        {{/if}}
+
+        <div class="">{{{body}}}</div>
+
+        <!--=================================
+        Javascript -->
+
+        <!-- JS Global Compulsory (Do not remove)-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity= 
+        "sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+        crossorigin="anonymous"> 
+    </script> 
+
+        <script src="../backend/js/popper/popper.min.js"></script>
+
+
+        <!-- Page JS Implementing Plugins (Remove the plugin script here if site does not use that feature)-->
+        <script src="../backend/js/moment.min.js"></script>
+
+        <script src="../backend/js/daterangepicker.min.js"></script>
+
+        <script src="../backend/js/jquery.appear.js"></script>
+
+        <script src="../backend/js/swiper/swiper.min.js"></script>
+
+        <script src="../backend/js/swiperanimation/SwiperAnimation.min.js"></script>
+
+        <script src="../backend/js/counter/jquery.countTo.js"></script>
+
+        <script src="../backend/js/owl-carousel/owl.carousel.min.js"></script>
+
+        <script src="../backend/js/jarallax/jarallax.min.js"></script>
+
+        <script src="../backend/js/jarallax/jarallax-video.min.js"></script>
+
+        <script src="../backend/js/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+        <script src="../backend/js/shuffle/shuffle.min.js"></script>
+
+        <script src="../backend/js/typer/jquery.typer.js"></script>
+
+        <script src="../backend/js/apexchart/apexcharts.min.js"></script>
+
+        <script src="../backend/js/apexchart/control-chart-apexcharts.js"></script>
+
+        <script src="../backend/js/nice-select.min.js"></script>
+
+        <script src="../backend/js/apexchart/apexcharts.min.js"></script>
+
+        <script src="../backend/js/calendar.min.js"></script>
+
+        <script src="../backend/js/datatables.min.js"></script>
+
+        <script src="../backend/js/dataTables.responsive.min.js"></script>
+
+        <script src="../backend/js/jquery.vmap.min.js"></script>
+
+        <script src="../backend/js/jquery.vmap.sampledata.js"></script>
+
+        <script src="../backend/js/jquery.vmap.world.js"></script>
+
+        <script src="../backend/js/main.js"></script>
+
+        <script src="../backend/js/range.js"></script>
+
+        <script src="../backend/js/script.js"></script>
+
+        <script src="../backend/js/tag.js"></script>
+
+        <script src="../backend/js/tagging.min.js"></script>
+
+        <script src="../backend/js/select2.min.js"></script>
+
+        <!-- Template Scripts (Do not remove)-->
+        <script src="../backend/js/custom.js"></script>
+
+        <script src="../backend/js/sweetalert2@11.js"></script>
+
+        <script src="../backend/js/jquery.validate.min.js"></script>
+
+
+        <!-- <script src="../backend/js/create_profile.js"></script> -->
+
+      
+        <!-- <script src="https://cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script> -->
+        <script src="../backend/js/bootstrap.min.js"></script>
+
+        <script src="../backend/js/jquery-3.5.1.slim.min.js"></script>
+        
+        <script src="../backend/js/popper.js"></script>
+        
+        
+
+{{!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --}}
+
+    </body>
+</html>

@@ -1,0 +1,336 @@
+/* Wrapper for the featured products */
+.featured-products-wrapper {
+  margin: 20px 0;
+  padding: 10px;
+}
+
+/* Product list styling */
+.products .product_list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  width: 100%;
+  margin: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+.owl-carousel .owl-wrapper, .owl-carousel .owl-item {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  text-align: center;
+}
+.owl-carousel .owl-item {
+  float: left;
+}
+
+.products .product_list li.product_item, .products .product_list li.item {
+  padding: 0;
+}
+
+.products .product_list.owl-carousel li .product-miniature {
+  border-inline-end: 1px solid #e5e5e5;
+}
+
+.products .product_list li .product-miniature {
+  position: relative;
+  z-index: 5;
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.featured-products, .newproducts, .bestseller-products, .special-products, .viewed-products, .crosssell-products, .product-accessories, .productscategory-products {
+  float: left;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  margin-top: 70px;
+}
+
+.featured-products, .newproducts, .bestseller-products, .special-products, .viewed-products, .crosssell-products, .product-accessories, .productscategory-products {
+  float: left;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  margin-top: 70px;
+}
+
+.products-wrapper, .featured-products-wraper, .bestseller-products .bestseller-products-wraper, .product-accessories .product-accessories-wrapper {
+  margin: 0;
+}
+
+.featured-products .products, .newproducts .products, .bestseller-products .products, .special-products .products, .viewed-products .products, .crosssell-products .products, .productscategory-products .products, .product-accessories .products, .brands .products {
+  float: left;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  margin-top: 70px;
+}
+
+
+.top_button, .form-control, .btn, #right-column .block, .products .product_list li .quick-view, .products .item .product-description, .blockreassurance_product, .products .all-product-link, #header .search-widget form input[type="text"], .checkout.cart-detailed-actions a.btn.btn-primary, .product-cover .layer .zoom-in, .top_button::after, .cz_search_block_top .product_search, .czcategoryimagelist .product_slider_grid li .block_content .categoryimage, .czcategoryimagelist .czcategoryimagelist_banner img, #czbannercmsblock .cmsbanners .one-third .cmsbanner, #czsubbannercmsblock .subbanners .subbanner, .flexslider .slides img, .featured-products .featured_banner img, .bestseller-products .bestseller-banner img, .special-products .pspc-main, #czbannercmsblock1 .cmsbanners1 .one-half .cmsbanner, #czcategorytabs .categorytabs_banner img, .blog-item, .block-category .category-cover img, #left-column .block, #right-column .block, #subcategories ul li .subcategory-image a, #czleftbanner li a img, #czleftbannercmsblock li img, .product-information .manufacturer-logo, .quickview .manufacturer-logo, .product-cover, #product .pp-right-column .product-information .pspc-main .time, #product-modal .modal-content .modal-body .product-cover-modal, #product-modal .modal-content .modal-body .product-images img, .images-container .js-qv-mask .thumb-container .thumb, .pagination a, .pagination li>span, #blogpage .blog-detail .blog-image .img-fluid, #blogpage .blog-detail .blog-meta, .card, #brand_list li.brand .brand-inner, #brand_list li.brand .brand-inner .brand-img img, #identity #content-wrapper #main, #mywishlist .new-wishlist, #address #content-wrapper #main, .products-sort-order .select-title, textarea.form-control, .block_newsletter p.alert, .tabs .tab-pane, .cz_search_block_top, #czoffercmsblock .one-half, .header-top-inner .menu .sub-menu, .dropdown-menu, #cztestimonialcmsblock li.item, #header .blockcart .cart_block .cart-item .cart-image, #header .blockcart .cart_block .cart-item .cart-image img, #blockcart-modal .product-image, .product-line-grid-left img, body#checkout #cart-summary-product-list img, #order-items .image img, #czleftbannercmsblock .cat-inner img, #header .search-widget form button[type="submit"], .flex-direction-nav a, .flex-direction-nav a::before, #czsubbannercmsblock .subbanners .one-third .subbanner, #czbannercmsblock .cmsbanners .one-half .cmsbanner, #czoffercmsblock .offercmsdetail, .blog-image .blogicons .icon::before, .block-promo .promo-input, #czfootercmsblock .footerdiv, #brand_list li.brand .brand-inner .brand-img img, .blog-item .blog-image, .block_newsletter form input[type="text"], .product-cover img, .products .product_list, #czcustomcmsblock1 .offerbanner, #czbannercmsblock1 .cmsbanners .one-half .cmsbanner, #czbannercmsblock2 .cmsbanners .one-half .cmsbanner, #czinstagramblock .instagramblock .instagram_list li.item a, .products-sort-order .dropdown-menu, .product-variants > .product-variants-item select, #product .pp-right-column .product-information .pspc-main .time, .image-block_slider .product-images li.thumb-container .thumb, #product .tabs .tab-pane .img.img-thumbnail, body#checkout section.checkout-step, .page-my-account #content .links a span.link-item, #products .page-not-found, #pagenotfound .page-not-found, #products .page-not-found .search-widget input, #pagenotfound .page-not-found .search-widget input {
+    border-radius: var(--border-radius);
+    -webkit-border-radius: var(--border-radius);
+    -moz-border-radius: var(--border-radius);
+    -ms-border-radius: var(--border-radius);
+    -o-border-radius: var(--border-radius);
+}
+.products .product_list {
+    width: 100%;
+    margin: 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.cz-carousel {
+    display: none;
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: 0;
+    -ms-touch-action: pan-y;
+}
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+ol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.owl-carousel .owl-wrapper-outer {
+  overflow: hidden;
+  position: relative;
+  float: left;
+  width: 100%;
+}
+
+
+.owl-carousel .owl-wrapper, .owl-carousel .owl-item {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  text-align: center;
+}
+.owl-carousel .owl-wrapper {
+  display: none;
+  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.owl-carousel .owl-wrapper, .owl-carousel .owl-item {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  text-align: center;
+}
+.owl-carousel .owl-item {
+  float: left;
+}
+
+.products .product_list li.product_item, .products .product_list li.item {
+  padding: 0;
+}
+
+.products .product_list.owl-carousel li .product-miniature {
+  border-inline-end: 1px solid #e5e5e5;
+}
+.products .product_list li .product-miniature {
+  position: relative;
+  z-index: 5;
+  padding: 10px;
+}
+
+.products .thumbnail-container, #header .vertical-menu {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  -webkit-border-radius: var(--border-radius) var(--border-radius) 0 0;
+  -moz-border-radius: var(--border-radius) var(--border-radius) 0 0;
+  -ms-border-radius: var(--border-radius) var(--border-radius) 0 0;
+  -o-border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.products .thumbnail-container {
+  position: relative;
+  margin-bottom: 0;
+  overflow: hidden;
+  padding: 0;
+  width: auto;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -ms-border-radius: 5px 5px 0 0;
+  -o-border-radius: 5px 5px 0 0;
+}
+
+.products .product-thumbnail {
+  background: #fff;
+  text-align: center;
+  display: block;
+}
+a {
+  color: #000;
+  text-decoration: none;
+}
+a, area, button, [role="button"], input, label, select, summary, textarea {
+  touch-action: manipulation;
+}
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+.products .product_list li.item .highlighted-informations, .products .product_list li.product_item .highlighted-informations {
+  position: absolute;
+  text-align: left;
+  bottom: 0;
+  left: 10px;
+  z-index: 3;
+  opacity: 0;
+  filter: alpha(opacity = 0);
+  -webkit-transition: all 500ms ease 0s;
+  -moz-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  right: 0;
+}
+
+
+ul.product-flags.js-product-flags {
+  position: absolute;
+  top: 5px;
+  bottom: auto;
+  left: 5px;
+  right: auto;
+  z-index: 1;
+}
+
+ol ol, ul ul, ol ul, ul ol {
+  margin-bottom: 0;
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+ol, ul, dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.products .product_list li .outer-functional, .products .product_list.grid .product_item .outer-functional .outer-functional {
+  position: absolute;
+  top: -30px;
+  right: 5px;
+  z-index: 8;
+  -webkit-transition: all 500ms ease 0s;
+  -moz-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  opacity: 0;
+  filter: alpha(opacity = 0);
+}
+
+.products .product_list li.item .product-description, .products .product_list.grid .product_item .product-description {
+  padding: 5px 10px 5px;
+  min-height: 143px;
+  text-align: left;
+}
+
+.top_button, .form-control, .btn, #right-column .block, .products .product_list li .quick-view, .products .item .product-description, .blockreassurance_product, .products .all-product-link, #header .search-widget form input[type="text"], .checkout.cart-detailed-actions a.btn.btn-primary, .product-cover .layer .zoom-in, .top_button::after, .cz_search_block_top .product_search, .czcategoryimagelist .product_slider_grid li .block_content .categoryimage, .czcategoryimagelist .czcategoryimagelist_banner img, #czbannercmsblock .cmsbanners .one-third .cmsbanner, #czsubbannercmsblock .subbanners .subbanner, .flexslider .slides img, .featured-products .featured_banner img, .bestseller-products .bestseller-banner img, .special-products .pspc-main, #czbannercmsblock1 .cmsbanners1 .one-half .cmsbanner, #czcategorytabs .categorytabs_banner img, .blog-item, .block-category .category-cover img, #left-column .block, #right-column .block, #subcategories ul li .subcategory-image a, #czleftbanner li a img, #czleftbannercmsblock li img, .product-information .manufacturer-logo, .quickview .manufacturer-logo, .product-cover, #product .pp-right-column .product-information .pspc-main .time, #product-modal .modal-content .modal-body .product-cover-modal, #product-modal .modal-content .modal-body .product-images img, .images-container .js-qv-mask .thumb-container .thumb, .pagination a, .pagination li>span, #blogpage .blog-detail .blog-image .img-fluid, #blogpage .blog-detail .blog-meta, .card, #brand_list li.brand .brand-inner, #brand_list li.brand .brand-inner .brand-img img, #identity #content-wrapper #main, #mywishlist .new-wishlist, #address #content-wrapper #main, .products-sort-order .select-title, textarea.form-control, .block_newsletter p.alert, .tabs .tab-pane, .cz_search_block_top, #czoffercmsblock .one-half, .header-top-inner .menu .sub-menu, .dropdown-menu, #cztestimonialcmsblock li.item, #header .blockcart .cart_block .cart-item .cart-image, #header .blockcart .cart_block .cart-item .cart-image img, #blockcart-modal .product-image, .product-line-grid-left img, body#checkout #cart-summary-product-list img, #order-items .image img, #czleftbannercmsblock .cat-inner img, #header .search-widget form button[type="submit"], .flex-direction-nav a, .flex-direction-nav a::before, #czsubbannercmsblock .subbanners .one-third .subbanner, #czbannercmsblock .cmsbanners .one-half .cmsbanner, #czoffercmsblock .offercmsdetail, .blog-image .blogicons .icon::before, .block-promo .promo-input, #czfootercmsblock .footerdiv, #brand_list li.brand .brand-inner .brand-img img, .blog-item .blog-image, .block_newsletter form input[type="text"], .product-cover img, .products .product_list, #czcustomcmsblock1 .offerbanner, #czbannercmsblock1 .cmsbanners .one-half .cmsbanner, #czbannercmsblock2 .cmsbanners .one-half .cmsbanner, #czinstagramblock .instagramblock .instagram_list li.item a, .products-sort-order .dropdown-menu, .product-variants > .product-variants-item select, #product .pp-right-column .product-information .pspc-main .time, .image-block_slider .product-images li.thumb-container .thumb, #product .tabs .tab-pane .img.img-thumbnail, body#checkout section.checkout-step, .page-my-account #content .links a span.link-item, #products .page-not-found, #pagenotfound .page-not-found, #products .page-not-found .search-widget input, #pagenotfound .page-not-found .search-widget input {
+    border-radius: var(--border-radius);
+    -webkit-border-radius: var(--border-radius);
+    -moz-border-radius: var(--border-radius);
+    -ms-border-radius: var(--border-radius);
+    -o-border-radius: var(--border-radius);
+}
+
+.products .product_list li.item .product-description, .products .product_list.grid .product_item .product-description {
+  padding: 5px 10px 5px;
+  min-height: 143px;
+  text-align: left;
+}
+
+.products .product-description .brand-title {
+  margin-bottom: 4px;
+}
+
+.products .product-title {
+  margin-bottom: 5px;
+  font-weight: 400;
+  width: 100%;
+  margin-top: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.products .product-description .comments_note {
+  display: block;
+  margin-bottom: 12px;
+}
+.comments_note {
+  display: inline-block;
+  margin: auto;
+}
+
+.products .product-price-and-shipping {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  color: #ff5252;
+  -webkit-transition: all 500ms ease 0s;
+  -moz-transition: all 500ms ease 0s;
+  -o-transition: all 500ms ease 0s;
+  transition: all 500ms ease 0s;
+  letter-spacing: 0;
+} */
+
+/* .featured-products, .newproducts, .bestseller-products, .special-products, .viewed-products, .crosssell-products, .product-accessories, .productscategory-products {
+  float: left;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  margin-top: 70px;
+} */

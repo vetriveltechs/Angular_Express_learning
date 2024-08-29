@@ -1,0 +1,241 @@
+<div class="content">
+    <div class="card">
+        <div class="card-body mt-2">
+            <form [formGroup]="listTypeValuesForm" method="post" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h3><b>{{ page_title }}</b></h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                        <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                        <a [routerLink]="['/setups/lov/']" class="btn btn-default btn-sm">Close</a>
+                    </div>
+                </div>
+                <fieldset>
+                    <section class="header-section">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                    <label class="col-form-label list_name">List Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                    <input type="text" formControlName="list_name" id="list_name" autocomplete="off" class="form-control" placeholder="List Name" required>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                    <label class="col-form-label list_description">List Description</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                    <input type="text" formControlName="list_description" id="list_description" autocomplete="off" class="form-control" placeholder="List Description" required>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                    <label class="col-form-label from_date"><span class="text-danger">*</span> Start Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                    <input type="text" formControlName="from_date" id="from_date" autocomplete="off" class="form-control default_date" placeholder="Start Date" required>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                    <label class="col-form-label to_date"><span class="text-danger">*</span> End Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                    <input type="text" formControlName="to_date" id="to_date" autocomplete="off" class="form-control default_date" placeholder="End Date" required>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">List Code <span class="text-danger">*</span></label>
+                                <input type="text" formControlName="list_code" id="list_code" autocomplete="off" required class="form-control" value="" placeholder="">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">List Value <span class="text-danger">*</span></label>
+                                <input type="text" formControlName="list_value" id="list_value" autocomplete="off" required class="form-control" value="">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Order Sequence </label>
+                                <input type="number" formControlName="order_sequence" id="order_sequence" autocomplete="off" class="form-control" value="" >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Short Description</label>
+                                <input type="text" formControlName="short_description" id="short_description" autocomplete="off"  class="form-control" value="" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left start_date">Start Date </label>
+                                <input type="text" formControlName="start_date" id="start_date" readonly class="form-control" value="" placeholder="">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">End Date</label>
+                                <input type="text" formControlName="end_date" id="end_date" readonly class="form-control" value="" placeholder="">
+                            </div>
+
+                            <!-- <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Image </label>
+                                <input type="file" name="upload_image" id="upload_image" class="form-control">
+                            </div> -->
+
+                            <div class="form-group col-md-3" style="margin-top: 22px;">
+                                <label class="col-form-label"></label>
+                                <input type="submit" formControlName="Add" value="Add" class="btn btn-primary">
+                            </div>
+                        </div>
+
+                    </section>
+                </fieldset>
+            </form>
+
+            <div class="new-scroller mt-5">
+                <table id="myTable" class="table table-bordered table-hover tbl_height" *ngIf="listTypeValues.length > 0; else noDataTemplate">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Controls</th>
+                            <th class="tab-md-140">List Code</th>
+                            <th class="tab-md-120">List Value</th>
+                            <th class="tab-md-120">Order Sequence</th>
+                            <th class="tab-md-140 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of listTypeValues">
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button class="dropdown-btn" (click)="toggleDropdown(record.list_type_values_id)">Action</button>
+                                    <div *ngIf="dropdownOpen[record.list_type_values_id]" class="dropdown-content">
+                                        <a (click)="openEditModal(record)" style="cursor: pointer;">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                        <span *ngIf="record.active_flag === 'Y'; else inactiveTemplate">
+                                            <a (click)="updateListValuesStatus(record.list_type_values_id, 'N')" style="cursor: pointer;">
+                                                <i class="fa fa-ban"></i> Inactive
+                                            </a>
+                                        </span>
+                                        <ng-template #inactiveTemplate>
+                                            <span title="Inactive">
+                                                <a (click)="updateListValuesStatus(record.list_type_values_id, 'Y')" style="cursor: pointer;">
+                                                    <i class="fa fa-check"></i> Active
+                                                </a>
+                                            </span>
+                                        </ng-template>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ record.list_code }}</td>
+                            <td>{{ record.list_value }}</td>
+                            <td>{{ record.order_sequence }}</td>
+                            <td class="text-center">
+                                <span class="btn btn-outline-success" title="Active" *ngIf="record.active_flag === 'Y'; else inactiveStatusTemplate">Active</span>
+                                <ng-template #inactiveStatusTemplate>
+                                    <span class="btn btn-outline-warning" title="Inactive">Inactive</span>
+                                </ng-template>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <ng-template #noDataTemplate>
+                    <div class="text-center">
+                        <img src="/assets/img/nodata.png">
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for Editing List Type Values -->
+<div class="modal fade" id="editListTypeValuesModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel"><b>Edit List Type Values</b></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" (click)="closeModal()">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editListTypeValuesForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>List Code <span class="text-danger">*</span></label>
+                  <input type="text" formControlName="list_code" class="form-control" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>List Value <span class="text-danger">*</span></label>
+                  <input type="text" formControlName="list_value" class="form-control" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Order Sequence</label>
+                  <input type="number" formControlName="order_sequence" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Short Description</label>
+                  <input type="text" formControlName="short_description" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Start Date</label>
+                  <input type="text" formControlName="start_date" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>End Date</label>
+                  <input type="text" formControlName="end_date" class="form-control" readonly>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveEditedListTypeValue()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

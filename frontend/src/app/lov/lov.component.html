@@ -1,0 +1,210 @@
+<div class="content">
+    <div class="card">
+      <div class="card-body mt-2">
+
+        <!-- Create Form -->
+        <form [formGroup]="lovForm" *ngIf="formAction === 'create' || formAction === 'edit' || formAction === 'view'"  (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data">
+            <div class="header-lines">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                  <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                  <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group text-right">
+                                  <label class="col-form-label list_name"><span class="text-danger">*</span> List Name</label>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <input type="text" formControlName="list_name" id="list_name" autocomplete="off" class="form-control" placeholder="List Name" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group text-right">
+                                  <label class="col-form-label from_date"><span class="text-danger">*</span> Start Date</label>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <input type="text" formControlName="from_date" id="from_date" autocomplete="off" class="form-control default_date" placeholder="Start Date" required>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group text-right">
+                                  <label class="col-form-label password"><span class="text-danger">*</span> List Description</label>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <textarea formControlName="list_description" rows="1" id="list_description" class="form-control" placeholder="List Description"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group text-right">
+                                  <label class="col-form-label to_date"><span class="text-danger">*</span> End Date</label>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <input type="text" formControlName="to_date" id="to_date" autocomplete="off" class="form-control default_date" placeholder="End Date" required>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+
+                </section>
+              </fieldset>
+              <div class="col-md-12 mt-3 pr-0 text-right">
+                <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+              </div>
+            </div>
+          </form>
+
+        <!-- Creation Block -->
+
+        <!-- Conditional Header Block -->
+        <div *ngIf="formAction === 'default'" class="row mb-2">
+          <div class="col-md-6">
+            <h3><b>{{ page_title }}</b></h3>
+          </div>
+          <div class="col-md-6 text-right">
+            <a href="#" data-toggle="modal" data-target="#importPatientCSV" title="Import" class="btn btn-outline-warning btn-sm">
+              <i class="icon-import"></i> Import
+            </a>
+            <button (click)="switchForm('create')" class="btn btn-info btn-sm mx-1">
+              Create lOV
+            </button>
+          </div>
+        </div>
+
+        <!-- Default Form -->
+        <form *ngIf="formAction === 'default'" (ngSubmit)="searchLovRecords()">
+            <section class="trans-section-back-1">
+            <div class="row">
+                <div class="col-md-4">
+                <div class="row">
+                    <label class="col-form-label col-md-4 text-right">List Name</label>
+                    <div class="input-wrapper form-group col-md-7">
+                    <input type="text" formControlName="list_name" id="list_name" autocomplete="off" class="form-control" placeholder="List Name" required>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-info">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+                <a href="/setups/lov/default" title="Clear" class="btn btn-default" style="margin-left:5px;">Clear</a>
+                </div>
+            </div>
+            </section>
+        </form>
+
+        <!-- Show results after clicking the search button -->
+        <div class="new-scroller"  *ngIf="showResults && formAction === 'default'">
+            <table id="myTable" class="table table-bordered table-hover tbl_height" *ngIf="lovRecords.length > 0; else noDataTemplate">
+                <thead>
+                    <tr>
+                    <th class="text-center">Controls</th>
+                    <th class="tab-md-140">List Name</th>
+                    <th class="tab-md-120">From Date</th>
+                    <th class="tab-md-120">To Date</th>
+                    <th class="tab-md-140">List Description</th>
+                    <th class="tab-md-140">List Type Values</th>
+                    <th class="tab-md-140 text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of lovRecords">
+                    <td class="text-center" >
+                        <div class="dropdown">
+                            <button class="dropdown-btn" (click)="toggleDropdown(record.lov_id)">Action</button>
+                            <div *ngIf="dropdownOpen[record.lov_id]" class="dropdown-content" [attr.id]="'myDropdown' + record.lov_id">
+                                <a [routerLink]="['/setups/lov/view']" [queryParams]="{ view_id: record.lov_id }">
+                                    <i class="fa fa-eye"></i> View
+                                </a>
+                                <a [routerLink]="['/setups/lov/edit']" [queryParams]="{ edit_id: record.lov_id }">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <span *ngIf="record.active_flag === 'Y'; else inactiveTemplate">
+                                    <a (click)="updateLovStatus(record.lov_id, 'N')" style="cursor: pointer;"><i class="fa fa-ban"></i> Inactive</a>
+                                </span>
+                                <ng-template #inactiveTemplate>
+                                    <span title="Inactive">
+                                        <a (click)="updateLovStatus(record.lov_id, 'Y')" style="cursor: pointer;"><i class="fa fa-check"></i> Active</a>
+                                    </span>
+                                </ng-template>
+
+                                <!-- <a [routerLink]="['/lov/delete']" [queryParams]="{ delete: record.lov_id }">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a> -->
+                            </div>
+                        </div>
+
+
+
+
+                    </td>
+                    <td>{{ record.list_name }}</td>
+                    <td>{{ record.from_date }}</td>
+                    <td>{{ record.to_date }}</td>
+                    <td>{{ record.list_description }}</td>
+                    <td class="tab-full-width" style="text-align:center;">
+                        <!-- <?php
+                            $listTypeCount = $this->db->query("select list_type_value_id from sm_list_type_values where list_type_id ='".$row['list_type_id']."' ")->result_array();
+                            if(count($listTypeCount) > 0)
+                            {
+                                $btn_class='success';
+                            }
+                            else
+                            {
+                                $btn_class='warning';
+                            }
+                        ?> -->
+                        <a title="List Type Values">
+                            <span [routerLink]="['/list_type_values', record.lov_id]" class="btn btn-outline-success" style="width:40%;">List Type Values</span>
+                        </a>
+                        <a title="List Type Values">
+                            <span [routerLink]="['/list_type_values', record.lov_id]" style="cursor: pointer;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <span class="btn btn-outline-success" title="Active" *ngIf="record.active_flag === 'Y'; else inactiveTemplate">Active</span>
+                        <ng-template #inactiveTemplate>
+                          <span class="btn btn-outline-warning" title="Inactive">Inactive</span>
+                        </ng-template>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-template #noDataTemplate>
+                <div class="text-center">
+                    <img src="/assets/img/nodata.png">
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+  </div>

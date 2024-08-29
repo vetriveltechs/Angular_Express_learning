@@ -1,0 +1,160 @@
+<div class="content">
+    <div class="card">
+      <div class="card-body mt-2">
+
+        <!-- Create Form -->
+        <form [formGroup]="rolesForm" *ngIf="formAction === 'create' || formAction === 'edit' || formAction === 'view'"  (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data">
+            <div class="header-lines">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                  <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                  <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group text-right">
+                                  <label class="col-form-label role_name"><span class="text-danger">*</span> Role Name</label>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <input type="text" formControlName="role_name" id="role_name" autocomplete="off" class="form-control" placeholder="Role Name">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                  <div class="form-group text-right">
+                                    <label class="col-form-label role_description">Role Description</label>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                      <textarea formControlName="role_description" rows="1" id="role_description" class="form-control" placeholder="Role Description"></textarea>
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                          </div>
+                    </div>
+
+                </section>
+              </fieldset>
+              <div class="col-md-12 mt-3 pr-0 text-right">
+                <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+              </div>
+            </div>
+          </form>
+
+        <!-- Creation Block -->
+
+        <!-- Conditional Header Block -->
+        <div *ngIf="formAction === 'default'" class="row mb-2">
+          <div class="col-md-6">
+            <h3><b>{{ page_title }}</b></h3>
+          </div>
+          <div class="col-md-6 text-right">
+            <a href="#" data-toggle="modal" data-target="#importPatientCSV" title="Import" class="btn btn-outline-warning btn-sm">
+              <i class="icon-import"></i> Import
+            </a>
+            <button (click)="switchForm('create')" class="btn btn-info btn-sm mx-1">
+              Create Role
+            </button>
+          </div>
+        </div>
+
+        <!-- Default Form -->
+        <form *ngIf="formAction === 'default'" (ngSubmit)="searchRolesRecords()">
+            <section class="trans-section-back-1">
+            <div class="row">
+                <div class="col-md-4">
+                <div class="row">
+                    <label class="col-form-label col-md-4 text-right">Role Name</label>
+                    <div class="input-wrapper form-group col-md-7">
+                    <input type="text" formControlName="role_name" id="role_name" autocomplete="off" class="form-control" placeholder="Role Name">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-info">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+                <a href="/roles/default" title="Clear" class="btn btn-default" style="margin-left:5px;">Clear</a>
+                </div>
+            </div>
+            </section>
+        </form>
+
+        <!-- Show results after clicking the search button -->
+        <div class="new-scroller"  *ngIf="showResults && formAction === 'default'">
+            <table id="myTable" class="table table-bordered table-hover tbl_height" *ngIf="rolesRecords.length > 0; else noDataTemplate">
+                <thead>
+                    <tr>
+                    <th class="text-center">Controls</th>
+                    <th class="tab-md-140">Role Name</th>
+                    <th class="tab-md-140">Role Description</th>
+                    <th class="tab-md-140 text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of rolesRecords">
+                    <td class="text-center" >
+                        <div class="dropdown">
+                            <button class="dropdown-btn" (click)="toggleDropdown(record.role_id)">Action</button>
+                            <div *ngIf="dropdownOpen[record.role_id]" class="dropdown-content" [attr.id]="'myDropdown' + record.role_id">
+                                <a [routerLink]="['/roles/view']" [queryParams]="{ view_id: record.role_id }">
+                                    <i class="fa fa-eye"></i> View
+                                </a>
+                                <a [routerLink]="['/roles/edit']" [queryParams]="{ edit_id: record.role_id }">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <span *ngIf="record.active_flag === 'Y'; else inactiveTemplate">
+                                    <a (click)="updateRolesStatus(record.role_id, 'N')" style="cursor: pointer;"><i class="fa fa-ban"></i> Inactive</a>
+                                </span>
+                                <ng-template #inactiveTemplate>
+                                    <span title="Inactive">
+                                        <a (click)="updateRolesStatus(record.role_id, 'Y')" style="cursor: pointer;"><i class="fa fa-check"></i> Active</a>
+                                    </span>
+                                </ng-template>
+
+                                <!-- <a [routerLink]="['/lov/delete']" [queryParams]="{ delete: record.lov_id }">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a> -->
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>{{ record.role_name }}</td>
+                    <td>{{ record.role_description }}</td>
+
+                    <td class="text-center">
+                        <span class="btn btn-outline-success" title="Active" *ngIf="record.active_flag === 'Y'; else inactiveTemplate">Active</span>
+                        <ng-template #inactiveTemplate>
+                          <span class="btn btn-outline-warning" title="Inactive">Inactive</span>
+                        </ng-template>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-template #noDataTemplate>
+                <div class="text-center">
+                    <img src="/assets/img/nodata.png">
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+  </div>

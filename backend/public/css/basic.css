@@ -1,0 +1,11 @@
+*{
+  font-family: 'Times New Roman', Times, serif;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: aqua;
+}
+
+label.error{
+  color: red;
+}

@@ -1,0 +1,57 @@
+[{
+  "_id": {
+    "$oid": "6641f4a53019a1529021674e"
+  },
+  "employee_code": "EMP101",
+  "employee_name": "Vetrivel",
+  "user_name": "vetri",
+  "password": "$2b$10$lXJtJlinx9IUIw9uvNnR.ulzzppbsL9.shz7vn2.vbL.RMzkwqIi2",
+  "active_flag": "Y",
+  "created_by": 1,
+  "created_date": {
+    "$date": "2024-05-13T00:00:00.000Z"
+  },
+  "last_updated_by": 1,
+  "last_updated_date": {
+    "$date": "2024-05-13T00:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6641f55526a13f393d6df7f7"
+  },
+  "employee_code": "EMP102",
+  "employee_name": "Naveen",
+  "user_name": "naveen",
+  "password": "$2b$10$rHaRBKPOGEsxvuovZKvfAexGGMEd7Vw6VIjdibYFys3mg7RTLe7Z6",
+  "active_flag": "Y",
+  "created_by": 1,
+  "created_date": {
+    "$date": "2024-05-13T00:00:00.000Z"
+  },
+  "last_updated_by": 1,
+  "last_updated_date": {
+    "$date": "2024-05-13T00:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "666c2733f10a1e500a4e0c31"
+  },
+  "employee_code": "EMP103",
+  "employee_name": "Kaviyan",
+  "user_name": "kaviyan",
+  "password": "$2b$10$ENnM2.pjPURcL.SuYT1vP.lEJS9seYmRGvxx49Z.rilo0rWLoNk7C",
+  "active_flag": "Y",
+  "created_by": 1,
+  "created_date": {
+    "$date": "2024-06-14T00:00:00.000Z"
+  },
+  "last_updated_by": 1,
+  "last_updated_date": {
+    "$date": "2024-06-14T00:00:00.000Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,797 @@
+    {{#if blog_list}}
+        <!-- Container Start -->
+        <div class="page-wrapper">
+            <div class="main-content">
+                <!-- Page Title Start -->
+                <div class="row pb-4">
+                    <div class="colxl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-box ad-title-box-use">
+                                <h4 class="page-title">{{tittle}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="colxl-6 col-lg-6 col-md-6 col-sm-6 col-6 ">
+                        <ul class="d-flex align-items-center justify-content-end">
+                            <li class="d-inline-block">
+                                <a href="#" data-toggle="modal" data-target="#importcountryCSV" title="Import" class="btn btn-outline-warning">
+                                    <i class="fa fa-download px-1" aria-hidden="true"></i> Import
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="btn btn-primary align_items_center" style="min-height: 50px;border-radius: 5px 5px 5px 5px;font-size: 14px;padding: 0 auto;border: 1px solid var(--primary);" href="/blog/create">Create Blog</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Table Start -->
+                <div class="row">
+                    <!-- Styled Table Card-->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card table-card">
+
+                            <div class="card-header pb-0">
+                                <form id="search-form" method="GET">
+                                    <div class="row pt-0 mt-0 px-0">
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <label class="col-form-label col-md-4 text-right pb-4">Tittle</label>
+                                                <div class="form-group col-md-8">
+                                                    <input type="text" name="tittle" id="tittle" class="form-control" value="{{tittle_query}}" placeholder="Tittle">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <label class="col-form-label col-md-4 text-right pb-4">Status</label>
+                                                <div class="form-group col-md-8">
+                                                    <input type="hidden" id="select_active_flag" value="{{active_flag}}">
+
+                                                    <select name="active_flag" id="active_flag" class="form-control btn-square form-btn searchDropdown">
+                                                        <option value="">- Select -</option>
+                                                        {{#each activeFlag}}
+                                                            <option value="{{list_code}}">{{list_name}}</option>
+                                                        {{/each}}
+                                                    </select>
+
+                                                    <span class="sel_arrow">
+                                                        <i class="fa fa-angle-down "></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                $(document).ready(function()
+                                                {
+                                                    $('#reset').click(function(){
+                                                        //$(".searchDropdown").empty();
+                                                        $(".searchDropdown").val('').trigger('change')
+                                                    });
+                                                });
+
+                                                $(document).ready(function()
+                                                {
+                                                    // Initialize select2
+                                                    $(".searchDropdown").select2();
+                                                    // Read selected option
+                                                /* $('#but_read').click(function(){
+                                                        var username = $('#selUser option:selected').text();
+                                                        var userid = $('#selUser').val();
+                                                        $('#result').html("id : " + userid + ", name : " + username);
+                                                    }); */
+
+                                                    //$(".searchDropdown").empty();
+                                                    //$(".searchDropdown").select2("val", "");
+                                                });
+                                                $(document).ready(function() {
+
+                                                    var select_active_flag    =$('#select_active_flag').val()
+
+                                                    if(select_active_flag!='' || select_active_flag!='0'){
+                                                        $('#active_flag').val(select_active_flag);
+
+                                                    }
+                                                })
+                                            </script>
+                                        </div>
+                                        <div class="col-md-4 pt-0 mt-0 align-items-start">
+                                            <a href="/blog" class="btn clear-btn" >Clear</a>
+                                               <button type="submit" class="btn search-btn px-2">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                            <div class="card-body pt-0">
+                                <div class="row pb-3">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                    <div class="row">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 ">
+                                                    <div class="row d-flex align-items-center justify-content-end">
+                                                        <div class="col-md-4" style="padding-left: 25px;">
+                                                            <label class="d-inline-block">Show : </label>
+                                                            <select id="pagination_limit" class="form-control d-inline-block" style="width: 100px;text-align:center;" aria-controls="example" name="example_length" onchange="changePaginationLimit()">
+                                                                <option value="10">10</option>
+                                                                <option value="25">25</option>
+                                                                <option value="50">50</option>
+                                                                <option value="100">100</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-holder">
+                                    <div class="table-responsive">
+                                        <table class="table table-styled mb-0 table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center text-white" style="background-color: #1598e1;">Action</th>
+                                                    <th class="text-center text-white" style="background-color: #1598e1;">Tittle</th>
+                                                    <th class="text-center text-white" style="background-color: #1598e1;">Description</th>
+                                                    <th class="text-center text-white" style="background-color: #1598e1;">Image</th>
+                                                    <th class="text-center text-white" style="background-color: #1598e1;">Status</th>
+                                                    <input type="hidden" id="totalcount" value="{{totalCount}}">
+                                                    <input type="hidden" id="currentpage" value="{{currentPage}}">
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{#each blog_result }}
+                                                    <tr>
+                                                        <td style="position: relative;">
+                                                            <!-- <a href="{% url 'create_profile_page_with_pk' operation='edit' pk=data.pk %}">Edit</a> | <a href="#">Delete</a> -->
+                                                            <div class="dropdown">
+                                                                <button class="dropdown-btn" onclick="toggleDropdown('{{ this.blog_id }}')">Action</button>
+                                                                <div class="dropdown-content" id="myDropdown{{ blog_id }}">
+                                                                    <a href="/blog/edit?view_id={{ blog_id }}"><i class="fa fa-eye"></i> View</a>
+                                                                    <a href="/blog/edit?edit_id={{ blog_id }}"><i class="fa fa-edit"></i> Edit</a>
+                                                                    {{#eq active_flag 'Y'}}
+                                                                        <a class="unblock" href="/blog/status?status_id={{ blog_id }}&active_flag=N" title="Block">
+                                                                            <i class="fa fa-ban"></i> Inactive
+                                                                        </a>
+                                                                    {{else}}
+                                                                        <a class="unblock" href="/blog/status?status_id={{ blog_id }}&active_flag=Y" title="Unblock">
+                                                                            <i class="fa fa-check"></i> Active
+                                                                        </a>
+                                                                    {{/eq}}
+                                                                    <a href="/blog/delete?delete={{ blog_id }}"><i class="fa fa-trash"></i> Delete</a>
+                                                                    <input type="hidden" name="inserted_id" value={{ blog_id }}>
+                                                                </div>
+                                                            </div>
+
+                                                           <script>
+                                                                function toggleDropdown(pk) {
+                                                                    var dropdown = $("#myDropdown" + pk);
+                                                                    dropdown.toggle();
+                                                                }
+
+                                                                $(document).on("click", function (event) {
+                                                                    if (!$(event.target).hasClass('dropdown-btn')) {
+                                                                        $(".dropdown-content").hide();
+                                                                    }
+                                                                });
+                                                            </script>
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    var urlParams = new URLSearchParams(window.location.search);
+                                                                    var limitFromUrl = urlParams.get('paginationLimit');
+                                                                    var defaultLimit = 10;
+                                                                    var limitToUse = (limitFromUrl !== null && !isNaN(limitFromUrl)) ? parseInt(limitFromUrl) : defaultLimit;
+
+                                                                    $('#pagination_limit').val(limitToUse);
+
+                                                                    $('#pagination_limit').on('change', function() {
+                                                                        var totalCount  = $('#totalcount').val();
+                                                                        var limit       = $(this).val();
+                                                                        var totalPages  = Math.ceil(totalCount / limit);
+                                                                        var currentPage =$('#currentpage').val();
+                                                                        $('#selected-limit').text(limit);
+
+                                                                        if (totalPages === 1 && currentPage !== 1) {
+                                                                            window.location.href = window.location.pathname + '?page=1&paginationLimit=' + limit;
+                                                                        }
+                                                                        else {
+                                                                            var url = new URL(window.location.href);
+                                                                            url.searchParams.set('paginationLimit', limit);
+                                                                            window.location.href = url.toString();
+                                                                        }
+
+                                                                    });
+                                                                });
+                                                            </script>
+                                                        </td>
+                                                        <td>{{ this.tittle }}</td>
+                                                        <td>{{ this.description }}</td>
+                                                        <td>
+                                                            {{!-- <img src="../uploads/blog/{{this._id}}.jpg" class="img_fluid" alt="Blog Image" style="width:120px;height:80px"> --}}
+                                                            <img src="{{this.imageUrl}}" class="img_fluid" alt="Blog Image" style="width:120px;height:80px">
+                                                        </td>
+                                                         <td>
+                                                            {{#eq active_flag 'Y'}}
+                                                                <span class="btn active-class btn-sm" title="Active"> Active </span>
+                                                            {{else}}
+                                                                <span class="btn inactive-class btn-sm" title="Inactive">Inactive </span>
+                                                            {{/eq}}
+                                                        </td>
+                                                    </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                    <h4>Showing {{startEntry}} to {{endEntry}} of {{totalCount}} entries</h4>
+                                                </div>
+                                                {{#if paginationShow}}
+                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                                <div class="text-right">
+                                                                    <nav class="d-inline-block">
+                                                                        {{#if blog_result}}
+                                                                            <ul class="pagination mb-0">
+                                                                                {{#if prevPage}}
+                                                                                    <li class="page-item">
+                                                                                        <a class="page-link" href="/blog?page={{prevPage}}" aria-label="Previous">
+                                                                                            <span aria-hidden="true">&laquo;</span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                {{else}}
+                                                                                    <li class="page-item disabled">
+                                                                                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                                                                                    </li>
+                                                                                {{/if}}
+
+                                                                                {{#each pages}}
+                                                                                    <li class="page-item {{#if (eq @index currentPage)}}active{{/if}}">
+                                                                                        <a class="page-link" href="/blog?page={{this}}">{{this}}</a>
+                                                                                    </li>
+                                                                                {{/each}}
+
+                                                                                {{#if nextPage}}
+                                                                                    <li class="page-item">
+                                                                                        <a class="page-link" href="/blog?page={{nextPage}}" aria-label="Next">
+                                                                                            <span aria-hidden="true">&raquo;</span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                {{else}}
+                                                                                    <li class="page-item disabled">
+                                                                                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                                                                                    </li>
+                                                                                {{/if}}
+                                                                            </ul>
+                                                                        {{/if}}
+
+                                                                    </nav>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {{/if}}
+
+
+                                                <script>
+                                                    // Get the current page number from the URL
+                                                    const urlParams = new URLSearchParams(window.location.search);
+                                                    const currentPage = parseInt(urlParams.get('page')) || 1;
+
+                                                    // Remove active class from all pagination items
+                                                    document.querySelectorAll('.pagination .page-item').forEach(item => {
+                                                        item.classList.remove('active');
+                                                    });
+
+                                                    // Add active class to the pagination item corresponding to the current page
+                                                    const currentPageItem = document.querySelector(`.pagination .page-item:nth-child(${currentPage+1})`);
+                                                    if (currentPageItem) {
+                                                        currentPageItem.classList.add('active');
+                                                        currentPageItem.querySelector('.page-link').style.backgroundColor = 'green';
+                                                        currentPageItem.querySelector('.page-link').style.border = '1px solid green';
+                                                        currentPageItem.querySelector('.page-link').style.color = 'white';
+                                                    }
+
+                                                </script>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad-footer-btm">
+                    <p>Copyright 2022 © SplashDash All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Preview Setting Box -->
+        <div class="slide-setting-box">
+            <div class="slide-setting-holder">
+                <div class="setting-box-head">
+                    <h4>Dashboard Demo</h4>
+                    <a href="javascript:void(0);" class="close-btn">Close</a>
+                </div>
+                <div class="setting-box-body">
+                    <div class="sd-light-vs">
+                        <a href="index.html">
+                            Light Version
+                            <img src="../backend/img/light.png" alt=""/>
+                        </a>
+                    </div>
+                    <div class="sd-light-vs">
+                        <a href="https://kamleshyadav.com/html/splashdash/html/b5/splashdash-admin-template-dark/index.html">
+                            dark Version
+                            <img src="../backend/img/dark.png" alt=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="sd-color-op">
+                    <h5>color option</h5>
+                    <div id="style-switcher">
+                        <div>
+                            <ul class="colors">
+                                <li>
+                                    <p class='colorchange' id='color'>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class='colorchange' id='color2'>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class='colorchange' id='color3'>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class='colorchange' id='color4'>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class='colorchange' id='color5'>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class='colorchange' id='style'>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <!-- Preview Setting -->
+        {{#if blog_create}}
+            <!-- Container Start -->
+            <div class="page-wrapper">
+                <div class="main-content">
+                    <!-- Page Title Start -->
+                    <div class="row">
+                        <div class="col xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">{{tittle}}</h4>
+                                </div>
+                                <div class="breadcrumb-list">
+                                    <ul>
+                                        <li class="breadcrumb-link">
+                                            <a href="index.html"><i class="fas fa-home mr-2"></i>Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-link active">User Profile</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Products view Start -->
+                    <div class="row">
+
+                        <div class="col-xl-12">
+                            <div class="card">
+
+                                <form class="form-validate-jquery" id="myForm" autocomplete="off" method="POST" action="/blog/edit" enctype="multipart/form-data">
+
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">
+
+                                        </h4>
+                                        <div class="card-options">
+                                            <a class="card-options-collapse" href="javascript:;" data-bs-toggle="card-collapse" data-bs-original-title="" title="">
+                                                <i class="fe fe-chevron-up"></i>
+                                            </a>
+                                            <a class="card-options-remove" href="javascript:;" data-bs-toggle="card-remove" data-bs-original-title="" title="">
+                                                <i class="fe fe-x"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body" style="border: solid 2px green; border-radius: 10px;">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-5">
+                                                <div class="mb-3">
+                                                    <label class="form-label tittle"><span class="text-danger">*</span> Tittle</label>
+                                                    <input type="text" class="form-control" name="tittle" id="tittle" placeholder="Tittle">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-5 offset-2">
+                                                <label class="form-label">Answer</label>
+                                                <input type="text" class="form-control" name="description" id="description" placeholder="Description">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-5">
+                                                <label class="form-label">Image</label>
+                                                <input type="file" class="form-control" name="image" id="image" accept="image/*">
+
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align: right;">
+                                            {{!-- {% if operation == 'view' %}
+                                                <a href="{% url 'create_profile_page_with_pk' operation='edit' pk=item.pk %}" class="btn btn-primary">Edit</a>
+                                            {% else %} --}}
+                                                <button type="submit" id="saveBtn" class="btn btn-primary">Save</button>
+                                            {{!-- {% endif %} --}}
+                                            <a href="/blog" class="btn btn-secondary">Cancel</a>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $('#saveBtn').click(function (event)
+                                            {
+                                                var tittle   = $("#tittle").val();
+
+                                                if (tittle) {
+                                                    $(".tittle").removeClass('errorClass');
+                                                    return true;
+
+                                                }
+                                                else
+                                                {
+                                                    if (tittle) {
+                                                        $(".tittle").removeClass('errorClass');
+                                                    } else {
+                                                        $(".tittle").addClass('errorClass');
+                                                    }
+
+                                                    return false;
+                                                }
+                                            } )
+
+                                        });
+
+
+                                    </script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-footer-btm">
+                        <p>Copyright 2022 © SplashDash All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Preview Setting Box -->
+            <div class="slide-setting-box">
+                <div class="slide-setting-holder">
+                    <div class="setting-box-head">
+                        <h4>Dashboard Demo</h4>
+                        <a href="javascript:void(0);" class="close-btn">Close</a>
+                    </div>
+                    <div class="setting-box-body">
+                        <div class="sd-light-vs">
+                            <a href="index.html">
+                                Light Version
+                                <img src="{%static 'assets/images/light.png' %}" alt=""/>
+                            </a>
+                        </div>
+                        <div class="sd-light-vs">
+                            <a href="https://kamleshyadav.com/html/splashdash/html/b5/splashdash-admin-template-dark/index.html">
+                                dark Version
+                                <img src="{%static 'assets/images/dark.png' %}" alt=""/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sd-color-op">
+                        <h5>color option</h5>
+                        <div id="style-switcher">
+                            <div>
+                                <ul class="colors">
+                                    <li>
+                                        <p class='colorchange' id='color'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color2'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color3'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color4'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color5'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='style'>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+        {{#if blog_edit}}
+            <!-- Container Start -->
+            <div class="page-wrapper">
+                <div class="main-content">
+                    <!-- Page Title Start -->
+                    <div class="row">
+                        <div class="col xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">{{tittle}}</h4>
+                                </div>
+                                <div class="breadcrumb-list">
+                                    <ul>
+                                        <li class="breadcrumb-link">
+                                            <a href="index.html"><i class="fas fa-home mr-2"></i>Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-link active">User Profile</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Products view Start -->
+                    <div class="row">
+
+                        <div class="col-xl-12">
+                            <div class="card">
+
+                                {{#if view_result}}
+                                    <form class="form-validate-jquery" id="myForm" autocomplete="off" method="POST" action="" >
+
+
+                                        <div class="card-header">
+                                            <h4 class="card-title mb-0">
+
+                                            </h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse" href="javascript:;" data-bs-toggle="card-collapse" data-bs-original-title="" title="">
+                                                    <i class="fe fe-chevron-up"></i>
+                                                </a>
+                                                <a class="card-options-remove" href="javascript:;" data-bs-toggle="card-remove" data-bs-original-title="" title="">
+                                                    <i class="fe fe-x"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body" style="border: solid 2px green; border-radius: 10px;">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label"><span class="text-danger">*</span> Tittle</label>
+                                                        <input type="text" class="form-control" name="tittle" id="tittle" readonly value="{{resultData.tittle}}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-5 offset-2">
+                                                    <label class="form-label">Description</label>
+                                                    <input type="text" class="form-control" name="description" id="description" value="{{resultData.description}}" readonly>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-5">
+                                                    <label class="form-label">Image</label>
+
+                                                    <div class="p-0 m-0">
+                                                        <img src="../uploads/blog/{{resultData.blog_id}}.jpg" class="img_fluid" alt="Blog Image" style="width:120px;height:80px">
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div style="text-align: right;">
+
+                                                <a href="/blog" class="btn btn-secondary">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                {{/if}}
+
+                                {{#if edit_result}}
+                                    <form class="form-validate-jquery" id="myForm" autocomplete="off" method="POST" action="/blog/edit/{{resultData.blog_id}}" enctype="multipart/form-data">
+
+
+                                        <div class="card-header">
+                                            <h4 class="card-title mb-0">
+
+                                            </h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse" href="javascript:;" data-bs-toggle="card-collapse" data-bs-original-title="" title="">
+                                                    <i class="fe fe-chevron-up"></i>
+                                                </a>
+                                                <a class="card-options-remove" href="javascript:;" data-bs-toggle="card-remove" data-bs-original-title="" title="">
+                                                    <i class="fe fe-x"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body" style="border: solid 2px green; border-radius: 10px;">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label tittle"><span class="text-danger">*</span> Tittle</label>
+                                                        <input type="text" class="form-control" name="tittle" id="tittle" value="{{resultData.tittle}}" placeholder="Tittle">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-5 offset-2">
+                                                    <label class="form-label">Description</label>
+                                                    <input type="text" class="form-control" name="description" id="description" value="{{resultData.description}}" placeholder="Description">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-5">
+
+                                                    <label class="form-label">Image</label>
+
+                                                    <input type="file" class="form-control" name="image" id="image" accept="image/*">
+
+                                                    <div class="p-0 m-0">
+                                                        <img src="{{imageUrl}}" class="img_fluid" alt="Blog Image" style="width:120px;height:80px">
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div style="text-align: right;">
+                                                {{!-- {% if operation == 'view' %}
+                                                    <a href="{% url 'create_profile_page_with_pk' operation='edit' pk=item.pk %}" class="btn btn-primary">Edit</a>
+                                                {% else %} --}}
+                                                    <button type="submit" id="saveBtn" class="btn btn-primary">Save</button>
+                                                {{!-- {% endif %} --}}
+                                                <a href="/blog" class="btn btn-secondary">Cancel</a>
+                                            </div>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#saveBtn').click(function (event)
+                                                    {
+                                                        var tittle   = $("#tittle").val();
+
+                                                        if (tittle) {
+                                                            $(".tittle").removeClass('errorClass');
+                                                            return true;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            if (tittle) {
+                                                                $(".tittle").removeClass('errorClass');
+                                                            } else {
+                                                                $(".tittle").addClass('errorClass');
+                                                            }
+
+                                                            return false;
+                                                        }
+                                                    } )
+
+                                                });
+
+
+                                            </script>
+                                        </div>
+                                    </form>
+                                {{/if}}
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-footer-btm">
+                        <p>Copyright 2022 © SplashDash All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Preview Setting Box -->
+            <div class="slide-setting-box">
+                <div class="slide-setting-holder">
+                    <div class="setting-box-head">
+                        <h4>Dashboard Demo</h4>
+                        <a href="javascript:void(0);" class="close-btn">Close</a>
+                    </div>
+                    <div class="setting-box-body">
+                        <div class="sd-light-vs">
+                            <a href="index.html">
+                                Light Version
+                                <img src="{%static 'assets/images/light.png' %}" alt=""/>
+                            </a>
+                        </div>
+                        <div class="sd-light-vs">
+                            <a href="https://kamleshyadav.com/html/splashdash/html/b5/splashdash-admin-template-dark/index.html">
+                                dark Version
+                                <img src="{%static 'assets/images/dark.png' %}" alt=""/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sd-color-op">
+                        <h5>color option</h5>
+                        <div id="style-switcher">
+                            <div>
+                                <ul class="colors">
+                                    <li>
+                                        <p class='colorchange' id='color'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color2'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color3'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color4'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='color5'>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p class='colorchange' id='style'>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+
+    {{/if}}
+
+    <script src="../backend/js/create_profile.js"></script>
+

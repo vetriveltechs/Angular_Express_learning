@@ -1,0 +1,91 @@
+<div class="page-content">
+    <style>
+        ul.nav.nav-group-sub.round-icon li a {
+            padding: 10px 15px;
+        }
+        ul.nav.nav-group-sub.round-icon li a i {
+            margin-right: 12px;
+        }
+        .new-order_notification {
+            background-color: white;
+            color: black;
+            margin-left: 17px;
+            border-radius: 7px;
+        }
+
+        .nav-link {
+            cursor: pointer; /* Sets the cursor to pointer (hand symbol) */
+        }
+
+    </style>
+
+    <!-- Main sidebar -->
+    <div id="hide-menu" class="sidebar sidebar-dark new-sidebar-scroll sidebar-main sidebar-expand-md">
+        <!-- Sidebar content -->
+        <div class="sidebar-content">
+            <!-- Main navigation -->
+            <div class="card card-sidebar-mobile">
+                <ul class="nav nav-sidebar nav-sidebar-new" data-nav-type="accordion">
+                    <li class="nav-item">
+                        <a routerLink="/" class="nav-link" style="cursor: pointer;" onclick="handleLinkClick('Dashboard')">
+                            <i class="fa fa-home menu-link"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/employee" class="nav-link" style="cursor: pointer;" onclick="handleLinkClick('Employee')">
+                            <i class="fa fa-users menu-link"></i>
+                            <span>Employee</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/users" class="nav-link" style="cursor: pointer;" onclick="handleLinkClick('Users')">
+                            <i class="fa fa-users menu-link"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/setups" class="nav-link" style="cursor: pointer;" onclick="handleLinkClick('Setups')">
+                            <i class="fa fa-cog menu-link"></i>
+                            <span>Setups</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <script>
+                    function handleLinkClick(linkName) {
+                        alert(`You clicked: ${linkName}`);
+                        console.log(`${linkName} link clicked`);
+                    }
+                </script>
+
+
+            </div><!-- /main navi -->
+        </div><!-- /sidebar content -->
+    </div><!-- /main sidebar -->
+
+    <div class="content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+    <script src="<?php echo base_url();?>assets/backend/toastr/sweetalert2@11.js"></script>
+  <script>
+    function logoutAlert()
+    {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#070d7d',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout!'
+      }).then((result) =>
+      {
+        if (result.isConfirmed)
+        {
+          window.location = '<?php echo base_url()?>admin/logout';
+        }
+      });
+    }
+  </script>

@@ -1,0 +1,771 @@
+<div class="content">
+    <div class="card">
+      <div class="card-body mt-2">
+        <div *ngIf="formAction === 'create' || formAction === 'edit'">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a [routerLink]="['/employee', formAction, 'basic-info']"
+                       class="nav-link"
+                       [class.active]="formType === 'basic-info'"
+                       (click)="formType = 'basic-info'">Basic Info</a>
+                </li>
+
+                <li class="nav-item">
+                    <a [routerLink]="basicForm.valid || formAction === 'edit' ? ['/employee', formAction, 'employee_details'] : 'javascript:void(0);'"
+                       class="nav-link"
+                       [class.active]="formType === 'employee_details'"
+                       [class.disabled]="!(basicForm.valid || formAction === 'edit')"
+                       (click)="basicForm.valid || formAction === 'edit' ? formType = 'employee_details' : null">Employment Details</a>
+                </li>
+
+                <li class="nav-item">
+                    <a [routerLink]="(basicForm.valid && employeeDetailForm.valid) || formAction === 'edit' ? ['/employee', formAction, 'identity'] : 'javascript:void(0);'"
+                       class="nav-link"
+                       [class.active]="formType === 'identity'"
+                       [class.disabled]="!(basicForm.valid && employeeDetailForm.valid || formAction === 'edit')"
+                       (click)="(basicForm.valid && employeeDetailForm.valid) || formAction === 'edit' ? formType = 'identity' : null">Identity</a>
+                </li>
+
+                <li class="nav-item">
+                    <a [routerLink]="(basicForm.valid && employeeDetailForm.valid && identityForm.valid) || formAction === 'edit' ? ['/employee', formAction, 'address'] : 'javascript:void(0);'"
+                       class="nav-link"
+                       [class.active]="formType === 'address'"
+                       [class.disabled]="!(basicForm.valid && employeeDetailForm.valid && identityForm.valid || formAction === 'edit')"
+                       (click)="(basicForm.valid && employeeDetailForm.valid && identityForm.valid) || formAction === 'edit' ? formType = 'address' : null">Address</a>
+                </li>
+
+                <li class="nav-item">
+                    <a [routerLink]="(basicForm.valid && employeeDetailForm.valid && identityForm.valid && addressForm.valid) || formAction === 'edit' ? ['/employee', formAction, 'bank_details'] : 'javascript:void(0);'"
+                       class="nav-link"
+                       [class.active]="formType === 'bank_details'"
+                       [class.disabled]="!(basicForm.valid && employeeDetailForm.valid && identityForm.valid && addressForm.valid || formAction === 'edit')"
+                       (click)="(basicForm.valid && employeeDetailForm.valid && identityForm.valid && addressForm.valid) || formAction === 'edit' ? formType = 'bank_details' : null">Bank Details</a>
+                </li>
+            </ul>
+          </div>
+
+          <div *ngIf="(formAction === 'create' || formAction === 'edit') && formType === 'basic-info'">
+            <!-- Basic Info Form -->
+            <form [formGroup]="basicForm" class="tab-pane active" id="basic-info" (ngSubmit)="onBasicSubmit()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                  <a routerLink="/employee" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label employment_type"><span class="text-danger">*</span> Employment Type</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-select formControlName="employee_type">
+                                            <mat-option>- Select Employee Type -</mat-option>
+                                            <mat-option *ngFor="let employeeType of employeeTypeOptions" [value]="employeeType.list_code">
+                                                {{ employeeType.list_value }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label user_name"><span class="text-danger">*</span> First Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="first_name" id="first_name" autocomplete="off" class="form-control" placeholder="First Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label middle_name"><span class="text-danger">*</span> Middle Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="middle_name" id="middle_name" autocomplete="off" class="form-control" placeholder="Middle Name">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label list_name"><span class="text-danger">*</span> List Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="list_name" id="list_name" autocomplete="off" class="form-control" placeholder="Last Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label mobile_number"><span class="text-danger">*</span> Mobile Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="mobile_number" id="mobile_number" autocomplete="off" class="form-control" placeholder="Mobile Number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label alt_mobile_number"> Alt Mobile Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="alt_mobile_number" id="alt_mobile_number" autocomplete="off" class="form-control" placeholder="Alt Mobile Number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label email"><span class="text-danger">*</span> Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="email" id="email" autocomplete="off" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label alt_email"> Alt Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="alt_email" id="alt_email" autocomplete="off" class="form-control" placeholder="Alt Email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label father_name"><span class="text-danger">*</span> Father Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="father_name" id="father_name" autocomplete="off" class="form-control" placeholder="Father Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label mother_name"><span class="text-danger">*</span> Mother Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="mother_name" id="mother_name" autocomplete="off" class="form-control" placeholder="Mother Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label from_date"><span class="text-danger">*</span> Date Of Birth</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="date_of_birth" id="date_of_birth" autocomplete="off" class="form-control default_date" placeholder="Date Of Birth">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label gender"><span class="text-danger">*</span> Gender</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-select formControlName="gender">
+                                            <mat-option>- Select Gender -</mat-option>
+                                            <mat-option *ngFor="let gender of genderOptions" [value]="gender.list_code">
+                                                {{ gender.list_value }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label blood_group">Blood Group</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-select formControlName="blood_group">
+                                            <mat-option>- Select Employee Type -</mat-option>
+                                            <mat-option *ngFor="let employeeType of employeeTypeOptions" [value]="employeeType.list_code">
+                                                {{ employeeType.list_value }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+              </fieldset>
+            </form>
+          </div>
+
+          <div *ngIf="(formAction === 'create' || formAction === 'edit') && formType === 'employee_details'">
+            <!-- Basic Info Form -->
+            <form [formGroup]="employeeDetailForm" class="tab-pane active" id="employee-details" (ngSubmit)="onEmployeeDetailsSubmit()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                  <a routerLink="/employee" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label department"><span class="text-danger">*</span> Department</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-select formControlName="department">
+                                            <mat-option>- Select Department -</mat-option>
+                                            <mat-option *ngFor="let department of departmentOptions" [value]="department.list_code">
+                                                {{ department.list_value }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label date_of_joining">Date Of Joining</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="date_of_joining" id="date_of_joining" autocomplete="off" class="form-control default_date" placeholder="Date Of Joining">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label date_of_relieving">Date Of Relieving</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="date_of_relieving" id="date_of_relieving" autocomplete="off" class="form-control default_date" placeholder="Date Of Relieving">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label previous_experience">Previous Experience</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="previous_experience" id="previous_experience" autocomplete="off" class="form-control" placeholder="Previous Experience">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label rate_per_hour">Rate Per Hour</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="rate_per_hour" id="rate_per_hour" autocomplete="off" class="form-control" placeholder="Rate Per Hour">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label rate_per_day">Rate Per Day</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="rate_per_day" id="rate_per_day" autocomplete="off" class="form-control" placeholder="Rate Per Day">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label pay_frequency">Pay Frequency</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-select formControlName="pay_frequency">
+                                        <mat-option>- Select Pay Frequency -</mat-option>
+                                        <mat-option *ngFor="let payFrequency of payFrequencyOptions" [value]="payFrequency.list_code">
+                                            {{ payFrequency.list_value }}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+              </fieldset>
+            </form>
+          </div>
+
+          <div *ngIf="(formAction === 'create' || formAction === 'edit') && formType === 'identity'">
+            <!-- Identity Info Form -->
+            <form [formGroup]="identityForm" class="tab-pane active" id="identity" (ngSubmit)="onIdentitySubmit()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                  <a routerLink="/employee" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label aadhar_number"><span class="text-danger">*</span> Aadhar No</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="aadhar_number" id="aadhar_number" autocomplete="off" class="form-control" placeholder="Aadhar Number">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label pan_number"><span class="text-danger">*</span> PAN Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="pan_number" id="pan_number" autocomplete="off" class="form-control" placeholder="PAN Number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label driving_licence">Driving Licence</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="driving_licence" id="driving_licence" autocomplete="off" class="form-control" placeholder="Driving Licence">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label passport_number">Passport No</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="passport_number" id="passport_number" autocomplete="off" class="form-control" placeholder="Passport No">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label passport_issue_date">Passport Issue Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="passport_issue_date" id="passport_issue_date" autocomplete="off" class="form-control default_date" placeholder="Passport Issue Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label passport_expiry_date">Passport Expiry Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="passport_expiry_date" id="passport_expiry_date" autocomplete="off" class="form-control default_date" placeholder="Passport Expiry Date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label pf_number">PF No</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="pf_number" id="pf_number" autocomplete="off" class="form-control" placeholder="PF No">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label uan_number">UAN No</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="uan_number" id="uan_number" autocomplete="off" class="form-control" placeholder="UAN No">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+              </fieldset>
+            </form>
+          </div>
+
+          <div *ngIf="(formAction === 'create' || formAction === 'edit') && formType === 'address'">
+            <!-- Basic Info Form -->
+            <form [formGroup]="addressForm" class="tab-pane active" id="address" (ngSubmit)="onAddressSubmit()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                  <a routerLink="/employee" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label address_1"><span class="text-danger">*</span> Address 1</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <textarea formControlName="address_1" id="address_1" autocomplete="off" class="form-control" placeholder="Address 1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label address_2"><span class="text-danger">*</span> Address 2</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <textarea formControlName="address_2" id="address_2" autocomplete="off" class="form-control" placeholder="Address 2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label address_3"><span class="text-danger">*</span> Address 3</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <textarea formControlName="address_3" id="address_3" autocomplete="off" class="form-control" placeholder="Address 3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label postal_code">Postal Code</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="postal_code" id="postal_code" autocomplete="off" class="form-control" placeholder="Postal Code">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+              </fieldset>
+            </form>
+          </div>
+
+          <div *ngIf="(formAction === 'create' || formAction === 'edit')  && formType === 'bank_details'">
+            <!-- Basic Info Form -->
+            <form [formGroup]="bankDetailsForm" class="tab-pane active" id="bank-details" (ngSubmit)="onBankDetailsSubmit()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <h3><b>{{ page_title }}</b></h3>
+                </div>
+                <div class="col-md-6 text-right">
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                  <a routerLink="/employee" class="btn btn-default btn-sm">Close</a>
+                </div>
+              </div>
+              <fieldset>
+                <section class="header-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label account_number"><span class="text-danger">*</span> A/C NO</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="account_number" id="account_number" autocomplete="off" class="form-control" placeholder="A/C NO">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label account_holder_number"><span class="text-danger">*</span> A/c Holder Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="account_holder_number" id="account_holder_number" autocomplete="off" class="form-control" placeholder="A/C Holder NO">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label bank_name"><span class="text-danger">*</span> Bank Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="bank_name" id="bank_name" autocomplete="off" class="form-control" placeholder="Bank Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label branch_name"><span class="text-danger">*</span> Branch Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="branch_name" id="branch_name" autocomplete="off" class="form-control" placeholder="Branch Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label ifsc_code"><span class="text-danger">*</span> IFSC Code</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="ifsc_code" id="ifsc_code" autocomplete="off" class="form-control" placeholder="IFSC Code">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label micr_code"><span class="text-danger">*</span> MICR Code</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="micr_code" id="micr_code" autocomplete="off" class="form-control" placeholder="MICR Code">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label micr_code">Address</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <textarea formControlName="address" id="address" rows="1" autocomplete="off" class="form-control" placeholder="Address"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                </section>
+              </fieldset>
+            </form>
+          </div>
+
+
+         <!-- Conditional Header Block -->
+         <div *ngIf="formAction === 'default'" class="row mb-2">
+            <div class="col-md-6">
+              <h3><b>{{ page_title }}</b></h3>
+            </div>
+            <div class="col-md-6 text-right">
+              <a href="#" data-toggle="modal" data-target="#importPatientCSV" title="Import" class="btn btn-outline-warning btn-sm">
+                <i class="icon-import"></i> Import
+              </a>
+              <button (click)="switchForm('create','basic-info')" class="btn btn-info btn-sm mx-1">
+                Create Employee
+              </button>
+            </div>
+          </div>
+
+          <!-- Default Form -->
+          <form *ngIf="formAction === 'default'" action="" method="get" (ngSubmit)="searchEmployeeRecords()">
+            <section class="trans-section-back-1">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="row">
+                    <label class="col-form-label col-md-4 text-right">User Name</label>
+                    <div class="input-wrapper form-group col-md-7">
+                      <input type="text" formControlName="user_name" id="user_name" autocomplete="off" class="form-control" placeholder="User Name">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 text-right">
+                  <button type="submit" class="btn btn-info">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+                  <a href="/employee" title="Clear" class="btn btn-default" style="margin-left:5px;">Clear</a>
+                </div>
+              </div>
+            </section>
+          </form>
+          <!-- Show results after clicking the search button -->
+            <div class="new-scroller"  *ngIf="showResults && formAction === 'default'">
+                <table id="myTable" class="table table-bordered table-hover tbl_height" *ngIf="employeeRecords.length > 0; else noDataTemplate">
+                    <thead>
+                        <tr>
+                        <th class="text-center">Controls</th>
+                        <th class="tab-md-140">Employee Name</th>
+                        <th class="tab-md-120">Date Of birth</th>
+                        <th class="tab-md-120">Aadhar Card</th>
+                        <th class="tab-md-140 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of employeeRecords">
+                        <td class="text-center" >
+                            <div class="dropdown">
+                                <button class="dropdown-btn" (click)="toggleDropdown(record.employee_id)">Action</button>
+                                <div *ngIf="dropdownOpen[record.employee_id]" class="dropdown-content" [attr.id]="'myDropdown' + record.employee_id">
+                                  <!-- View Link -->
+                                  <a [routerLink]="['/employee/view/basic-info']" [queryParams]="{ view_id: record.employee_id }">
+                                    <i class="fa fa-eye"></i> View
+                                  </a>
+                                  <!-- Edit Link -->
+                                  <a [routerLink]="['/employee/edit/basic-info']" [queryParams]="{ edit_id: record.employee_id }">
+                                    <i class="fa fa-edit"></i> Edit
+                                  </a>
+                                  <!-- Active/Inactive Status Toggle -->
+                                  <span *ngIf="record.active_flag === 'Y'; else inactiveTemplate">
+                                    <a (click)="updateEmployeeStatus(record.employee_id, 'N')" style="cursor: pointer;">
+                                      <i class="fa fa-ban"></i> Inactive
+                                    </a>
+                                  </span>
+                                  <ng-template #inactiveTemplate>
+                                    <span title="Inactive">
+                                      <a (click)="updateEmployeeStatus(record.employee_id, 'Y')" style="cursor: pointer;">
+                                        <i class="fa fa-check"></i> Active
+                                      </a>
+                                    </span>
+                                  </ng-template>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td>{{ record.first_name }}</td>
+                        <td>{{ record.date_of_birth }}</td>
+                        <td>{{ record.aadhar_number }}</td>
+
+                        <td class="text-center">
+                            <span class="btn btn-outline-success" title="Active" *ngIf="record.active_flag === 'Y'; else inactiveTemplate">Active</span>
+                            <ng-template #inactiveTemplate>
+                            <span class="btn btn-outline-warning" title="Inactive">Inactive</span>
+                            </ng-template>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <ng-template #noDataTemplate>
+                    <div class="text-center">
+                        <img src="/assets/img/nodata.png">
+                    </div>
+                </ng-template>
+            </div>
+      </div>
+    </div>
+</div>
