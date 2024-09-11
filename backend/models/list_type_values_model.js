@@ -13,7 +13,7 @@ const list_type_values = {
                       FROM list_type_values
                       WHERE 1=1 AND lov_id = ?
                       ORDER BY order_sequence`;
-                      
+
       const [results] = await pool.query(query, [lovId]);
       return results;
     },

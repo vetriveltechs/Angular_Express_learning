@@ -73,7 +73,7 @@ exports.getAllEmployees = async (req, res) => {
 exports.getEmployees = async (req, res) => {
   try {
       const { employee_id } = req.params;
-      console.log(employee_id);
+     
 
       const results = await Employee.getEmployees(employee_id);
       res.status(200).json(results);

@@ -24,33 +24,92 @@ const Users = {
             },
 
           // Add a new user
-            create: async (data) => {
-              try {
-                console.log(data);
+          create: async (data) => {
+            try {
 
-                  const hashedPassword = bcrypt.hashSync(data.password, 10);
-                  const query = 'INSERT INTO users (user_type,user_name,password, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
-                  await pool.query(query, [data.user_type,data.user_name, hashedPassword,data.start_date,data.end_date]);
-              } catch (err) {
-                  console.error('Error executing query:', err);
-                  throw err;
-              }
+                // Insert user data into the per_user table
+                const password = data.password;
+                const queryUser = 'INSERT INTO per_user (user_type, user_name, password, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
+                const hashedPassword = bcrypt.hashSync(password, 10);
+                const [result] = await pool.query(queryUser, [data.user_type, data.user_name, hashedPassword, data.start_date, data.end_date]);
+
+                // Get the inserted user's ID
+                const userId = result.insertId;
+
+                // Insert roles into the per_user_roles table
+                const queryRole = 'INSERT INTO per_user_roles (user_id, role_id, role_name, role_status) VALUES ?';
+                const roleValues = data.roles.map(role => [userId, role.role_id, role.role_name, role.role_status]);
+                await pool.query(queryRole, [roleValues]);
+
+            } catch (err) {
+                console.error('Error executing query:', err);
+                throw err;
+            }
+        },
+
+
+        getAllUsers: async (userName, active_flag) => {
+            let query = `
+              SELECT user_id, user_type, user_name, password, start_date, end_date, active_flag
+              FROM per_user
+              WHERE 1=1`;
+
+            const params = [];
+
+            if (userName) {
+              query += ` AND user_name LIKE ?`;
+              params.push(`%${userName}%`);
+            }
+
+            if (active_flag && active_flag !== 'ALL') {
+              query += ` AND active_flag = ?`;
+              params.push(active_flag);
+            }
+
+            const [results] = await pool.query(query, params);
+            return results;
           },
 
-          getAllUsers: async () => {
-              const query = 'SELECT user_id,user_type,user_name,password, start_date, end_date,active_flag FROM users';
-              const [results] = await pool.query(query);
-              return results;
-          },
+
           userAlreadyExists: async (user_name) => {
-            const query = 'SELECT user_id FROM users WHERE user_name = ?';
+            const query = 'SELECT user_id FROM per_user WHERE user_name = ?';
             const [results] = await pool.query(query, [user_name]);
             return results[0]; // Return the first result or undefined if not found
           },
+          // Model: Users.js or similar
           editUsers: async (user_id) => {
-              const query = 'SELECT user_id,user_type,user_name,password, start_date, end_date, FROM users WHERE user_id = ?';
-              const [results] = await pool.query(query, [user_id]);
-              return results[0]; // Return the first result or undefined if not found
+            const headerQuery = `
+                SELECT
+                    user.user_id,
+                    user.user_type,
+                    user.user_name,
+                    user.password,
+                    user.start_date,
+                    user.end_date
+                FROM per_user AS user
+                WHERE user.user_id = ?`;
+
+            const [userResults] = await pool.query(headerQuery, [user_id]);
+
+            if (userResults.length === 0) {
+                return null; // No user found with the given user_id
+            }
+
+            const lineQuery = `
+                SELECT
+                    roles.role_id,
+                    roles.role_name,
+                    user_roles.role_status
+                FROM per_user_roles AS user_roles
+                LEFT JOIN roles ON roles.role_id = user_roles.role_id
+                WHERE user_roles.user_id = ?`;
+
+            const [rolesResults] = await pool.query(lineQuery, [user_id]);
+
+            const userData = userResults[0];
+            userData.roles = rolesResults; // Add the roles array to the user data
+
+            return userData;
           },
 
           updateUsers: async (user_id, data) => {
@@ -59,7 +118,7 @@ const Users = {
               }
 
               const query = `
-                  UPDATE uses
+                  UPDATE per_user
                   SET
                       user_name = COALESCE(?, list_name),
                       password = COALESCE(?, password),
@@ -86,7 +145,7 @@ const Users = {
             }
 
             const query = `
-                UPDATE users
+                UPDATE per_user
                 SET active_flag = COALESCE(?, active_flag)
                 WHERE user_id = ?
             `;

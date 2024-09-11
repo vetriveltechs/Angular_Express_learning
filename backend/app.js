@@ -9,10 +9,10 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const glob = require("glob");
-const pool = require('./config/database');
-const knex = require('./config/knex');
+// const pool = require('./config/database');
+// const knex = require('./config/knex');
 
-// const global_file=require('./config/globalconfig'); // Adjust the path as necessary
+const global_file=require('./config/globalconfig'); // Adjust the path as necessary
 
 const cookieParser = require('cookie-parser');
 const router = require('./routers/router');

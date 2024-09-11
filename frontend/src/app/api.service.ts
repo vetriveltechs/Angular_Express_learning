@@ -142,24 +142,25 @@ export class ApiService {
         return this.http.post<any>(`${this.baseUrl}/users/createUser`, usersData, httpOptions);
     }
 
-    getAllUsers(): Observable<any> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.get<any>(`${this.baseUrl}/users/getAllUsers`,httpOptions);
+    getAllUsers(user_name: string, active_flag: string): Observable<any> {
+        // Construct the URL with proper query parameter formatting
+        const url = `${this.baseUrl}/users/getAllUsers?user_name=${encodeURIComponent(user_name)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
     }
+
 
     editUsers(user_id: string): Observable<any> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.get<any>(`${this.baseUrl}/lov/getAllUsers/${user_id}`,httpOptions);
+        return this.http.get<any>(`${this.baseUrl}/users/editUsers/${user_id}`, httpOptions);
     }
 
-    updateUsers(user_id: string, data: any): Observable<any> {
+    updateUsers(user_id: string, user_data: any): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.put<any>(`${this.baseUrl}/lov/updateLov/${user_id}`, data,httpOptions);
+        return this.http.put<any>(`${this.baseUrl}/users/updateUsers/${user_id}`, user_data,httpOptions);
     }
 
     updateUsersStatus(user_id: string, data: any): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.put<any>(`${this.baseUrl}/lov/updateLovStatus/${user_id}/status`, data,httpOptions);
+        return this.http.put<any>(`${this.baseUrl}/users/updateUsersStatus/${user_id}/status`, data, httpOptions);
 
     }
     ///////////////// Users API end ////////////////

@@ -72,6 +72,8 @@ router.put('/roles/updateRolesStatus/:role_id/status', authenticateUser,rolesCon
 router.post('/login',authenticateUser,authenticationController.login)
 router.post('/users/createUser',authenticateUser,authenticationController.createUser)
 router.get('/users/getAllUsers',authenticateUser,authenticationController.getAllUsers)
+router.put('/users/updateUsersStatus/:user_id/status',authenticateUser,authenticationController.updateUsersStatus)
+router.get('/users/editUsers/:user_id',authenticateUser,authenticationController.editUsers)
 
 module.exports = router;
 

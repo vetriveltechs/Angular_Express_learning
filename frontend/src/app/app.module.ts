@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RolesComponent } from './roles/roles.component';
     ListTypeValuesComponent,
     UsersComponent,
     RolesComponent,
+    AdminLoginComponent,
 
 
   ],

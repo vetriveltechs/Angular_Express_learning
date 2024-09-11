@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import * as $ from 'jquery';
 import 'jquery-ui/ui/widgets/datepicker';
 import { UtilsService } from './../utils/utils.service';
@@ -15,12 +15,14 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
     page_title          = 'Manage Users';
     usersForm           : FormGroup;
+    searchForm          : FormGroup;
     formAction          : 'default' | 'create' | 'edit' | 'view' = 'default';
     usersRecords        : any[] = [];
     showResults         : boolean = false;
     usersTypeOptions    : any[] = [];
     roleOptions         : any[] = [];
     roleStatusOptions   : any[] = [];
+    activeFlagOptions   : any[] = [];
     selectedRoles       : any[] = [];
     dropdownOpen        : { [key: string]: boolean } = {};
 
@@ -35,9 +37,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
         user_type           : ['', Validators.required],
         user_name           : ['', Validators.required],
         password            : ['', Validators.required],
-        from_date           : [''],
-        to_date             : [''],
-        role_id             : ['']
+        start_date          : [''],
+        end_date            : [''],
+        role_id             : [''],
+        roles               : this.fb.array([])
+      });
+
+      this.searchForm = this.fb.group({
+        user_name       : [''],
+        active_flag     : ['']
       });
     }
 
@@ -46,19 +54,34 @@ export class UsersComponent implements OnInit, AfterViewInit {
           this.formAction = params['action'] || 'default';
           const user_id = this.route.snapshot.queryParams['edit_id'] || this.route.snapshot.queryParams['view_id'];
 
+
           if (this.formAction === 'edit' || this.formAction === 'view') {
             this.apiService.editUsers(user_id).subscribe(
               (data) => {
-                data.from_date  = new Date(data.from_date).toISOString().split('T')[0];
-                data.to_date    = new Date(data.to_date).toISOString().split('T')[0];
+                console.log(data);
+
+
+                data.start_date = this.adjustDate(data.start_date);
+                data.end_date = this.adjustDate(data.end_date);
 
                 this.usersForm.patchValue(data);
 
                 if (this.formAction === 'view') {
-                  this.usersForm.disable();
+                this.usersForm.disable();
                 } else {
-                  this.usersForm.enable();
+                this.usersForm.enable();
                 }
+
+                if (data.roles) {
+                    const rolesArray = this.usersForm.get('roles') as FormArray;
+                    rolesArray.clear(); // Clear existing entries
+                    data.roles.forEach((role: any) => {
+                      rolesArray.push(this.fb.group({
+                        role_name: [role.role_name],
+                        role_status: [role.role_status]
+                      }));
+                    });
+                  }
               },
               error => {
                 console.error('Error fetching users record:', error);
@@ -72,7 +95,37 @@ export class UsersComponent implements OnInit, AfterViewInit {
           this.fetchLovOptions('USERS TYPE');
           this.fetchRoleOptions();
           this.fetchLovOptions('ROLE STATUS');
+          this.fetchLovOptions('ACTIVE STATUS');
         });
+    }
+
+    adjustDate(dateString: string): string {
+        const date = new Date(dateString);
+        const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+        const localDate = new Date(date.getTime() - userTimezoneOffset);
+        return localDate.toISOString().split('T')[0]; // Return only the date part in YYYY-MM-DD format
+      }
+
+   // Getter for the roles FormArray
+    get roles(): FormArray {
+        return this.usersForm.get('roles') as FormArray;
+    }
+
+    newRoles(isNew: boolean = true):FormGroup{
+        return this.fb.group({
+            role_name:"",
+            role_status:"",
+            isNew: [isNew]
+
+        })
+    }
+    
+    removeLines(index: number): void {
+        this.roles.removeAt(index);
+    }
+
+    addLines(){
+        this.roles.push(this.newRoles(true));
     }
 
     fetchLovOptions(listName: string) {
@@ -83,6 +136,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
                 } else if (listName === 'ROLE STATUS') {
                     this.roleStatusOptions = response;
                 }
+                 else if (listName === 'ACTIVE STATUS') {
+                    this.activeFlagOptions = response;
+                }
             },
             error => {
                 console.error('Error fetching options:', error);
@@ -90,9 +146,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
         );
     }
 
-    removeRole(roleToRemove: any) {
-        this.selectedRoles = this.selectedRoles.filter(role => role !== roleToRemove);
-    }
+
+    // removeRole(index: number) {
+    //     const rolesArray = this.usersForm.get('roles') as FormArray;
+
+    //     rolesArray.removeAt(index);
+    //   }
+
 
     fetchRoleOptions() {
         this.apiService.getAllRoles().subscribe(
@@ -108,11 +168,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
     onRoleChange(roleId: number) {
         const selectedRole = this.roleOptions.find(role => role.role_id === roleId);
         if (selectedRole) {
-          this.selectedRoles.push(selectedRole);
+          const rolesArray = this.usersForm.get('roles') as FormArray;
+          rolesArray.push(this.fb.group({
+            role_id: [selectedRole.role_id],
+            role_name: [selectedRole.role_name],
+            role_status: ['' || 'Not Getting']
+          }));
         }
-        
         this.usersForm.get('role_id')?.setValue('');
-    }
+      }
 
     ngAfterViewInit(): void {
       ($(".default_date") as any).datepicker({
@@ -125,28 +189,32 @@ export class UsersComponent implements OnInit, AfterViewInit {
           const selectedDate = new Date(dateText);
           const formattedDate = selectedDate.toISOString().split('T')[0];
 
-          if (elementId === 'from_date') {
-            this.usersForm.patchValue({ from_date: formattedDate });
-          } else if (elementId === 'to_date') {
-            this.usersForm.patchValue({ to_date: formattedDate });
+          if (elementId === 'start_date') {
+            this.usersForm.patchValue({ start_date: formattedDate });
+          } else if (elementId === 'end_date') {
+            this.usersForm.patchValue({ end_date: formattedDate });
           }
         }
       });
     }
 
     searchUsersRecords() {
-        this.apiService.getAllUsers().subscribe(
-        (data: any[]) => {
+        const user_name     = this.searchForm.get('user_name')?.value || '';
+        const active_flag    = this.searchForm.get('active_flag')?.value || '';
+
+        this.apiService.getAllUsers(user_name,active_flag).subscribe(
+          (data: any[]) => {
             this.usersRecords = data;
             this.showResults = true;
-        },
-        error => {
+          },
+          error => {
             console.error('Error fetching users records:', error);
             alert('Error fetching users records. Please try again later.');
             this.showResults = true;
-        }
+          }
         );
     }
+
 
     switchForm(action: 'default' | 'create' | 'edit' | 'view', lovId?: string) {
         if (action === 'edit' && lovId) {
@@ -160,10 +228,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
     onSubmit() {
       if (this.usersForm.valid) {
-        const usersData = this.usersForm.value;
+        const users_data = this.usersForm.value;
         if (this.formAction === 'edit') {
-            const lovId = this.route.snapshot.queryParams['edit_id'];
-            this.apiService.updateLov(lovId, usersData).subscribe(
+            const user_id = this.route.snapshot.queryParams['edit_id'];
+            this.apiService.updateUsers(user_id, users_data).subscribe(
               response => {
                 console.log('Users updated:', response);
                 alert('Users updated successfully!');
@@ -175,7 +243,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
               }
             );
         } else {
-            this.apiService.createUsers(usersData).subscribe(
+            this.apiService.createUsers(users_data).subscribe(
               response => {
                 console.log('Users created:', response);
                 alert('Users created successfully!');
@@ -199,6 +267,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
 
     updateUsersStatus(user_id: string, status: 'Y' | 'N') {
+
         this.apiService.updateUsersStatus(user_id, { status }).subscribe(
             response => {
                 this.searchUsersRecords();
@@ -217,5 +286,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
     toggleSection(sectionType: 'FIRST_SECTION' | 'SECOND_SECTION', showHideType: 'SHOW' | 'HIDE'): void {
         this.utilsService.sectionShow(sectionType, showHideType);
     }
+
+    clearSearch() {
+        this.searchForm.reset();
+        this.usersRecords = [];
+        this.showResults = false;
+        this.router.navigate(['/users','default']);
+      }
 
 }

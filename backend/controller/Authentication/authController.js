@@ -7,14 +7,14 @@ exports.login = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { user_type,user_name, password,start_date,end_date } = req.body; // Get data from the request body
+  const { user_type, user_name, password, start_date, end_date, roles } = req.body; // Get data from the request body
   try {
       const existingUsers = await Users.userAlreadyExists(user_name);
       if (existingUsers) {
           return res.status(400).json({ message: 'User already exists.' }); // Send a conflict response
       }
 
-      await Users.create({ user_type,user_name, password,start_date,end_date });
+      await Users.create({ user_type, user_name, password, start_date, end_date, roles });
       res.status(201).json({ message: 'User created successfully' }); // Send a success response
   } catch (err) {
       console.error('Error creating user:', err);
@@ -24,24 +24,32 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-      const results = await Users.getAllUsers();
-      res.status(200).json(results); // Return the list of lov as JSON
+    const user_name   = req.query.user_name || ''; // Get the user_name from query
+    const active_flag = req.query.active_flag || '';
+
+    const results = await Users.getAllUsers(user_name,active_flag);
+    res.status(200).json(results); // Return the list of users as JSON
   } catch (err) {
-      console.error('Error fetching user:', err);
-      return res.status(500).send('Internal Server Error'); // Handle errors
+    console.error('Error fetching users:', err);
+    return res.status(500).send('Internal Server Error'); // Handle errors
   }
 };
 
 exports.editUsers = async (req, res) => {
-try {
-    const { user_id } = req.params;
-    const results = await Users.editUsers(user_id);
-    res.status(200).json(results); // Return the list of lov as JSON
-} catch (err) {
-    console.error('Error fetching user:', err);
-    return res.status(500).send('Internal Server Error'); // Handle errors
-}
-}
+    try {
+        const { user_id } = req.params;
+        const userData = await Users.editUsers(user_id);
+
+        if (!userData) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(userData);
+    } catch (err) {
+        console.error('Error fetching user:', err);
+        return res.status(500).send('Internal Server Error');
+    }
+};
 exports.updateUsers = async (req, res) => {
   try {
       // Extract lov_id from the route parameters
@@ -83,7 +91,7 @@ try {
         return res.status(400).json({ message: 'No status provided' });
     }
 
-    const result = await lov.updateUsersStatus(lov_id, { status });
+    const result = await Users.updateUsersStatus(user_id, { status });
 
     if (!result) {
         return res.status(404).json({ message: 'User not found' });

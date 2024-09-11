@@ -1,20 +1,13 @@
-// const pool = require('../config/database');
+const pool = require('../config/database');
 // const knex = require('../config/knex'); // assuming knex.js is in the same directory
 
 const roles = {
-    // create: async (data) => {
-    //     const query = 'INSERT INTO roles (role_name, role_description) VALUES (?, ?)';
-    //     const [results] = await pool.query(query, [data.role_name, data.role_description]);
-    //     return results;
-    // },/
-    create: async ({ role_name, role_description }) => {
-      try {
-          await knex('roles').insert({ role_name, role_description });
-      } catch (err) {
-          console.error('Error inserting role:', err);
-          throw err;
-      }
-  },
+    create: async (data) => {
+        const query = 'INSERT INTO roles (role_name, role_description) VALUES (?, ?)';
+        const [results] = await pool.query(query, [data.role_name, data.role_description]);
+        return results;
+    },
+
     getAllRoles: async () => {
         const query = 'SELECT role_id,role_name, role_description,active_flag FROM roles';
         const [results] = await pool.query(query);
