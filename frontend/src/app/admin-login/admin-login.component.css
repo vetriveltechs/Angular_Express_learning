@@ -1,0 +1,50 @@
+em.error {
+    color: red;
+    font-style: normal;
+}
+
+.message-error.message {
+    text-align: center;
+    color: red;
+    font-size: 17px;
+    position: relative;
+    top: 16px;
+}
+
+a.view-password {
+    float: right !important;
+    padding: 10px !important;
+    font-size: 15px !important;
+    margin: -42px 0px 0px 0px;
+}
+a.view-password:hover {
+    color: #464646;
+}
+
+.forgot-password a, .forgot-password a:hover {
+    color: #000;
+}
+.login100-form-btn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.login100-form-btn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.login100-form-btn:hover span {
+  padding-right: 25px;
+}
+
+.login100-form-btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}

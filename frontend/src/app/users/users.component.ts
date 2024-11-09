@@ -20,11 +20,14 @@ export class UsersComponent implements OnInit, AfterViewInit {
     usersRecords        : any[] = [];
     showResults         : boolean = false;
     usersTypeOptions    : any[] = [];
+    employeeName        : any[] = [];
     roleOptions         : any[] = [];
     roleStatusOptions   : any[] = [];
     activeFlagOptions   : any[] = [];
     selectedRoles       : any[] = [];
     dropdownOpen        : { [key: string]: boolean } = {};
+    showEmployeeName    : boolean = false; // Control visibility of Employee Name field
+
 
     constructor(
       private router: Router,
@@ -35,6 +38,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     ) {
       this.usersForm = this.fb.group({
         user_type           : ['', Validators.required],
+        person_id           : [''],
         user_name           : ['', Validators.required],
         password            : ['', Validators.required],
         start_date          : [''],
@@ -93,9 +97,14 @@ export class UsersComponent implements OnInit, AfterViewInit {
           }
 
           this.fetchLovOptions('USERS TYPE');
+          this.fetchEmployeeOptions();
           this.fetchRoleOptions();
           this.fetchLovOptions('ROLE STATUS');
           this.fetchLovOptions('ACTIVE STATUS');
+
+          this.usersForm.get('user_type')?.valueChanges.subscribe((value) => {
+            this.showEmployeeName = (value === 'EMPLOYEE');
+          });
         });
     }
 
@@ -119,7 +128,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
         })
     }
-    
+
     removeLines(index: number): void {
         this.roles.removeAt(index);
     }
@@ -165,6 +174,17 @@ export class UsersComponent implements OnInit, AfterViewInit {
         );
     }
 
+    fetchEmployeeOptions() {
+        this.apiService.getAllEmployee().subscribe(
+            response => {
+                this.employeeName = response;
+            },
+            error => {
+                console.error('Error fetching options:', error);
+            }
+        );
+    }
+
     onRoleChange(roleId: number) {
         const selectedRole = this.roleOptions.find(role => role.role_id === roleId);
         if (selectedRole) {
@@ -172,7 +192,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
           rolesArray.push(this.fb.group({
             role_id: [selectedRole.role_id],
             role_name: [selectedRole.role_name],
-            role_status: ['' || 'Not Getting']
+            role_status: [selectedRole.role_status || 'Not Getting']
           }));
         }
         this.usersForm.get('role_id')?.setValue('');
@@ -245,6 +265,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         } else {
             this.apiService.createUsers(users_data).subscribe(
               response => {
+
                 console.log('Users created:', response);
                 alert('Users created successfully!');
                 this.switchForm('default');

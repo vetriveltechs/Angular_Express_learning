@@ -195,7 +195,4 @@ export class LovComponent implements OnInit,AfterViewInit {
             }
         );
 }
-
-
-
 }

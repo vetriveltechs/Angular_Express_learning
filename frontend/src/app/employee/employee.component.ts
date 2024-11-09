@@ -23,11 +23,15 @@ export class EmployeeComponent implements OnInit{
     formType: 'basic-info' | 'employee_details' | 'identity' | 'address' | 'bank_details' = 'basic-info';
     employeeTypeOptions : any[] = [];
     genderOptions       : any[] = [];
+    bloodGroupOptions   : any[] = [];
     departmentOptions   : any[] = [];
     payFrequencyOptions : any[] = [];
     selectedValue       : string = ''; // Variable to hold the selected value
     employeeRecords     : any[] = []; // Array to hold fetched LOV records
     showResults         : boolean = false; // Flag to control results visibility
+    designationOptions  : any[] = [];
+    userId              : number | null = null;
+    roleId              : number | null = null;
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -53,7 +57,8 @@ export class EmployeeComponent implements OnInit{
         });
 
         this.employeeDetailForm = this.fb.group({
-            department          : ['', [Validators.required]],
+            department_id       : ['', [Validators.required]],
+            designation_id      : ['', [Validators.required]],
             date_of_joining     : [''],
             date_of_relieving   : [''],
             previous_experience : [''],
@@ -122,7 +127,8 @@ export class EmployeeComponent implements OnInit{
                             blood_group         : employee.blood_group,
                         });
                         this.employeeDetailForm.patchValue({
-                            department          : employee.department,
+                            department_id       : employee.department_id,
+                            designation_id      : employee.designation_id,
                             date_of_joining     : employee.date_of_joining,
                             date_of_relieving   : employee.date_of_relieving,
                             previous_experience : employee.previous_experience,
@@ -130,8 +136,6 @@ export class EmployeeComponent implements OnInit{
                             rate_per_day        : employee.rate_per_day,
                             pay_frequency       : employee.pay_frequency
                         });
-
-                        console.log(this.identityForm.controls['uan_number']);  // Check if the control exists and its current value
 
                         try {
                             this.identityForm.patchValue({
@@ -169,6 +173,12 @@ export class EmployeeComponent implements OnInit{
 
             this.loadDropdownOptions();
         });
+        this.userId = this.apiService.getUserId();
+        this.roleId = this.apiService.getRoleId();
+
+        console.log(`User ID: ${this.userId}, Role ID: ${this.roleId}`);
+
+
     }
 
 
@@ -208,12 +218,34 @@ export class EmployeeComponent implements OnInit{
         if (this.formType === 'basic-info') {
             this.fetchLovOptions('EMPLOYEE TYPE');
             this.fetchLovOptions('GENDER');
+            this.apiService.getBloodGroupAll().subscribe(response =>
+            {
+                this.bloodGroupOptions = response
+            });
+
+
+
         } else if (this.formType === 'employee_details') {
-            this.fetchLovOptions('DEPARTMENT');
             this.fetchLovOptions('PAY FREQUENCY');
+            this.apiService.getDepartmentAll().subscribe(response =>
+            {
+                this.departmentOptions = response
+            });
+
+            this.apiService.getDesignationAll().subscribe(
+                response => {
+
+                    this.designationOptions = response;
+                },
+                error => {
+                    console.error('Error fetching options:', error);
+                }
+            );
         }
 
     }
+
+
 
     fetchLovOptions(listName: string) {
         this.apiService.getLov(listName).subscribe(
@@ -331,7 +363,7 @@ export class EmployeeComponent implements OnInit{
                 ...this.bankDetailsForm.value
             };
 
-            console.log(employeeData);
+            // console.log(employeeData);
 
             if (this.formAction === 'create') {
                 this.apiService.createEmployee(employeeData).subscribe(
@@ -374,6 +406,8 @@ export class EmployeeComponent implements OnInit{
                 this.showResults = true; // Show results even if an error occurs, but no records will be shown
             }
         );
+        // Now you can use the userId in the component
+        // console.log('User ID:', this.userId);
     }
     dropdownOpen: { [key: string]: boolean } = {};
 

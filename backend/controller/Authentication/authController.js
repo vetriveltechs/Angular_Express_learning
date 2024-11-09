@@ -7,14 +7,14 @@ exports.login = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { user_type, user_name, password, start_date, end_date, roles } = req.body; // Get data from the request body
+  const { user_type,person_id, user_name, password, start_date, end_date, roles } = req.body; // Get data from the request body
   try {
       const existingUsers = await Users.userAlreadyExists(user_name);
       if (existingUsers) {
           return res.status(400).json({ message: 'User already exists.' }); // Send a conflict response
       }
 
-      await Users.create({ user_type, user_name, password, start_date, end_date, roles });
+      await Users.create({ user_type,person_id, user_name, password, start_date, end_date, roles });
       res.status(201).json({ message: 'User created successfully' }); // Send a success response
   } catch (err) {
       console.error('Error creating user:', err);

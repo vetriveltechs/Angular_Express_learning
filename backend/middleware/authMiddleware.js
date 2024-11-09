@@ -4,6 +4,7 @@ const { Users } = require('../models/User_model');
 // Middleware to authenticate user and generate token
 const authenticateUser = async (req, res, next) => {
     try {
+
         const authHeader = req.headers['authorization'];
 
         if (!authHeader || !authHeader.startsWith('Basic ')) {
@@ -18,9 +19,8 @@ const authenticateUser = async (req, res, next) => {
         const base64Credentials = authHeader.split(' ')[1];
         const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
         const [user_name, password] = credentials.split(':');
-
-        // Check if the user exists and the password is correct
         const user = await Users.userExists(user_name, password);
+        
         if (!user) {
             return res.status(401).json({
                 httpCode: 401,

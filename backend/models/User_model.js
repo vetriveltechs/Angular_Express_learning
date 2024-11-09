@@ -3,19 +3,20 @@ const pool = require('../config/database');
 const bcrypt = require('bcryptjs');
 
 const Users = {
-            // Check if user exists and passwords match
             userExists: async (user_name, password) => {
                 try {
-                    const query = 'SELECT user_id, password FROM users WHERE user_name = ?';
+                    const query = 'SELECT user_id, password FROM per_user WHERE user_name = ?';
                     const [results] = await pool.query(query, [user_name]);
 
                     if (results.length > 0) {
-                        const user = results[0];
-                        const isPasswordValid = bcrypt.compareSync(password, user.password);
-                        if (isPasswordValid) {
-                            return user;
-                        }
-                    }
+                      const user = results[0];
+
+                      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+                      if (isPasswordValid) {
+                          return user; // Password is valid
+                      }
+                  }
                     return null; // User not found or password invalid
                 } catch (err) {
                     console.error('Error executing query:', err);
@@ -23,15 +24,12 @@ const Users = {
                 }
             },
 
-          // Add a new user
           create: async (data) => {
             try {
-
-                // Insert user data into the per_user table
                 const password = data.password;
-                const queryUser = 'INSERT INTO per_user (user_type, user_name, password, start_date, end_date) VALUES (?, ?, ?, ?, ?)';
+                const queryUser = 'INSERT INTO per_user (user_type,person_id, user_name, password, start_date, end_date) VALUES (?,?, ?, ?, ?, ?)';
                 const hashedPassword = bcrypt.hashSync(password, 10);
-                const [result] = await pool.query(queryUser, [data.user_type, data.user_name, hashedPassword, data.start_date, data.end_date]);
+                const [result] = await pool.query(queryUser, [data.user_type, data.person_id,data.user_name, hashedPassword, data.start_date, data.end_date]);
 
                 // Get the inserted user's ID
                 const userId = result.insertId;
@@ -46,7 +44,6 @@ const Users = {
                 throw err;
             }
         },
-
 
         getAllUsers: async (userName, active_flag) => {
             let query = `

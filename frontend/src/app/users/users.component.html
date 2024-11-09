@@ -47,6 +47,24 @@
                                 </div>
                               </div>
                             </div>
+                            <div class="row" *ngIf="showEmployeeName">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                    <label class="col-form-label person_id"><span class="text-danger">*</span> Employee Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-select placeholder="- Select -" formControlName="person_id">
+                                            <mat-option>- Select User Name -</mat-option>
+                                            <mat-option *ngFor="let employee of employeeName" [value]="employee.employee_id">
+                                            {{ employee.first_name }}
+                                            </mat-option>
+                                        </mat-select>
+                                    <!-- <input type="text" formControlName="user_name" id="user_name" autocomplete="off" class="form-control" placeholder="User Name"> -->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                               <div class="col-md-3">
                                 <div class="form-group text-right">
@@ -116,7 +134,6 @@
                             </div>
                           </div>
                     </div>
-
                 </section>
                 <div class="row mb-3">
                     <div class="col-md-6 header-filters">

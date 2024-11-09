@@ -1,5 +1,5 @@
 
-/* 
+/*
 @font-face {
   font-family: Poppins-Regular;
   src: url('../fonts/poppins/Poppins-Regular.ttf');
@@ -2650,7 +2650,7 @@ span.gp-number {
 /* For sticky page and Scroll 15/7/2023 */
 
 .new-sidebar-scroll {
-  height: 90vh;
+  height: 100vh;
   position: fixed;
   overflow-y: auto;
   width: 200px;

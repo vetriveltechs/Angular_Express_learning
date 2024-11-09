@@ -1,8 +1,8 @@
 import { HttpHeaders } from '@angular/common/http';
 
 // Define your credentials
-const username = 'vetrivel';
-const password = 'Attur';
+const username = 'manoj';
+const password = 'manoj@123';
 
 // Encode credentials to base64
 const credentials = btoa(`${username}:${password}`);

@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import awsConfig from '../config/aws-exports';
 import { EmployeeComponent } from './employee/employee.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ManageAppraisalComponent } from './manage-appraisal/manage-appraisal.component';
+// import { ManageAppraisalComponent } from './manage-appraisal/manage-appraisal.component';
 import { SetupsComponent } from './setups/setups.component';
 import { LovComponent } from './lov/lov.component';
 import { ListTypeValuesComponent } from './list-type-values/list-type-values.component';
@@ -20,19 +20,30 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AppraisalComponent } from './appraisal/appraisal.component';
+import { DepartmentComponent } from './department/department.component';
+// import { DestinationComponent } from './destination/destination.component';
+import { BloodGroupComponent } from './blood-group/blood-group.component';
+import { DesignationComponent } from './designation/designation.component';
+import { DocumentNumberingComponent } from './document-numbering/document-numbering.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+
     EmployeeComponent,
-    ManageAppraisalComponent,
+    // ManageAppraisalComponent,
     SetupsComponent,
     LovComponent,
     ListTypeValuesComponent,
     UsersComponent,
     RolesComponent,
     AdminLoginComponent,
+    AppraisalComponent,
+    DepartmentComponent,
+    BloodGroupComponent,
+    DesignationComponent,
+    DocumentNumberingComponent
 
 
   ],
@@ -44,7 +55,8 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    HomeComponent,
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

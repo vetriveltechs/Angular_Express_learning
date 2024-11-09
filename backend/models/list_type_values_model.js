@@ -1,5 +1,6 @@
 const { Console } = require('console');
 const pool = require('../config/database');
+const mysql = require('mysql2');
 
 const list_type_values = {
     create: async (data) => {
@@ -71,10 +72,16 @@ const list_type_values = {
         return result.affectedRows > 0; // Return true if the update was successful
     },
 
-    listTypeValuesAlreadyExists: async (list_code) => {
-      const query = 'SELECT list_type_values_id FROM list_type_values WHERE list_code = ?';
-      const [results] = await pool.query(query, [list_code]);
-      return results[0]; // Return the first result or undefined if not found
+    listTypeValuesAlreadyExists: async (lov_id,list_code) => {
+        const escapedLovId = mysql.escape(lov_id);
+        const escapedListCode = mysql.escape(list_code);
+
+        const query = `select list_type_values_id from list_type_values
+                        where 1=1
+                        and lov_id = ${escapedLovId} and list_code = ${escapedListCode}`;
+
+        const [results] = await pool.query(query, [list_code]);
+        return results[0]; // Return the first result or undefined if not found
     }
 };
 

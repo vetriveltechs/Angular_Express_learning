@@ -26,6 +26,3 @@ const common_model = {
 };
 
 module.exports = { common_model };
-
-
-module.exports = { common_model };

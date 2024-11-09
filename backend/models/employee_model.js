@@ -17,7 +17,8 @@ const Employee = {
                         date_of_birth,
                         gender,
                         blood_group,
-                        department,
+                        department_id,
+                        designation_id,
                         date_of_joining,
                         date_of_relieving,
                         previous_experience,
@@ -45,13 +46,13 @@ const Employee = {
                         micr_code,
                         address)
                     VALUES
-                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `;
           const [results] = await pool.query(query, [
               data.employee_type, data.first_name, data.middle_name, data.last_name,
               data.mobile_number, data.alt_mobile_number, data.email, data.alt_email,
               data.father_name, data.mother_name, data.date_of_birth, data.gender,
-              data.blood_group, data.department, data.date_of_joining, data.date_of_relieving,
+              data.blood_group, data.department_id,data.designation_id, data.date_of_joining, data.date_of_relieving,
               data.previous_experience, data.rate_per_hour, data.rate_per_day, data.pay_frequency,
               data.aadhar_number, data.pan_number, data.driving_licence, data.passport_number,
               data.passport_issue_date, data.passport_expiry_date, data.pf_number, data.esi_number,
@@ -69,7 +70,7 @@ const Employee = {
     },
     getAllEmployees: async () => {
         try {
-            const query = `SELECT employee_id, employee_type, first_name, middle_name, last_name, mobile_number, alt_mobile_number, email, alt_email, father_name, mother_name, date_of_birth, gender, blood_group, department, date_of_joining, date_of_relieving, previous_experience, rate_per_hour, rate_per_day, pay_frequency, aadhar_number, pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date, pf_number, esi_number, uan_number, address_1, address_2, address_3, postal_code, account_number, account_holder_number, bank_name, branch_name, ifsc_code, micr_code, address,active_flag
+            const query = `SELECT employee_id, employee_type, first_name, middle_name, last_name, mobile_number, alt_mobile_number, email, alt_email, father_name, mother_name, date_of_birth, gender, blood_group, department_id,designation_id, date_of_joining, date_of_relieving, previous_experience, rate_per_hour, rate_per_day, pay_frequency, aadhar_number, pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date, pf_number, esi_number, uan_number, address_1, address_2, address_3, postal_code, account_number, account_holder_number, bank_name, branch_name, ifsc_code, micr_code, address,active_flag
                 FROM per_people_all`;
             const [results] = await pool.query(query);
             return results;
@@ -80,7 +81,24 @@ const Employee = {
     },
 
     getEmployees: async (employee_id) => {
-      const query = `SELECT employee_id, employee_type, first_name, middle_name, last_name, mobile_number, alt_mobile_number, email, alt_email, father_name, mother_name, date_of_birth, gender, blood_group, department, date_of_joining, date_of_relieving, previous_experience, rate_per_hour, rate_per_day, pay_frequency, aadhar_number, pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date, pf_number, esi_number, uan_number, address_1, address_2, address_3, postal_code, account_number, account_holder_number, bank_name, branch_name, ifsc_code, micr_code, address,active_flag FROM per_people_all WHERE employee_id = ?`;
+      const query = `SELECT employee_id, employee_type, first_name, middle_name, last_name, mobile_number, alt_mobile_number, email, alt_email, father_name, mother_name, date_of_birth, gender, blood_group, department_id,designation_id, date_of_joining, date_of_relieving, previous_experience, rate_per_hour, rate_per_day, pay_frequency, aadhar_number, pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date, pf_number, esi_number, uan_number, address_1, address_2, address_3, postal_code, account_number, account_holder_number, bank_name, branch_name, ifsc_code, micr_code, address,active_flag FROM per_people_all WHERE employee_id = ?`;
+      const [results] = await pool.query(query, [employee_id]);
+      return results[0]; // Return the first result or undefined if not found
+    },
+
+    getEmployeeDetails: async (employee_id) => {
+      const query = `SELECT employee_id,
+      per_people_all.employee_type,
+      per_people_all.first_name,
+      per_people_all.middle_name,
+      per_people_all.last_name,
+      per_people_all.active_flag,
+      departments.department_name,
+      designations.designation_name from per_people_all
+      left join departments on departments.department_id=per_people_all.department_id
+      left join designations on designations.designation_id=per_people_all.designation_id
+      WHERE 1=1
+      and employee_id = ?`;
       const [results] = await pool.query(query, [employee_id]);
       return results[0]; // Return the first result or undefined if not found
     },

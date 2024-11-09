@@ -68,8 +68,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <mat-select formControlName="employee_type">
-                                            <mat-option>- Select Employee Type -</mat-option>
+                                        <mat-select placeholder="- Select -" formControlName="employee_type">
+                                            <mat-option>- Select -</mat-option>
                                             <mat-option *ngFor="let employeeType of employeeTypeOptions" [value]="employeeType.list_code">
                                                 {{ employeeType.list_value }}
                                             </mat-option>
@@ -105,12 +105,12 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group text-right">
-                                        <label class="col-form-label list_name"><span class="text-danger">*</span> List Name</label>
+                                        <label class="col-form-label last_name"><span class="text-danger">*</span> Last Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" formControlName="list_name" id="list_name" autocomplete="off" class="form-control" placeholder="Last Name">
+                                        <input type="text" formControlName="last_name" id="last_name" autocomplete="off" class="form-control" placeholder="Last Name">
                                     </div>
                                 </div>
                             </div>
@@ -209,8 +209,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <mat-select formControlName="gender">
-                                            <mat-option>- Select Gender -</mat-option>
+                                        <mat-select placeholder="- Select -" formControlName="gender">
+                                            <mat-option>- Select -</mat-option>
                                             <mat-option *ngFor="let gender of genderOptions" [value]="gender.list_code">
                                                 {{ gender.list_value }}
                                             </mat-option>
@@ -227,10 +227,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <mat-select formControlName="blood_group">
-                                            <mat-option>- Select Employee Type -</mat-option>
-                                            <mat-option *ngFor="let employeeType of employeeTypeOptions" [value]="employeeType.list_code">
-                                                {{ employeeType.list_value }}
+                                        <mat-select placeholder="- Select -" formControlName="blood_group">
+                                            <mat-option>- Select -</mat-option>
+                                            <mat-option *ngFor="let bloodGroup of bloodGroupOptions" [value]="bloodGroup.blood_group_id">
+                                                {{ bloodGroup.blood_group_name }}
                                             </mat-option>
                                         </mat-select>
                                     </div>
@@ -267,10 +267,27 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <mat-select formControlName="department">
-                                            <mat-option>- Select Department -</mat-option>
-                                            <mat-option *ngFor="let department of departmentOptions" [value]="department.list_code">
-                                                {{ department.list_value }}
+                                        <mat-select placeholder="- Select -" formControlName="department_id">
+                                            <mat-option>- Select -</mat-option>
+                                            <mat-option *ngFor="let department of departmentOptions" [value]="department.department_id">
+                                                {{ department.department_name }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group text-right">
+                                        <label class="col-form-label designation_id"><span class="text-danger">*</span> Designation</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-select placeholder="- Select -" formControlName="designation_id">
+                                            <mat-option>- Select -</mat-option>
+                                            <mat-option *ngFor="let designation of designationOptions" [value]="designation.designation_id">
+                                                {{ designation.designation_name }}
                                             </mat-option>
                                         </mat-select>
                                     </div>
@@ -690,7 +707,7 @@
                   <div class="row">
                     <label class="col-form-label col-md-4 text-right">User Name</label>
                     <div class="input-wrapper form-group col-md-7">
-                      <input type="text" formControlName="user_name" id="user_name" autocomplete="off" class="form-control" placeholder="User Name">
+                      <input type="text" id="user_name" autocomplete="off" class="form-control" placeholder="User Name">
                     </div>
                   </div>
                 </div>

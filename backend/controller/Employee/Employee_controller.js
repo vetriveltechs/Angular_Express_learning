@@ -31,7 +31,7 @@ const { Employee } = require('../../models/employee_model');
 exports.createEmployee = async (req, res) => {
     const {
       employee_type, first_name, middle_name,last_name,mobile_number,alt_mobile_number,email,alt_email,father_name,mother_name, date_of_birth,gender,blood_group,
-      department,date_of_joining,date_of_relieving,previous_experience,rate_per_hour,rate_per_day,pay_frequency,
+      department_id,designation_id,date_of_joining,date_of_relieving,previous_experience,rate_per_hour,rate_per_day,pay_frequency,
       aadhar_number,pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date,pf_number, esi_number, uan_number,
       address_1,address_2,address_3,postal_code,
       account_number,account_holder_number,bank_name,branch_name,ifsc_code,micr_code,address
@@ -47,7 +47,7 @@ exports.createEmployee = async (req, res) => {
         // Create a new employee
         await Employee.create({
             employee_type, first_name, middle_name,last_name,mobile_number,alt_mobile_number,email,alt_email,father_name,mother_name, date_of_birth,gender,blood_group,
-            department,date_of_joining,date_of_relieving,previous_experience,rate_per_hour,rate_per_day,pay_frequency,
+            department_id,designation_id,date_of_joining,date_of_relieving,previous_experience,rate_per_hour,rate_per_day,pay_frequency,
             aadhar_number,pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date,pf_number, esi_number, uan_number,
             address_1,address_2,address_3,postal_code,
             account_number,account_holder_number,bank_name,branch_name,ifsc_code,micr_code,address
@@ -73,9 +73,21 @@ exports.getAllEmployees = async (req, res) => {
 exports.getEmployees = async (req, res) => {
   try {
       const { employee_id } = req.params;
-     
+
 
       const results = await Employee.getEmployees(employee_id);
+      res.status(200).json(results);
+  } catch (err) {
+      console.error('Error fetching employees:', err);
+      res.status(500).json({ message: 'Internal Server Error', error: err.message });
+  }
+};
+exports.getEmployeeDetails = async (req, res) => {
+  try {
+      const { employee_id } = req.params;
+
+
+      const results = await Employee.getEmployeeDetails(employee_id);
       res.status(200).json(results);
   } catch (err) {
       console.error('Error fetching employees:', err);

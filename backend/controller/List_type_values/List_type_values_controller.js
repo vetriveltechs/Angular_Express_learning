@@ -4,7 +4,7 @@ exports.createListTypeValues = async (req, res) => {
     const { lov_id, list_code, list_value, order_sequence, short_description, start_date, end_date } = req.body;
 
     try {
-        const existingListTypeValues = await list_type_values.listTypeValuesAlreadyExists(list_code);
+        const existingListTypeValues = await list_type_values.listTypeValuesAlreadyExists(lov_id,list_code);
         if (existingListTypeValues) {
             return res.status(400).json({ message: 'List type value already exists.' });
         }
