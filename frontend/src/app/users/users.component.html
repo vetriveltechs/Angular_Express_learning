@@ -38,8 +38,8 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <mat-select formControlName="user_type">
-                                        <mat-option>- Select User Type -</mat-option>
+                                    <mat-select placeholder="- Select -" formControlName="user_type">
+                                        <mat-option>- Select -</mat-option>
                                         <mat-option *ngFor="let users of usersTypeOptions" [value]="users.list_code">
                                             {{ users.list_value }}
                                         </mat-option>
@@ -97,8 +97,8 @@
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group">
-                                        <mat-select formControlName="role_id" (selectionChange)="onRoleChange($event.value)" #roleSelect>
-                                            <mat-option>- Select Role -</mat-option>
+                                        <mat-select placeholder="- Select -" formControlName="role_id" (selectionChange)="onRoleChange($event.value)" #roleSelect>
+                                            <mat-option>- Select -</mat-option>
                                             <mat-option *ngFor="let role of roleOptions" [value]="role.role_id">
                                             {{ role.role_name }}
                                             </mat-option>
@@ -224,8 +224,7 @@
                     <div class="row">
                         <label class="col-form-label col-md-4 text-right">Status</label>
                         <div class="input-wrapper form-group col-md-7">
-                            <mat-select formControlName="active_flag">
-                                <mat-option>- Select Status -</mat-option>
+                            <mat-select placeholder="- Select -" formControlName="active_flag">
                                 <mat-option *ngFor="let activeFlag of activeFlagOptions" [value]="activeFlag.list_code">
                                     {{ activeFlag.list_value }}
                                 </mat-option>

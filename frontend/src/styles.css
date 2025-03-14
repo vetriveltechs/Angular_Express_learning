@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .tbl_height{
     /* overflow: hidden; */
-    min-height: 200px;
+    min-height: 130px;
     /* z-index: 9000; */
 }
 
@@ -27,7 +27,7 @@ tr, td {
 .dropdown-content {
     display: block;
     position: absolute; /* This should align the dropdown correctly */
-    bottom: calc(100% + 10px); /* Move the dropdown above the button with some spacing */
+    top: calc(100% + -57px); /* Move the dropdown above the button with some spacing */
     left: 0;
     background-color: #f9f9f9;
     color: black;
@@ -39,11 +39,20 @@ tr, td {
 }
 
 /* Dropdown item styling */
-.dropdown-content a {
+/* .dropdown-content a {
     color: black;
     padding: 10px 15px;
     display: block;
     text-decoration: none;
+} */
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 8px;
+    display: block;
+    text-decoration: none;
+    position: relative;
+    bottom: 0px;
 }
 
 .dropdown-content a:hover {

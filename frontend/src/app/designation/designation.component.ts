@@ -1,4 +1,4 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit,HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,14 +12,16 @@ import 'jquery-ui/ui/widgets/datepicker';
 })
 export class DesignationComponent implements OnInit {
 
-    page_title                  = 'Manage Designation';
-    designationForm             : FormGroup;
-    searchForm                  : FormGroup;
-    formAction                  : 'default' | 'create' | 'edit' | 'view' = 'default'; // Added
-    designationRecords: any[]   = []; // Array to hold fetched designation records
-    showResults                 : boolean = false; // Flag to control results visibility
-    activeFlagOptions           : any[] = [];
-    designationName             : any[] = [];
+    page_title                      = 'Manage Designation';
+    designationForm                 : FormGroup;
+    searchForm                      : FormGroup;
+    formAction                      : 'default' | 'create' | 'edit' | 'view' = 'default'; // Added
+    designationRecords: any[]       = []; // Array to hold fetched designation records
+    showResults                     : boolean = false; // Flag to control results visibility
+    activeFlagOptions               : any[] = [];
+    designationName                 : any[] = [];
+    dropdownOpen: { [key: string]   : boolean } = {};
+
     constructor(
       private router: Router,
       private route: ActivatedRoute,
@@ -167,20 +169,16 @@ export class DesignationComponent implements OnInit {
       }
     }
 
-    dropdownOpen: { [key: string]: boolean } = {};
+    toggleDropdown(id: string): void {
+        this.dropdownOpen[id] = !this.dropdownOpen[id]; // Toggle dropdown state
+      }
 
-    toggleDropdown(id: string) {
-        // Check if the clicked dropdown is already open
-        const isOpen = this.dropdownOpen[id];
-
-        // Close all dropdowns
-        Object.keys(this.dropdownOpen).forEach(key => {
-          this.dropdownOpen[key] = false;
-        });
-
-        // If it was not open, open it
-        if (!isOpen) {
-          this.dropdownOpen[id] = true;
+      // Close dropdowns when clicking outside
+      @HostListener('document:click', ['$event'])
+      closeDropdownOnClickOutside(event: MouseEvent): void {
+        const targetElement = event.target as HTMLElement;
+        if (!targetElement.closest('.dropdown')) {
+          this.dropdownOpen = {}; // Reset the dropdown state for all records
         }
       }
 

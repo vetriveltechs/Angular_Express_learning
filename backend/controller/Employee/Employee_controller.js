@@ -95,6 +95,50 @@ exports.getEmployeeDetails = async (req, res) => {
   }
 };
 
+exports.updateEmployee = async (req, res) => {
+  try {
+      // Extract lov_id from the route parameters
+      const { employee_id } = req.params;
+
+      // Get updated data from request body
+      const { employee_type, first_name, middle_name,last_name,mobile_number,alt_mobile_number,email,alt_email,father_name,mother_name, date_of_birth,gender,blood_group,
+        department_id,designation_id,date_of_joining,date_of_relieving,previous_experience,rate_per_hour,rate_per_day,pay_frequency,
+        aadhar_number,pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date,pf_number, esi_number, uan_number,
+        address_1,address_2,address_3,postal_code,
+        account_number,account_holder_number,bank_name,branch_name,ifsc_code,micr_code,address
+          } = req.body;
+
+          console.log(req.body);
+
+
+      // Check if any fields are provided for update
+      if (!employee_id) {
+          return res.status(400).json({ message: 'Employee ID is required' });
+      }
+
+      // Call the updateLov method in the model
+      const result = await Employee.updateEmployee(employee_id, {
+        employee_type, first_name, middle_name,last_name,mobile_number,alt_mobile_number,email,alt_email,father_name,mother_name, date_of_birth,gender,blood_group,
+        department_id,designation_id,date_of_joining,date_of_relieving,previous_experience,rate_per_hour,rate_per_day,pay_frequency,
+        aadhar_number,pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date,pf_number, esi_number, uan_number,
+        address_1,address_2,address_3,postal_code,
+        account_number,account_holder_number,bank_name,branch_name,ifsc_code,micr_code,address
+
+      });
+
+      // Check if the record was updated
+      if (!result) {
+          return res.status(404).json({ message: 'Employee not found' }); // Return a 404 if no record is found
+      }
+
+      // Return a success message
+      res.status(200).json({ message: 'Employee updated successfully' });
+  } catch (err) {
+      console.error('Error updating Employee:', err);
+      return res.status(500).json({ message: 'Internal Server Error' }); // Handle errors appropriately
+  }
+};
+
 exports.updateEmployeeStatus = async (req, res) => {
   try {
       const { employee_id } = req.params;

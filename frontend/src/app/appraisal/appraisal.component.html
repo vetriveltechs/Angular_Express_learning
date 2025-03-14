@@ -38,7 +38,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" formControlName="employee_name" id="employee_name" autocomplete="off" class="form-control" placeholder="Employee Name">
+                                    <input type="text" formControlName="employee_name" id="employee_name" autocomplete="off" class="form-control" placeholder="Employee Name" [readonly]="true">
                                 </div>
                               </div>
                             </div>
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <input type="text" formControlName="employee_created_id" id="employee_created_id" autocomplete="off" class="form-control" placeholder="Employee ID">
+                                    <input type="text" formControlName="employee_created_id" id="employee_created_id" autocomplete="off" class="form-control" placeholder="Employee ID" [readonly]="true">
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <input type="text" formControlName="designation_id" id="designation_id" autocomplete="off" class="form-control" placeholder="Postion Held">
+                                  <input type="text" formControlName="designation_id" id="designation_id" autocomplete="off" class="form-control" placeholder="Postion Held" [readonly]="true">
                                 </div>
                               </div>
                             </div>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-group">
-                                    <input type="text" formControlName="last_review_date" id="last_review_date" autocomplete="off" class="form-control" placeholder="Last Review Date">
+                                    <input type="text" formControlName="last_review_date" id="last_review_date" autocomplete="off" class="form-control" placeholder="Last Review Date" [readonly]="true">
                                   </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <input formControlName="department_id" id="department_id" class="form-control" placeholder="Department Name">
+                                    <input formControlName="department_id" id="department_id" class="form-control" placeholder="Department Name" [readOnly]="true">
                                 </div>
                               </div>
                             </div>
@@ -101,7 +101,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <input type="text" formControlName="reviewer_name" id="reviewer_name" autocomplete="off" class="form-control" placeholder="Reviewer Name">
+                                  <input type="text" formControlName="reviewer_name" id="reviewer_name" autocomplete="off" class="form-control" placeholder="Reviewer Name" [readonly]="true">
                                 </div>
                               </div>
                             </div>
@@ -113,7 +113,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <input type="text" formControlName="reviewer_title" id="reviewer_title" autocomplete="off" class="form-control" placeholder="Reviewer Title">
+                                  <input type="text" formControlName="reviewer_title" id="reviewer_title" autocomplete="off" class="form-control" placeholder="Reviewer Title" [readonly]="true">
                                 </div>
                               </div>
                             </div>
@@ -125,7 +125,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <input type="text" formControlName="created_date" id="created_date" autocomplete="off" class="form-control default_date" placeholder="Created Date">
+                                  <input type="text" formControlName="created_date" id="created_date" autocomplete="off" class="form-control default_date" placeholder="Created Date" [readonly]="true">
                                 </div>
                               </div>
                             </div>
@@ -146,6 +146,172 @@
                     <div class="col-md-6 text-right float-right">
                         <!-- <span style="color:blue;">Currency :</span> -->
                     </div>
+                    <section class="second_section">
+                        <div class="table-responsive">
+                            <table class="table table-responsive table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5" class="text-center">CHARACTERISTICS</th>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th style="width: 400px;">KRA</th>
+                                        <th style="width: 400px;">Description</th>
+                                        <th style="width: 400px;">Detail</th>
+                                        <th style="width: 400px;">Weightage(%)</th>
+                                        <th style="width: 400px;">
+                                            Employee Rating
+                                            <table class="table table-responsive table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:50%">
+                                                            Rating(Out Of 5)
+                                                        </th>
+                                                        <th style="width:50%">
+                                                            Rating
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">Project Delivered on Time</td>
+                                        <td class="text-center">
+                                            <textarea class="form-control" placeholder="Project Delivered on Time" id="project_delivered_on_time" rows="3"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                            <textarea class="form-control" placeholder="Detail 1" id="detail_1" rows="3"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" class="form-control" id="Weightage_1" value="65" [readonly]="true">
+                                        </td>
+                                        <td class="text-center">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 50%;">
+                                                            <mat-select placeholder="- Rating -">
+                                                                <!-- Options you want to display -->
+                                                                <mat-option value="5">5 - Excellent</mat-option>
+                                                                <mat-option value="4">4 - Very Good</mat-option>
+                                                                <mat-option value="3">3 - Good</mat-option>
+                                                                <mat-option value="2">2 - Weak</mat-option>
+                                                                <mat-option value="1">1 - Unacceptable</mat-option>
+                                                            </mat-select>
+                                                        </td>
+                                                        <td style="width: 50%;">
+                                                            <input type="text" class="form-control" [readOnly]="true">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">Productivity</td>
+                                        <td>
+                                            <textarea class="form-control" id="productivity" placeholder="Productivity" rows="3"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea class="form-control" id="detail_2" placeholder="Detail 1" rows="3"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" class="form-control" id="Weightage_2" value="10" [readonly]="true">
+                                        </td>
+                                        <td class="text-center">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 50%;">
+                                                            <mat-select placeholder="- Rating -">
+                                                                <!-- Options you want to display -->
+                                                                <mat-option value="5">5 - Excellent</mat-option>
+                                                                <mat-option value="4">4 - Very Good</mat-option>
+                                                                <mat-option value="3">3 - Good</mat-option>
+                                                                <mat-option value="2">2 - Weak</mat-option>
+                                                                <mat-option value="1">1 - Unacceptable</mat-option>
+                                                            </mat-select>
+                                                        </td>
+                                                        <td style="width: 50%;">
+                                                            <input type="text" class="form-control" [readOnly]="true">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">Efficiency</td>
+                                        <td>
+                                            <textarea class="form-control" id="Efficiency" placeholder="Efficiency" rows="3"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea class="form-control" id="detail_3" placeholder="Detail 1" rows="3"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" class="form-control" id="Weightage_3" value="10" [readonly]="true">
+                                        </td>
+                                        <td class="text-center">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 50%;">
+                                                            <mat-select placeholder="- Rating -">
+                                                                <!-- Options you want to display -->
+                                                                <mat-option value="5">5 - Excellent</mat-option>
+                                                                <mat-option value="4">4 - Very Good</mat-option>
+                                                                <mat-option value="3">3 - Good</mat-option>
+                                                                <mat-option value="2">2 - Weak</mat-option>
+                                                                <mat-option value="1">1 - Unacceptable</mat-option>
+                                                            </mat-select>
+                                                        </td>
+                                                        <td style="width: 50%;">
+                                                            <input type="text" class="form-control" [readOnly]="true">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">Learning/Cross Functional</td>
+                                        <td>
+                                            <textarea class="form-control" id="learning_cross_functional" placeholder="Learning/Cross Functional" rows="3"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea class="form-control" id="detail_4" placeholder="Detail 4" rows="3"></textarea>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="text" class="form-control" id="Weightage_4" value="15" [readonly]="true">
+                                        </td>
+                                        <td class="text-center">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 50%;">
+                                                            <mat-select placeholder="- Rating -">
+                                                                <!-- Options you want to display -->
+                                                                <mat-option value="5">5 - Excellent</mat-option>
+                                                                <mat-option value="4">4 - Very Good</mat-option>
+                                                                <mat-option value="3">3 - Good</mat-option>
+                                                                <mat-option value="2">2 - Weak</mat-option>
+                                                                <mat-option value="1">1 - Unacceptable</mat-option>
+                                                            </mat-select>
+                                                        </td>
+                                                        <td style="width: 50%;">
+                                                            <input type="text" class="form-control" [readOnly]="true">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
                 </div>
 
               </fieldset>

@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group text-right">
-                                        <label class="col-form-label user_name"><span class="text-danger">*</span> First Name</label>
+                                        <label class="col-form-label first_name"><span class="text-danger">*</span> First Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -200,7 +200,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group text-right">
@@ -218,7 +217,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group text-right">
@@ -227,14 +225,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <mat-select placeholder="- Select -" formControlName="blood_group">
-                                            <mat-option>- Select -</mat-option>
-                                            <mat-option *ngFor="let bloodGroup of bloodGroupOptions" [value]="bloodGroup.blood_group_id">
-                                                {{ bloodGroup.blood_group_name }}
-                                            </mat-option>
-                                        </mat-select>
+                                      <mat-select placeholder="- Select -" formControlName="blood_group">
+                                        <mat-option value="">- Select -</mat-option>
+                                        <mat-option *ngFor="let blood_group of bloodGroupOptions" [value]="blood_group.blood_group_id">
+                                          {{ blood_group.blood_group_name }}  <!-- Display the name here -->
+                                        </mat-option>
+                                      </mat-select>
                                     </div>
-                                </div>
+                                  </div>
+
                             </div>
                         </div>
                     </div>
@@ -267,6 +266,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <!-- --(selectionChange)="onDepartmentChange($event)" -->
                                         <mat-select placeholder="- Select -" formControlName="department_id">
                                             <mat-option>- Select -</mat-option>
                                             <mat-option *ngFor="let department of departmentOptions" [value]="department.department_id">
@@ -764,7 +764,7 @@
 
                         </td>
                         <td>{{ record.first_name }}</td>
-                        <td>{{ record.date_of_birth }}</td>
+                        <td>{{ record.date_of_birth | date: 'yyyy-MM-dd' }}</td>
                         <td>{{ record.aadhar_number }}</td>
 
                         <td class="text-center">

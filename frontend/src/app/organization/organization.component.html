@@ -1,0 +1,267 @@
+<div class="content">
+    <div class="card">
+        <div class="card-body mt-2">
+            <!-- Create Form -->
+            <form [formGroup]="organizationForm" *ngIf="formAction === 'create' || formAction === 'edit' || formAction === 'view'"  (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data">
+                <div class="header-lines">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                    <h3><b>{{ formAction | capitalize }} Organization</b></h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                    <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm" [disabled]="!organizationForm.valid || formSubmitted">Save</button>
+                    <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm" [disabled]="!organizationForm.valid || formSubmitted">Submit</button>
+                    <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+                    </div>
+                </div>
+                <fieldset>
+                    <section class="header-section">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label organization_name"><span class="text-danger">*</span> Organization Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" formControlName="organization_name" id="organization_name" autocomplete="off" class="form-control" placeholder="Organization Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                            <label class="col-form-label organization_description">Organization Description</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <textarea formControlName="organization_description" id="organization_description" autocomplete="off" class="form-control" placeholder="Organization Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                            <label class="col-form-label location_id"><span class="text-danger">*</span> Location</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <mat-select placeholder="- Select -" formControlName="location_id">
+                                                <mat-option>- Select -</mat-option>
+                                                <mat-option *ngFor="let location of locationOptions" [value]="location.location_id">
+                                                    {{ location.location_name }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label start_date">Start Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                        <input type="text" formControlName="start_date" id="start_date" autocomplete="off" class="form-control default_date" placeholder="Start Date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label end_date">End Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                        <input type="text" formControlName="end_date" id="end_date" autocomplete="off" class="form-control default_date" placeholder="End Date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label contact_person"><span class="text-danger">*</span> Contact Person</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" formControlName="contact_person" id="contact_person" autocomplete="off" class="form-control" placeholder="Contact Person">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label mobile_number"><span class="text-danger">*</span> Contact Phone Number</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" formControlName="mobile_number" id="mobile_number" autocomplete="off" class="form-control" placeholder="Mobile Number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label email"><span class="text-danger">*</span> Contact Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" formControlName="email" id="email" autocomplete="off" class="form-control" placeholder="Contact Email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group text-right">
+                                        <label class="col-form-label organization_image"><span class="text-danger">*</span> Image</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="file" (change)="onFileChange($event)" autocomplete="off" class="form-control" placeholder="Contact Email">
+                                            <div *ngIf="previewImage">
+                                                <img [src]="previewImage" alt="Preview" width="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+                </fieldset>
+                <div class="col-md-12 mt-3 pr-0 text-right">
+                    <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm" [disabled]="!organizationForm.valid || formSubmitted">Save</button>
+                    <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm" [disabled]="!organizationForm.valid || formSubmitted">Submit</button>
+                    <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+                </div>
+                </div>
+            </form>
+
+            <!-- Creation Block -->
+
+            <!-- Conditional Header Block -->
+            <div *ngIf="formAction === 'default'" class="row mb-2">
+                <div class="col-md-6">
+                    <h3><b>{{ page_title }}</b></h3>
+                </div>
+            <div class="col-md-6 text-right">
+                <a href="#" data-toggle="modal" data-target="#importPatientCSV" title="Import" class="btn btn-outline-warning btn-sm">
+                    <i class="icon-import"></i> Import
+                </a>
+                <button (click)="switchForm('create')" class="btn btn-info btn-sm mx-1">
+                    Create Organization
+                </button>
+            </div>
+        </div>
+
+        <!-- Default Form -->
+        <form [formGroup]="searchForm" *ngIf="formAction === 'default'" (ngSubmit)="searchOrganizationRecords()">
+            <section class="trans-section-back-1">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <label class="col-form-label col-md-4 text-right">Organization Name</label>
+                        <div class="input-wrapper form-group col-md-7">
+                            <mat-select placeholder="- Select -" formControlName="organization_id">
+                                <mat-option>- Select -</mat-option>
+                                <mat-option *ngFor="let organization of organizationOptions" [value]="organization.organization_id">
+                                {{ organization.organization_name }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="row">
+                        <label class="col-form-label col-md-4 text-right">Status</label>
+                        <div class="input-wrapper form-group col-md-7">
+                            <mat-select placeholder="- Select -" formControlName="active_flag">
+                                <mat-option *ngFor="let activeFlag of activeFlagOptions" [value]="activeFlag.list_code">
+                                    {{ activeFlag.list_value }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-info">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+                    <a (click)="clearSearch()" title="Clear" class="btn btn-default" style="margin-left:5px;">Clear</a>
+                </div>
+            </div>
+            </section>
+        </form>
+
+        <!-- Show results after clicking the search button -->
+        <div class="new-scroller"  *ngIf="showResults && formAction === 'default'">
+            <table id="myTable" class="table table-bordered table-hover tbl_height" *ngIf="organizationRecords.length > 0; else noDataTemplate">
+                <thead>
+                    <tr>
+                    <th class="text-center">Controls</th>
+                    <th class="tab-md-140">Organization Name</th>
+                    <th class="tab-md-100 text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of organizationRecords">
+                    <td class="text-center" >
+                        <div class="dropdown">
+                            <button class="dropdown-btn" (click)="toggleDropdown(record.organization_id)">Action</button>
+                            <div *ngIf="dropdownOpen[record.organization_id]" class="dropdown-content" [attr.id]="'myDropdown' + record.organization_id">
+                                <a [routerLink]="['/organization/view']" [queryParams]="{ view_id: record.organization_id }">
+                                    <i class="fa fa-eye"></i> View
+                                </a>
+                                <a [routerLink]="['/organization/edit']" [queryParams]="{ edit_id: record.organization_id }">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <span *ngIf="record.active_flag === 'Y'; else inactiveTemplate">
+                                    <a (click)="updateOrganizationStatus(record.organization_id, 'N')" style="cursor: pointer;"><i class="fa fa-ban"></i> Inactive</a>
+                                </span>
+                                <ng-template #inactiveTemplate>
+                                    <span title="Inactive">
+                                        <a (click)="updateOrganizationStatus(record.organization_id, 'Y')" style="cursor: pointer;"><i class="fa fa-check"></i> Active</a>
+                                    </span>
+                                </ng-template>
+
+                                <!-- <a [routerLink]="['/location/delete']" [queryParams]="{ delete: record.location_id }">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a> -->
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ record.organization_name }}</td>
+
+                    <td class="text-center">
+                        <span class="btn btn-outline-success" title="Active" *ngIf="record.active_flag === 'Y'; else inactiveTemplate">Active</span>
+                        <ng-template #inactiveTemplate>
+                          <span class="btn btn-outline-warning" title="Inactive">Inactive</span>
+                        </ng-template>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-template #noDataTemplate>
+                <div class="text-center">
+                    <img src="/assets/img/nodata.png">
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+</div>

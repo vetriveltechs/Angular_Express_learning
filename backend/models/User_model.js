@@ -3,7 +3,8 @@ const pool = require('../config/database');
 const bcrypt = require('bcryptjs');
 
 const Users = {
-            userExists: async (user_name, password) => {
+
+  userExists: async (user_name, password) => {
                 try {
                     const query = 'SELECT user_id, password FROM per_user WHERE user_name = ?';
                     const [results] = await pool.query(query, [user_name]);

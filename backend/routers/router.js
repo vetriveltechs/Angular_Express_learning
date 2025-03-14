@@ -6,27 +6,40 @@ const router = express.Router();
 const fs = require('fs');
 const path=require('path');
 
-const rootdir=require('../utils/path');
+const rootdir                     = require('../utils/path');
 
-const employeeController = require('../controller/Employee/Employee_controller');
+const employeeController          = require('../controller/Employee/Employee_controller');
 
-const lovController = require('../controller/Lov/Lov_controller');
+const lovController               = require('../controller/Lov/Lov_controller');
 
-const list_type_values_controller=require('../controller/List_type_values/List_type_values_controller')
+const list_type_values_controller = require('../controller/List_type_values/List_type_values_controller')
 
-const commmon_controller=require('../controller/Common_controller/Common_controller')
+const commmon_controller          = require('../controller/Common_controller/Common_controller')
 
-const authenticationController =require('../controller/Authentication/authController')
+const authenticationController    = require('../controller/Authentication/authController')
 
-const rolesController =require('../controller/Roles/Roles_controller')
+const rolesController             = require('../controller/Roles/Roles_controller')
 
-const adminLoginController =require('../controller/Admin_login/admin_login')
+const adminLoginController        = require('../controller/Admin_login/admin_login')
 
-const departmentController =require('../controller/Department/Department_controller')
+const departmentController        = require('../controller/Department/Department_controller')
 
-const designationController =require('../controller/Designation/Designation_controller')
+const designationController       = require('../controller/Designation/Designation_controller')
 
-const bloodGroupController =require('../controller/Blood_group/Blood_group')
+const documentNumberingController = require('../controller/Document_numbering/Document_numbering_controller')
+
+const bloodGroupController        = require('../controller/Blood_group/Blood_group')
+
+const countryController           = require('../controller/Country/Country_controller')
+
+const stateController             = require('../controller/State/State_controller')
+
+const cityController              = require('../controller/City/City_controller')
+
+const locationController          = require('../controller/Location/Location_controller')
+
+const organizationController      = require('../controller/Organization/Organization_controller')
+
 
 // const { authenticateToken } = require('../middleware/authMiddleware');
 
@@ -53,6 +66,7 @@ const upload1 = multer({ dest: 'assets/' });
 router.post('/employee/createEmployee', authenticateUser,employeeController.createEmployee); // Use POST for creating employee
 router.get('/employee/getAllEmployee', authenticateUser,employeeController.getAllEmployees); // GET all employees
 router.get('/employee/getEmployees/:employee_id', authenticateUser,employeeController.getEmployees); // GET employee by ID
+router.put('/employee/updateEmployee/:employee_id', authenticateUser,employeeController.updateEmployee);
 router.put('/employee/updateEmployeeStatus/:employee_id/status', authenticateUser,employeeController.updateEmployeeStatus); // GET employee by ID
 router.get('/employee/getEmployeeDetails/:employee_id', authenticateUser,employeeController.getEmployeeDetails);
 
@@ -100,6 +114,13 @@ router.put('/designation/updateDesignation/:designation_id', authenticateUser,de
 router.put('/designation/updateDesignationStatus/:designation_id/status', authenticateUser,designationController.updateDesignationStatus);
 router.get('/designation/getDesignationAll', authenticateUser,designationController.getDesignationAll);
 
+router.post('/document-numbering/createDocumentNumbering',authenticateUser,documentNumberingController.createDocumentNumbering)
+router.get('/document-numbering/getAllDocumentNumbering', authenticateUser,documentNumberingController.getAllDocumentNumbering);
+router.get('/document-numbering/editDocumentNumbering/:document_numbering_id', authenticateUser,documentNumberingController.editDocumentNumbering);
+router.put('/document-numbering/updateDocumentNumbering/:document_numbering_id', authenticateUser,documentNumberingController.updateDocumentNumbering);
+router.put('/document-numbering/updateDocumentNumberingStatus/:document_numbering_id/status', authenticateUser,documentNumberingController.updateDocumentNumberingStatus);
+router.get('/document-numbering/getDocumentNumberingAll', authenticateUser,documentNumberingController.getDocumentNumberingAll);
+
 
 router.post('/blood_group/createBloodGroup',authenticateUser,bloodGroupController.createBloodGroup)
 router.get('/blood_group/getAllBloodGroups', authenticateUser,bloodGroupController.getAllBloodGroups);
@@ -108,6 +129,40 @@ router.put('/blood_group/updateBloodGroup/:blood_group_id', authenticateUser,blo
 router.put('/blood_group/updateBloodGroupStatus/:blood_group_id/status', authenticateUser,bloodGroupController.updateBloodGroupStatus);
 router.get('/blood_group/getBloodGroupAll', authenticateUser,bloodGroupController.getBloodGroupAll);
 
+router.post('/country/createCountry',authenticateUser,countryController.createCountry)
+router.get('/country/getAllCountrys', authenticateUser,countryController.getAllCountrys);
+router.get('/country/editCountry/:country_id', authenticateUser,countryController.editCountry);
+router.put('/country/updateCountry/:country_id', authenticateUser,countryController.updateCountry);
+router.put('/country/updateCountryStatus/:country_id/status', authenticateUser,countryController.updateCountryStatus);
+router.get('/country/getCountryAll', authenticateUser,countryController.getCountryAll);
+
+router.post('/state/createState',authenticateUser,stateController.createState)
+router.get('/state/getAllStates', authenticateUser,stateController.getAllStates);
+router.get('/state/editState/:state_id', authenticateUser,stateController.editState);
+router.put('/state/updateState/:state_id', authenticateUser,stateController.updateState);
+router.put('/state/updateStateStatus/:state_id/status', authenticateUser,stateController.updateStateStatus);
+router.get('/state/getStateAll', authenticateUser,stateController.getStateAll);
+
+router.post('/city/createCity',authenticateUser,cityController.createCity)
+router.get('/city/getAllCities', authenticateUser,cityController.getAllCities);
+router.get('/city/editCity/:city_id', authenticateUser,cityController.editCity);
+router.put('/city/updateCity/:city_id', authenticateUser,cityController.updateCity);
+router.put('/city/updateCityStatus/:city_id/status', authenticateUser,cityController.updateCityStatus);
+router.get('/city/getCityAll', authenticateUser,cityController.getCityAll);
+
+router.post('/location/createLocation',authenticateUser,locationController.createLocation)
+router.get('/location/getAllLocations', authenticateUser,locationController.getAllLocations);
+router.get('/location/editLocation/:location_id', authenticateUser,locationController.editLocation);
+router.put('/location/updateLocation/:location_id', authenticateUser,locationController.updateLocation);
+router.put('/location/updateLocationStatus/:location_id/status', authenticateUser,locationController.updateLocationStatus);
+router.get('/location/getLocationAll', authenticateUser,locationController.getLocationAll);
+
+router.post('/organization/createOrganization',authenticateUser,organizationController.createOrganization)
+router.get('/organization/getAllOrganizations', authenticateUser,organizationController.getAllOrganizations);
+router.get('/organization/editOrganization/:organization_id', authenticateUser,organizationController.editOrganization);
+router.put('/organization/updateOrganization/:organization_id', authenticateUser,organizationController.updateOrganization);
+router.put('/organization/updateOrganizationStatus/:organization_id/status', authenticateUser,organizationController.updateOrganizationStatus);
+router.get('/organization/getOrganizationAll', authenticateUser,organizationController.getOrganizationAll);
+
 
 module.exports = router;
-

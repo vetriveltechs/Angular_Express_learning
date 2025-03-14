@@ -1,4 +1,4 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit,HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,13 +12,14 @@ import 'jquery-ui/ui/widgets/datepicker';
 })
 export class DepartmentComponent implements OnInit {
 
-    page_title                  = 'Manage Departments';
-    departmentForm              : FormGroup;
-    searchForm              : FormGroup;
-    formAction                  : 'default' | 'create' | 'edit' | 'view' = 'default'; // Added
-    departmentRecords: any[]    = []; // Array to hold fetched LOV records
-    showResults                 : boolean = false; // Flag to control results visibility
-    activeFlagOptions           : any[] = [];
+    page_title                      = 'Manage Departments';
+    departmentForm                  : FormGroup;
+    searchForm                      : FormGroup;
+    formAction                      : 'default' | 'create' | 'edit' | 'view' = 'default'; // Added
+    departmentRecords: any[]        = []; // Array to hold fetched LOV records
+    showResults                     : boolean = false; // Flag to control results visibility
+    activeFlagOptions               : any[] = [];
+    dropdownOpen: { [key: string]   : boolean } = {};
 
     constructor(
       private router: Router,
@@ -153,22 +154,19 @@ export class DepartmentComponent implements OnInit {
       }
     }
 
-    dropdownOpen: { [key: string]: boolean } = {};
-
-    toggleDropdown(id: string) {
-        // Check if the clicked dropdown is already open
-        const isOpen = this.dropdownOpen[id];
-
-        // Close all dropdowns
-        Object.keys(this.dropdownOpen).forEach(key => {
-          this.dropdownOpen[key] = false;
-        });
-
-        // If it was not open, open it
-        if (!isOpen) {
-          this.dropdownOpen[id] = true;
-        }
+    toggleDropdown(id: string): void {
+        this.dropdownOpen[id] = !this.dropdownOpen[id];
       }
+
+    @HostListener('document:click', ['$event'])
+        closeDropdownOnClickOutside(event: MouseEvent): void
+        {
+            const targetElement = event.target as HTMLElement;
+            if (!targetElement.closest('.dropdown'))
+            {
+                this.dropdownOpen = {};
+            }
+    }
 
 
     editLov(department_id: string) {

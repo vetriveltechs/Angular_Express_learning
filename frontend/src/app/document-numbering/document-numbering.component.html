@@ -1,1 +1,200 @@
-<p>document-numbering works!</p>
+<div class="content">
+    <div class="card">
+        <div class="card-body mt-2">
+            <!-- Create Form -->
+            <form [formGroup]="documentNumberingForm" *ngIf="formAction === 'create' || formAction === 'edit' || formAction === 'view'"  (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data">
+                <div class="header-lines">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                    <h3><b>{{ page_title }}</b></h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                    <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                    <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                    <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+                    </div>
+                </div>
+                <fieldset>
+                    <section class="header-section">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left document_numbering_type"><span class="text-danger">*</span> Document Numbering Type</label>
+                                <mat-select placeholder="- Select -" formControlName="document_numbering_type">
+                                    <mat-option>- Select Document Number Type-</mat-option>
+                                    <mat-option *ngFor="let documentNumberingType of documentNumberingTypeOptions" [value]="documentNumberingType.list_code">
+                                    {{ documentNumberingType.list_value }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Document Type</label>
+                                <input type="text" formControlName="document_type" id="document_type" autocomplete="off" class="form-control" value="" placeholder="Document Type">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">From Date </label>
+                                <input type="text" formControlName="from_date" id="from_date" autocomplete="off" class="form-control previous_date" [readOnly]="true" value="" placeholder="From Date">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">To Date</label>
+                                <input type="text" formControlName="to_date" id="to_date" autocomplete="off"  class="form-control previous_date" [readOnly]="true" value="" placeholder="To Date">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Prefix</label>
+                                <input type="text" formControlName="prefix" id="prefix" autocomplete="off" class="form-control" value="" placeholder="Prefix">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left next_number"><span class="text-danger">*</span> Next Number</label>
+                                <input type="text" formControlName="next_number" id="next_number" autocomplete="off" class="form-control" value="" placeholder="Next Number">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Suffix </label>
+                                <input type="text" formControlName="suffix" id="suffix" autocomplete="off" class="form-control" value="" placeholder="Suffix">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="col-form-label float-left">Preview</label>
+                                <input type="text" id="preview" autocomplete="off" class="form-control" [value]="preview" placeholder="Preview" disabled>
+                            </div>
+
+
+
+                        </div>
+                    </section>
+                </fieldset>
+                <div class="col-md-12 mt-3 pr-0 text-right">
+                    <button type="submit" name="save_btn" id="save_btn" title="Save & Continue" class="btn btn-primary btn-sm">Save</button>
+                    <button type="submit" name="submit_btn" id="submit_btn" title="Submit" class="btn btn-primary btn-sm">Submit</button>
+                    <a (click)="switchForm('default')" class="btn btn-default btn-sm">Close</a>
+                </div>
+                </div>
+            </form>
+
+            <!-- Creation Block -->
+
+            <!-- Conditional Header Block -->
+            <div *ngIf="formAction === 'default'" class="row mb-2">
+                <div class="col-md-6">
+                    <h3><b>{{ page_title }}</b></h3>
+                </div>
+            <div class="col-md-6 text-right">
+                <a href="#" data-toggle="modal" data-target="#importPatientCSV" title="Import" class="btn btn-outline-warning btn-sm">
+                    <i class="icon-import"></i> Import
+                </a>
+                <button (click)="switchForm('create')" class="btn btn-info btn-sm mx-1">
+                    Create Document Numbering
+                </button>
+            </div>
+        </div>
+
+        <!-- Default Form -->
+        <form [formGroup]="searchForm" *ngIf="formAction === 'default'" (ngSubmit)="searchDocumentNumberingRecords()">
+            <section class="trans-section-back-1">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <label class="col-form-label col-md-4 text-right">Document Number</label>
+                        <div class="input-wrapper form-group col-md-7">
+                            <!-- <input type="text" formControlName="designation_name" id="designation_name" autocomplete="off" class="form-control" placeholder="Designation Name"> -->
+                            <mat-select placeholder="- Select -" formControlName="document_numbering_type">
+                                <mat-option>- Select Document Number-</mat-option>
+                                <mat-option *ngFor="let documentNumbering of documentNumberingOptions" [value]="documentNumbering.list_code">
+                                {{ documentNumbering.list_value }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <label class="col-form-label col-md-4 text-right">Status</label>
+                        <div class="input-wrapper form-group col-md-7">
+                            <mat-select placeholder="- Select -" formControlName="active_flag">
+                                <mat-option *ngFor="let activeFlag of activeFlagOptions" [value]="activeFlag.list_code">
+                                    {{ activeFlag.list_value }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-info">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+                <a (click)="clearSearch()" title="Clear" class="btn btn-default" style="margin-left:5px;">Clear</a>
+                </div>
+            </div>
+            </section>
+        </form>
+
+        <!-- Show results after clicking the search button -->
+        <div class="new-scroller"  *ngIf="showResults && formAction === 'default'">
+            <table id="myTable" class="table table-bordered table-hover tbl_height" style="position: absolute;" *ngIf="documentNumberingRecords.length > 0; else noDataTemplate">
+                <thead>
+                    <tr>
+                    <th class="text-center">Controls</th>
+                    <th class="tab-md-100">Prefix</th>
+                    <th class="tab-md-100">Next Number</th>
+                    <th class="tab-md-100">Suffix</th>
+                    <th class="tab-md-140 text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of documentNumberingRecords">
+                    <td class="text-center" >
+                        <div class="dropdown">
+                            <button class="dropdown-btn" (click)="toggleDropdown(record.document_numbering_id)">Action</button>
+                            <div *ngIf="dropdownOpen[record.document_numbering_id]" class="dropdown-content" [attr.id]="'myDropdown' + record.document_numbering_id">
+                              <a [routerLink]="['/document-numbering/view']" [queryParams]="{ view_id: record.document_numbering_id }">
+                                <i class="fa fa-eye"></i> View
+                              </a>
+                              <a [routerLink]="['/document-numbering/edit']" [queryParams]="{ edit_id: record.document_numbering_id }">
+                                <i class="fa fa-edit"></i> Edit
+                              </a>
+                              <span *ngIf="record.active_flag === 'Y'; else inactiveTemplate">
+                                <a (click)="updateDocumentNumberingStatus(record.document_numbering_id, 'N')" style="cursor: pointer;">
+                                  <i class="fa fa-ban"></i> Inactive
+                                </a>
+                              </span>
+                              <ng-template #inactiveTemplate>
+                                <span title="Inactive">
+                                  <a (click)="updateDocumentNumberingStatus(record.document_numbering_id, 'Y')" style="cursor: pointer;">
+                                    <i class="fa fa-check"></i> Active
+                                  </a>
+                                </span>
+                              </ng-template>
+                            </div>
+                          </div>
+
+
+
+
+
+                    </td>
+                    <td>{{ record.prefix }}</td>
+                    <td>{{ record.next_number }}</td>
+                    <td>{{ record.suffix }}</td>
+
+                    <td class="text-center">
+                        <span class="btn btn-outline-success" title="Active" *ngIf="record.active_flag === 'Y'; else inactiveTemplate">Active</span>
+                        <ng-template #inactiveTemplate>
+                          <span class="btn btn-outline-warning" title="Inactive">Inactive</span>
+                        </ng-template>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-template #noDataTemplate>
+                <div class="text-center">
+                    <img src="/assets/img/nodata.png">
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+</div>

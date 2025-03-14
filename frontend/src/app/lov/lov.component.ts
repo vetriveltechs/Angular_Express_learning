@@ -14,6 +14,7 @@ export class LovComponent implements OnInit,AfterViewInit {
 
     page_title = 'Manage LOV';
     lovForm: FormGroup;
+    searchForm  : FormGroup;
     formAction: 'default' | 'create' | 'edit' | 'view' = 'default'; // Added
     lovRecords: any[] = []; // Array to hold fetched LOV records
     showResults: boolean = false; // Flag to control results visibility
@@ -31,6 +32,11 @@ export class LovComponent implements OnInit,AfterViewInit {
         from_date           : [''],
         list_description    : [''],
         to_date             : [''],
+      });
+
+      this.searchForm = this.fb.group({
+        list_name         : [''],
+        // active_flag                     : ['']
       });
     }
 
@@ -90,20 +96,24 @@ export class LovComponent implements OnInit,AfterViewInit {
       });
     }
 
-    // Method to fetch LOV records from the API based on the search criteria
     searchLovRecords() {
+        const list_name       = this.searchForm.get('list_name')?.value || '';
+        // const active_flag                   = this.searchForm.get('active_flag')?.value || '';
+
         this.apiService.getAllLov().subscribe(
-        (data: any[]) => {
-            this.lovRecords = data; // Store the fetched records
-            this.showResults = true; // Show results after fetching
-        },
-        error => {
-            console.error('Error fetching LOV records:', error);
-            alert('Error fetching LOV records. Please try again later.');
-            this.showResults = true; // Show results even if an error occurs, but no records will be shown
-        }
+          (data: any[]) => {
+            this.lovRecords = data;
+            this.showResults = true;
+          },
+          error => {
+            console.error('Error fetching lov records:', error);
+            alert('Error fetching lov records. Please try again later.');
+            this.showResults = true;
+          }
         );
     }
+
+
     switchForm(action: 'default' | 'create' | 'edit' | 'view', lovId?: string) {
         if (action === 'edit' && lovId) {
           this.router.navigate(['/setups', 'lov', action], { queryParams: { edit_id: lovId } });

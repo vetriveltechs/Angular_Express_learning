@@ -26,11 +26,16 @@ import { DepartmentComponent } from './department/department.component';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { DesignationComponent } from './designation/designation.component';
 import { DocumentNumberingComponent } from './document-numbering/document-numbering.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { CountryComponent } from './country/country.component';
+import { StateComponent } from './state/state.component';
+import { CityComponent } from './city/city.component';
+import { CommonModulesModule } from './commonmodules/commonmodules.module';
+import { LocationComponent } from './location/location.component'; // Ensure the path is correct
 
 @NgModule({
   declarations: [
     AppComponent,
-
     EmployeeComponent,
     // ManageAppraisalComponent,
     SetupsComponent,
@@ -43,9 +48,12 @@ import { DocumentNumberingComponent } from './document-numbering/document-number
     DepartmentComponent,
     BloodGroupComponent,
     DesignationComponent,
-    DocumentNumberingComponent
-
-
+    DocumentNumberingComponent,
+    OrganizationComponent,
+    CountryComponent,
+    StateComponent,
+    CityComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +65,7 @@ import { DocumentNumberingComponent } from './document-numbering/document-number
     MatSelectModule,
     MatFormFieldModule,
     HomeComponent,
+    CommonModulesModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

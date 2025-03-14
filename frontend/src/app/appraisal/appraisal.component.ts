@@ -25,7 +25,6 @@ export class AppraisalComponent implements OnInit {
     userNameOptions     : any[] = [];
     activeFlagOptions   : any[] = [];
     dropdownOpen        : { [key: string]: boolean } = {};
-
     constructor(
       private router: Router,
       private route: ActivatedRoute,
@@ -95,12 +94,14 @@ export class AppraisalComponent implements OnInit {
             {
 
                 this.apiService.getEmployeeDetails(this.person_id).subscribe((data) => {
-                    console.log(data);
+                    const currentDate = new Date().toISOString().split('T')[0];
 
                     this.appraisalForm.patchValue({
-                        employee_name   : data.first_name,
-                        department_id   : data.department_name,
-                        designation_id  : data.designation_name,
+                        employee_name           : data.first_name,
+                        department_id           : data.department_name,
+                        designation_id          : data.designation_name,
+                        employee_created_id     : data.employee_number,
+                        created_date            : currentDate
                     });
                 })
 

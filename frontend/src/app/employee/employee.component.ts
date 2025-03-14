@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit,HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -32,6 +32,7 @@ export class EmployeeComponent implements OnInit{
     designationOptions  : any[] = [];
     userId              : number | null = null;
     roleId              : number | null = null;
+    dropdownOpen: { [key: string]: boolean } = {};
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -111,6 +112,13 @@ export class EmployeeComponent implements OnInit{
                 const editId = this.route.snapshot.queryParams['edit_id'];
                 if (editId) {
                     this.apiService.getEmployeeById(editId).subscribe(employee => {
+
+                        employee.date_of_birth      = this.adjustDate(employee.date_of_birth);
+                        employee.date_of_joining    = this.adjustDate(employee.date_of_joining);
+                        employee.date_of_relieving  = this.adjustDate(employee.date_of_relieving);
+                        employee.passport_issue_date  = this.adjustDate(employee.passport_issue_date);
+                        employee.passport_expiry_date  = this.adjustDate(employee.passport_expiry_date);
+
                         this.basicForm.patchValue({
                             employee_type       : employee.employee_type,
                             first_name          : employee.first_name,
@@ -168,6 +176,7 @@ export class EmployeeComponent implements OnInit{
                             address                 : employee.address
                         });
                     });
+
                 }
             }
 
@@ -181,37 +190,45 @@ export class EmployeeComponent implements OnInit{
 
     }
 
+    adjustDate(dateString: string): string {
+        const date = new Date(dateString);
+        const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+        const localDate = new Date(date.getTime() - userTimezoneOffset);
+        return localDate.toISOString().split('T')[0]; // Return only the date part in YYYY-MM-DD format
+      }
 
 
-    // ngAfterViewInit(): void {
-    //     // Apply datepicker to all elements with class 'default_date'
-    //     ($(".default_date") as any).datepicker({
-    //         changeMonth: true,
-    //         changeYear: true,
-    //         yearRange: "1950:" + (new Date().getFullYear() + 10),
-    //         dateFormat: "yy-mm-dd",
-    //         onSelect: (dateText: string, inst: any) => {
-    //             const elementId = $(inst.input).attr('id');
-    //             if (elementId) {
-    //                 // Check and update the corresponding form control
-    //                 if (elementId === 'date_of_birth') {
-    //                     this.basicForm.patchValue({ date_of_birth: dateText });
-    //                 }
-    //                 else if (elementId === 'date_of_joining') {
-    //                     this.employeeDetailForm.patchValue({ date_of_joining: dateText });
-    //                 }
-    //                 else if (elementId === 'date_of_relieving') {
-    //                     this.employeeDetailForm.patchValue({ date_of_relieving: dateText });
-    //                 }
-    //                 else if (elementId === 'passport_issue_date') {
-    //                     this.identityForm.patchValue({ passport_issue_date: dateText });
-    //                 } else if (elementId === 'passport_expiry_date') {
-    //                     this.identityForm.patchValue({ passport_expiry_date: dateText });
-    //                 }
-    //             }
-    //         }
-    //     });
-    // }
+
+    ngAfterViewInit(): void
+    {
+        ($(".default_date") as any).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1950:" + (new Date().getFullYear() + 10),
+            dateFormat: "yy-mm-dd",
+            onSelect: (dateText: string, inst: any) => {
+                const elementId = $(inst.input).attr('id');
+                const selectedDate = new Date(dateText);
+                const formattedDate = selectedDate.toISOString().split('T')[0];
+
+                if (elementId === 'date_of_birth') {
+                    this.basicForm.patchValue({ date_of_birth: formattedDate });
+                }
+                else if (elementId === 'date_of_joining') {
+                    this.employeeDetailForm.patchValue({ date_of_joining: formattedDate });
+                }
+                else if (elementId === 'date_of_relieving') {
+                    this.employeeDetailForm.patchValue({ date_of_relieving: formattedDate });
+                }
+                else if (elementId === 'passport_issue_date') {
+                    this.identityForm.patchValue({ passport_issue_date: formattedDate });
+                } else if (elementId === 'passport_expiry_date') {
+                    this.identityForm.patchValue({ passport_expiry_date: formattedDate });
+                }
+
+            }
+        });
+    }
 
 
     loadDropdownOptions() {
@@ -220,6 +237,7 @@ export class EmployeeComponent implements OnInit{
             this.fetchLovOptions('GENDER');
             this.apiService.getBloodGroupAll().subscribe(response =>
             {
+
                 this.bloodGroupOptions = response
             });
 
@@ -380,6 +398,7 @@ export class EmployeeComponent implements OnInit{
                 const editId = this.route.snapshot.queryParams['edit_id'];
                 this.apiService.updateEmployee(editId, employeeData).subscribe(
                     response => {
+
                         alert('Employee updated successfully!');
                         this.router.navigate(['/employee']);
                     },
@@ -409,13 +428,22 @@ export class EmployeeComponent implements OnInit{
         // Now you can use the userId in the component
         // console.log('User ID:', this.userId);
     }
-    dropdownOpen: { [key: string]: boolean } = {};
+
 
     toggleDropdown(id: string) {
-        const isOpen = this.dropdownOpen[id];
-        Object.keys(this.dropdownOpen).forEach(key => this.dropdownOpen[key] = false);
-        this.dropdownOpen[id] = !isOpen;
+
+        this.dropdownOpen[id] =!this.dropdownOpen[id];
       }
+
+      @HostListener('document:click', ['$event'])
+      closeDropdownOnClickOutside(event: MouseEvent): void {
+        const targetElement = event.target as HTMLElement;
+        if (!targetElement.closest('.dropdown')) {
+          this.dropdownOpen = {}; // Reset the dropdown state for all records
+        }
+      }
+
+
 
     // editEmployee(lovId: string) {
     //     this.switchForm('edit', lovId);

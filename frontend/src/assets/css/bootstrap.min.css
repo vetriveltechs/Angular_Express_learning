@@ -2905,7 +2905,8 @@ fieldset:disabled a.btn {
 	padding: .3125rem .75rem;
 	font-size: .75rem;
 	line-height: 1.6667;
-	border-radius: .125rem
+	border-radius: .125rem;
+    margin-right:5px
 }
 
 .btn-block {

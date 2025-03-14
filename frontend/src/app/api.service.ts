@@ -341,6 +341,48 @@ export class ApiService {
     }
     ///////////////// Designation API end //////////
 
+
+     ///////////////// Department API start ////////
+     createDocumentNumbering(documentNumberingData: any): Observable<any>
+     {
+         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+         return this.http.post<any>(`${this.baseUrl}/document-numbering/createDocumentNumbering`, documentNumberingData, httpOptions);
+     }
+
+
+     getAllDocumentNumbering(document_numbering_type: string, active_flag: string): Observable<any>
+     {
+         // Construct the URL with proper query parameter formatting
+         const url = `${this.baseUrl}/document-numbering/getAllDocumentNumbering?document_numbering_type=${encodeURIComponent(document_numbering_type)}&active_flag=${encodeURIComponent(active_flag)}`;
+         return this.http.get<any>(url, httpOptions);
+     }
+
+     editDocumentNumbering(document_numbering_id: string): Observable<any>
+     {
+         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+         return this.http.get<any>(`${this.baseUrl}/document-numbering/editDocumentNumbering/${document_numbering_id}`,httpOptions);
+     }
+
+     updateDocumentNumbering(document_numbering_id: string, documentNumberingData: any): Observable<any>
+     {
+         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+         return this.http.put<any>(`${this.baseUrl}/document-numbering/updateDocumentNumbering/${document_numbering_id}`, documentNumberingData,httpOptions);
+     }
+
+     updateDocumentNumberingStatus(document_numbering_id: string, data: any): Observable<any>
+     {
+         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+         return this.http.put<any>(`${this.baseUrl}/document-numbering/updateDocumentNumberingStatus/${document_numbering_id}/status`, data,httpOptions);
+
+     }
+
+    getDocumentNumberingAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/document-numbering/getDocumentNumberingAll`,httpOptions);
+    }
+     ///////////////// Department API end //////////
+
     ///////////////// Appraisal API start ///////////////
 
     getEmployeeData(appraisal_id: string): Observable<any>
@@ -414,5 +456,196 @@ export class ApiService {
 
     }
     ///////////////// Blood group API end //////////
+
+    ///////////////// Country API start ////////
+    createCountry(countryData: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(`${this.baseUrl}/country/createCountry`, countryData, httpOptions);
+    }
+
+    getAllCountrys(country_id: string, active_flag: string): Observable<any>
+    {
+        const url = `${this.baseUrl}/country/getAllCountrys?country_id=${encodeURIComponent(country_id)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
+    }
+
+    editCountry(country_id: string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/country/editCountry/${country_id}`,httpOptions);
+    }
+
+    updateCountry(country_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/country/updateCountry/${country_id}`, data,httpOptions);
+    }
+
+    updateCountryStatus(country_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/country/updateCountryStatus/${country_id}/status`, data,httpOptions);
+    }
+
+    getCountryAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/country/getCountryAll`,httpOptions);
+    }
+    ///////////////// Country API end /////////////
+
+    ///////////////// State API start ////////////
+    createState(stateData: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(`${this.baseUrl}/state/createState`, stateData, httpOptions);
+    }
+
+    getAllStates(country_id: string,state_id: string, active_flag: string): Observable<any>
+    {
+        const url = `${this.baseUrl}/state/getAllStates?country_id=${encodeURIComponent(country_id)}&state_id=${encodeURIComponent(state_id)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
+    }
+
+    editState(state_id: string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/state/editState/${state_id}`,httpOptions);
+    }
+
+    updateState(state_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/state/updateState/${state_id}`, data,httpOptions);
+    }
+
+    updateStateStatus(state_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/state/updateStateStatus/${state_id}/status`, data,httpOptions);
+    }
+
+    getStateAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/state/getStateAll`,httpOptions);
+    }
+    ///////////////// State API end /////////////
+
+
+    ///////////////// City API start ////////////
+    createCity(cityData: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(`${this.baseUrl}/city/createCity`, cityData, httpOptions);
+    }
+
+    getAllCities(country_id: string,state_id: string,city_id: string, active_flag: string): Observable<any>
+    {
+        const url = `${this.baseUrl}/city/getAllCities?country_id=${encodeURIComponent(country_id)}&state_id=${encodeURIComponent(state_id)}&city_id=${encodeURIComponent(city_id)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
+    }
+
+    editCity(city_id: string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/city/editCity/${city_id}`,httpOptions);
+    }
+
+    updateCity(city_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/city/updateCity/${city_id}`, data,httpOptions);
+    }
+
+    updateCityStatus(city_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/city/updateCityStatus/${city_id}/status`, data,httpOptions);
+    }
+
+    getCityAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/city/getCityAll`,httpOptions);
+    }
+    ///////////////// State API end /////////////
+
+    ///////////////// Location API start ////////////
+    createLocation(locationData: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(`${this.baseUrl}/location/createLocation`, locationData, httpOptions);
+    }
+
+    getAllLocations(location_id: string,active_flag: string): Observable<any>
+    {
+        const url = `${this.baseUrl}/location/getAllLocations?location_id=${encodeURIComponent(location_id)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
+    }
+
+    editLocation(location_id: string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/location/editLocation/${location_id}`,httpOptions);
+    }
+
+    updateLocation(city_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/location/updateLocation/${city_id}`, data,httpOptions);
+    }
+
+    updateLocationStatus(city_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/location/updateLocationStatus/${city_id}/status`, data,httpOptions);
+    }
+
+    getLocationAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/location/getLocationAll`,httpOptions);
+    }
+    ///////////////// Location API end /////////////
+
+    ///////////////// Organization API start ////////////
+    createOrganization(locationData: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(`${this.baseUrl}/organization/createOrganization`, locationData, httpOptions);
+    }
+
+    getAllOrganizations(organization_id: string,active_flag: string): Observable<any>
+    {
+        const url = `${this.baseUrl}/organization/getAllOrganizations?organization_id=${encodeURIComponent(organization_id)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
+    }
+
+    editOrganization(organization_id: string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/organization/editOrganization/${organization_id}`,httpOptions);
+    }
+
+    updateOrganization(organization_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/organization/updateOrganization/${organization_id}`, data,httpOptions);
+    }
+
+    updateOrganizationStatus(city_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/organization/updateOrganizationStatus/${city_id}/status`, data,httpOptions);
+    }
+
+    getOrganizationAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/organization/getOrganizationAll`,httpOptions);
+    }
+    ///////////////// Organization API end /////////////
 
 }

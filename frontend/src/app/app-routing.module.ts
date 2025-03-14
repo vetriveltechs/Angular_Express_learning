@@ -11,33 +11,38 @@ import { AppraisalComponent } from './appraisal/appraisal.component';
 import { DepartmentComponent } from './department/department.component';
 import { BloodGroupComponent } from './blood-group/blood-group.component';
 import { DesignationComponent } from './designation/designation.component';
-
-// const routes: Routes = [
-//   { path: '', component: EmployeeComponent }, // Adjust as necessary
-//   { path: 'employee', component: EmployeeComponent },
-//   { path: 'employee:action', component: EmployeeComponent },
-//   { path: 'setups', component: SetupsComponent }
-// ];
+import { DocumentNumberingComponent } from './document-numbering/document-numbering.component';
+import { CountryComponent } from './country/country.component';
+import { StateComponent } from './state/state.component';
+import { CityComponent } from './city/city.component';
+import { LocationComponent } from './location/location.component';
+import { OrganizationComponent } from './organization/organization.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/login', pathMatch: 'full' }, // Default route redirects to 'employee'
-    { path: 'login', component: AdminLoginComponent, pathMatch: 'full' }, // Default route for EmployeeComponent
-    { path: 'employee', component: EmployeeComponent, pathMatch: 'full' }, // Default route for EmployeeComponent
-    { path: 'employee/:action/:formType', component: EmployeeComponent, pathMatch: 'full' }, // Handles actions and form types
-    { path: 'setups', component: SetupsComponent,pathMatch: 'full' }, // Route for SetupsComponent
-    { path: 'setups/lov', component: LovComponent,pathMatch: 'full' }, // Route for LovComponent
-    { path: 'setups/lov/:action', component: LovComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
-    { path: 'users', component: UsersComponent,pathMatch: 'full' }, // Route for LovComponent
-    { path: 'users/:action', component: UsersComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
-    { path: 'list_type_values/:lov_id', component: ListTypeValuesComponent},// Route for List Type Value
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: AdminLoginComponent, pathMatch: 'full' },
+    { path: 'employee', component: EmployeeComponent, pathMatch: 'full' },
+    { path: 'employee/:action/:formType', component: EmployeeComponent, pathMatch: 'full' },
+    { path: 'setups', component: SetupsComponent,pathMatch: 'full' },
+    { path: 'setups/lov', component: LovComponent,pathMatch: 'full' },
+    { path: 'setups/lov/:action', component: LovComponent,pathMatch: 'full' },
+    { path: 'users', component: UsersComponent,pathMatch: 'full' },
+    { path: 'users/:action', component: UsersComponent,pathMatch: 'full' },
+    { path: 'list_type_values/:lov_id', component: ListTypeValuesComponent},
     { path: 'roles/:action', component: RolesComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
     { path: 'admin_login/:action', component: AdminLoginComponent,pathMatch: 'full' },
     { path: 'appraisal', component: AppraisalComponent,pathMatch: 'full' },
-    { path: 'appraisal/:action', component: AppraisalComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
-    { path: 'department/:action', component: DepartmentComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
-    { path: 'designation/:action', component: DesignationComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
-    { path: 'blood_group/:action', component: BloodGroupComponent,pathMatch: 'full' }, // Handles actions like 'create', 'edit'
-    { path: '**', redirectTo: '/employee' }, // Wildcard route redirects to 'employee' if no match is found
+    { path: 'appraisal/:action', component: AppraisalComponent,pathMatch: 'full' },
+    { path: 'department/:action', component: DepartmentComponent,pathMatch: 'full' },
+    { path: 'designation/:action', component: DesignationComponent,pathMatch: 'full' },
+    { path: 'document-numbering/:action', component: DocumentNumberingComponent,pathMatch: 'full' },
+    { path: 'blood_group/:action', component: BloodGroupComponent,pathMatch: 'full' },
+    { path: 'country/:action', component: CountryComponent,pathMatch: 'full' },
+    { path: 'state/:action', component: StateComponent,pathMatch: 'full' },
+    { path: 'city/:action', component: CityComponent,pathMatch: 'full' },
+    { path: 'location/:action', component: LocationComponent,pathMatch: 'full' },
+    { path: 'organization/:action', component: OrganizationComponent,pathMatch: 'full' },
+    { path: '**', redirectTo: '/employee' },
 
   ];
 

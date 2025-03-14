@@ -100,7 +100,7 @@
         </div>
 
         <!-- Default Form -->
-        <form *ngIf="formAction === 'default'" (ngSubmit)="searchLovRecords()">
+        <form [formGroup]="searchForm" *ngIf="formAction === 'default'" (ngSubmit)="searchLovRecords()">
             <section class="trans-section-back-1">
             <div class="row">
                 <div class="col-md-4">

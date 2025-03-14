@@ -147,6 +147,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
                 }
                  else if (listName === 'ACTIVE STATUS') {
                     this.activeFlagOptions = response;
+                    if (this.activeFlagOptions.length > 0)
+                        {
+                        this.searchForm.patchValue(
+                        {
+                            active_flag: this.activeFlagOptions[0].list_code
+                        });
+                    }
                 }
             },
             error => {
@@ -309,7 +316,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
 
     clearSearch() {
-        this.searchForm.reset();
+        this.searchForm.reset(
+            {
+                user_name : "",
+                active_flag: this.activeFlagOptions?.length ? this.activeFlagOptions[0].list_code : ''
+            }
+        );
         this.usersRecords = [];
         this.showResults = false;
         this.router.navigate(['/users','default']);
