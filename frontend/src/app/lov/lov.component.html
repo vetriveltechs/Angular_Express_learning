@@ -131,7 +131,7 @@
                     <th class="tab-md-120">From Date</th>
                     <th class="tab-md-120">To Date</th>
                     <th class="tab-md-140">List Description</th>
-                    <th class="tab-md-140">List Type Values</th>
+                    <th class="tab-md-140 text-center">List Type Values</th>
                     <th class="tab-md-140 text-center">Status</th>
                     </tr>
                 </thead>
@@ -186,7 +186,7 @@
                             <span [routerLink]="['/list_type_values', record.lov_id]" class="btn btn-outline-success" style="width:40%;">List Type Values</span>
                         </a>
                         <a title="List Type Values">
-                            <span [routerLink]="['/list_type_values', record.lov_id]" style="cursor: pointer;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                            <span [routerLink]="['/list_type_values', record.lov_id]" style="cursor: pointer;"><i class="fa fa-plus list-type-value-icon" aria-hidden="true"></i></span>
                         </a>
                     </td>
                     <td class="text-center">
@@ -208,3 +208,4 @@
 
     </div>
   </div>
+

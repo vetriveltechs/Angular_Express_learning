@@ -4,7 +4,15 @@ const bcrypt = require('bcrypt');
 const admin_login = {
   userExists: async (user_name) => {
     try {
-      const query = 'SELECT user_id,person_id, user_name,password FROM per_user WHERE user_name = ?';
+      const query = `SELECT
+      user_id,
+      person_id,
+      user_name,
+      password,
+      people.organization_id
+      FROM per_user
+      left join per_people_all as people on people.employee_id=per_user.person_id
+      WHERE user_name = ?`;
       const [results] = await pool.query(query, [user_name]);
 
       if (results.length > 0) {

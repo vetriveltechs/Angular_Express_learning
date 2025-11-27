@@ -82,7 +82,7 @@ const { getNextDocumentNumber,incrementNextDocumentNumber } = require('../utils/
     },
 
     getEmployees: async (employee_id) => {
-      const query = `SELECT employee_id, employee_type, first_name, middle_name, last_name, mobile_number, alt_mobile_number, email, alt_email, father_name, mother_name, date_of_birth, gender, blood_group, department_id,designation_id, date_of_joining, date_of_relieving, previous_experience, rate_per_hour, rate_per_day, pay_frequency, aadhar_number, pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date, pf_number, esi_number, uan_number, address_1, address_2, address_3, postal_code, account_number, account_holder_number, bank_name, branch_name, ifsc_code, micr_code, address,active_flag FROM per_people_all WHERE employee_id = ?`;
+      const query = `SELECT employee_id, employee_type, first_name, middle_name, last_name, mobile_number, alt_mobile_number, email, alt_email, father_name, mother_name, date_of_birth, gender, blood_group,organization_id, department_id,designation_id, date_of_joining, date_of_relieving, previous_experience, rate_per_hour, rate_per_day, pay_frequency, aadhar_number, pan_number, driving_licence, passport_number, passport_issue_date, passport_expiry_date, pf_number, esi_number, uan_number, address_1, address_2, address_3, postal_code, account_number, account_holder_number, bank_name, branch_name, ifsc_code, micr_code, address,active_flag FROM per_people_all WHERE employee_id = ?`;
       const [results] = await pool.query(query, [employee_id]);
       return results[0]; // Return the first result or undefined if not found
     },

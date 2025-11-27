@@ -32,8 +32,9 @@ export class AdminLoginComponent {
           (response) => {
             // Handle successful login
             console.log('Login successful:', response);
-            if (response.token) {
-              // Token and user details are already stored in localStorage
+            
+            if (response.token)
+            {
               this.router.navigate(['/employee']);  // Navigate after login
             }
           },

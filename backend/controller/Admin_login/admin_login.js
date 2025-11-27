@@ -31,7 +31,8 @@ exports.login = async (req, res) => {
             roles: roles.map(r => r.role_name),
             user_id: user.user_id,
             role_id: role_id,
-            person_id:user.person_id
+            person_id:user.person_id,
+            organization_id:user.organization_id
         });
 
   } catch (err) {

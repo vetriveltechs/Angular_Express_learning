@@ -155,8 +155,16 @@ export class DepartmentComponent implements OnInit {
     }
 
     toggleDropdown(id: string): void {
-        this.dropdownOpen[id] = !this.dropdownOpen[id];
+      const isOpen = this.dropdownOpen[id];
+
+      // Close all
+      this.dropdownOpen = {};
+
+      // Toggle the clicked one
+      if (!isOpen) {
+        this.dropdownOpen[id] = true;
       }
+    }
 
     @HostListener('document:click', ['$event'])
         closeDropdownOnClickOutside(event: MouseEvent): void

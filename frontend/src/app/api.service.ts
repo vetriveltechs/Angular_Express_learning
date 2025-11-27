@@ -24,12 +24,12 @@ export class ApiService {
             tap((response: any) => {
               console.log('Login response:', response); // Log for debugging
 
-              const { user_id, roles, role_id, token,person_id } = response;
+              const { user_id, roles, role_id, token,person_id,organization_id } = response;
 
 
               if (user_id != null && roles != null && role_id != null) {
 
-                this.storeUserData(token, user_id, roles, role_id,person_id);
+                this.storeUserData(token, user_id, roles, role_id,person_id,organization_id);
               } else {
                 console.error('Error: Missing userId, roles, or roleId in the response.');
               }
@@ -38,12 +38,13 @@ export class ApiService {
       }
 
       // Store user data globally in localStorage
-      storeUserData(token: string, userId: number, roles: string[], roleId: number,person_id:number) {
+      storeUserData(token: string, userId: number, roles: string[], roleId: number,person_id:number,organization_id:number) {
         localStorage.setItem('token', token);
         localStorage.setItem('user_id', userId.toString());
         localStorage.setItem('roles', JSON.stringify(roles));
         localStorage.setItem('role_id', roleId.toString());
         localStorage.setItem('person_id', person_id.toString());
+        localStorage.setItem('organization_id', organization_id.toString());
       }
 
       // Get user_id from localStorage
@@ -80,14 +81,20 @@ export class ApiService {
     return person_id ? parseInt(person_id, 10) : null;
   }
 
-  // Clear all stored user data (on logout)
-  clearUserData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('roles');
-    localStorage.removeItem('role_id');
-    localStorage.removeItem('person_id');
+  getOrganizationId(): number | null {
+    const organization_id = localStorage.getItem('organization_id');
+    return organization_id ? parseInt(organization_id, 10) : null;
   }
+
+  // Clear all stored user data (on logout)
+    clearUserData() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('roles');
+        localStorage.removeItem('role_id');
+        localStorage.removeItem('person_id');
+        localStorage.removeItem('organization_id');
+    }
 
     createEmployee(data: any): Observable<any>
     {
@@ -381,6 +388,13 @@ export class ApiService {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this.http.get<any>(`${this.baseUrl}/document-numbering/getDocumentNumberingAll`,httpOptions);
     }
+
+    getDocumentNumberByType(type:string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/document-numbering/getDocumentNumberByType/${type}`,httpOptions);
+    }
+
      ///////////////// Department API end //////////
 
     ///////////////// Appraisal API start ///////////////
@@ -647,5 +661,48 @@ export class ApiService {
         return this.http.get<any>(`${this.baseUrl}/organization/getOrganizationAll`,httpOptions);
     }
     ///////////////// Organization API end /////////////
+
+    ///////////////// Staff Details API start ////////////
+    createStaffDetails(staffDetailsData: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<any>(`${this.baseUrl}/staffDetails/createStaffDetails`, staffDetailsData, httpOptions);
+    }
+
+    getAllStaffDetails(staff_id: string,department_id: string,academic_year: string, active_flag: string): Observable<any>
+    {
+        const url = `${this.baseUrl}/staffDetails/getAllStaffDetails?staff_id=${encodeURIComponent(staff_id)}&department_id=${encodeURIComponent(department_id)}&academic_year=${encodeURIComponent(academic_year)}&active_flag=${encodeURIComponent(active_flag)}`;
+        return this.http.get<any>(url, httpOptions);
+    }
+
+    editStaffDetails(staff_id: string): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/staffDetails/editStaffDetails/${staff_id}`,httpOptions);
+    }
+
+    updateStaffDetails(staff_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/staffDetails/updateStaffDetails/${staff_id}`, data,httpOptions);
+    }
+
+    updateStaffDetailsStatus(staff_id: string, data: any): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.put<any>(`${this.baseUrl}/staffDetails/updateStaffDetailsStatus/${staff_id}/status`, data,httpOptions);
+    }
+
+    getStaffDetailsAll(): Observable<any>
+    {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.get<any>(`${this.baseUrl}/staffDetails/getStaffDetailsAll`,httpOptions);
+    }
+    ///////////////// State API end /////////////
+
+
+
+
+
 
 }

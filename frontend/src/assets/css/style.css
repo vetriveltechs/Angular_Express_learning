@@ -771,8 +771,15 @@ h4.last-booking-list {
   padding: 7px 0px 7px 0px;
 }
 
-.new-scroller {
+/* .new-scroller {
   overflow: auto;
+  min-height: 120px;
+} */
+
+.new-scroller {
+  overflow: visible !important;
+  position: relative;
+  z-index: 1;
   min-height: 120px;
 }
 

@@ -233,8 +233,20 @@ export class DocumentNumberingComponent implements OnInit, AfterViewInit {
   }
 
   // Toggle dropdown open/close
+  // toggleDropdown(id: string): void {
+  //   this.dropdownOpen[id] = !this.dropdownOpen[id]; // Toggle dropdown state
+  // }
+
   toggleDropdown(id: string): void {
-    this.dropdownOpen[id] = !this.dropdownOpen[id]; // Toggle dropdown state
+    const isOpen = this.dropdownOpen[id];
+
+    // Close all
+    this.dropdownOpen = {};
+
+    // Toggle the clicked one
+    if (!isOpen) {
+      this.dropdownOpen[id] = true;
+    }
   }
 
   // Close dropdowns when clicking outside

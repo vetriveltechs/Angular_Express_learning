@@ -40,6 +40,8 @@ const locationController          = require('../controller/Location/Location_con
 
 const organizationController      = require('../controller/Organization/Organization_controller')
 
+const StaffDetailsController      = require('../controller/StaffDetails/StaffDetails_controller')
+
 
 // const { authenticateToken } = require('../middleware/authMiddleware');
 
@@ -55,6 +57,7 @@ app.use(express.json());
 
 
 const crypto = require('crypto');
+const { staffDetails } = require('../models/staffDetails_model');
 
 // Middleware function to generate secret key
 const generateSecret = () => {
@@ -120,6 +123,7 @@ router.get('/document-numbering/editDocumentNumbering/:document_numbering_id', a
 router.put('/document-numbering/updateDocumentNumbering/:document_numbering_id', authenticateUser,documentNumberingController.updateDocumentNumbering);
 router.put('/document-numbering/updateDocumentNumberingStatus/:document_numbering_id/status', authenticateUser,documentNumberingController.updateDocumentNumberingStatus);
 router.get('/document-numbering/getDocumentNumberingAll', authenticateUser,documentNumberingController.getDocumentNumberingAll);
+router.get('/document-numbering/getDocumentNumberByType/:type', documentNumberingController.getDocumentNumberByType);
 
 
 router.post('/blood_group/createBloodGroup',authenticateUser,bloodGroupController.createBloodGroup)
@@ -164,5 +168,11 @@ router.put('/organization/updateOrganization/:organization_id', authenticateUser
 router.put('/organization/updateOrganizationStatus/:organization_id/status', authenticateUser,organizationController.updateOrganizationStatus);
 router.get('/organization/getOrganizationAll', authenticateUser,organizationController.getOrganizationAll);
 
+router.post('/staffDetails/createStaffDetails',authenticateUser,StaffDetailsController.createStaffDetails)
+router.get('/staffDetails/getAllStaffDetails', authenticateUser,StaffDetailsController.getAllStaffDetails);
+router.get('/staffDetails/editStaffDetails/:staff_id', authenticateUser,StaffDetailsController.editStaffDetails);
+router.put('/staffDetails/updateStaffDetails/:staff_id', authenticateUser,StaffDetailsController.updateStaffDetails);
+router.put('/staffDetails/updateStaffDetailsStatus/:staff_id/status', authenticateUser,StaffDetailsController.updateStaffDetailsStatus);
+router.get('/staffDetails/getStaffDetailsAll', authenticateUser,StaffDetailsController.getStaffDetailsAll);
 
 module.exports = router;

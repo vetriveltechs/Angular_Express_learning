@@ -1,4 +1,5 @@
 const { documentNumbering } = require('../../models/document_numbering_model');
+const { getNextDocumentNumber,incrementNextDocumentNumber } = require('../../utils/common_function');
 
 exports.createDocumentNumbering = async (req, res) => {
     const { document_numbering_type}  = req.body;
@@ -8,9 +9,6 @@ exports.createDocumentNumbering = async (req, res) => {
     const { suffix}                   = req.body;
     const { from_date}                = req.body;
     const { to_date}                  = req.body;
-
-    console.log(req.body);
-
 
     try {
         const existingDocumentNumbering = await documentNumbering.documentNumberingAlreadyExists(document_numbering_type);
@@ -126,4 +124,36 @@ exports.getDocumentNumberingAll = async (req, res) => {
       return res.status(500).send('Internal Server Error'); // Handle errors
   }
 };
+
+exports.getDocumentNumberByType = async (req, res) => {
+  const type = req.params.type;
+
+  try {
+    const result = await getNextDocumentNumber(type); // result is { nextNumber, prefix, suffix }
+
+    const { nextNumber, prefix, suffix } = result || {};
+
+    if (!nextNumber) {
+      return res.status(404).json({ message: 'Document type not found.' });
+    }
+
+    const documentNumber = `${prefix || ''}${nextNumber}${suffix || ''}`;
+
+    const nextNumberValue = Number(nextNumber);
+
+    await incrementNextDocumentNumber(type, nextNumberValue);
+
+    res.status(200).json({
+      documentNumber,
+      prefix,
+      suffix,
+      nextNumber
+    });
+
+  } catch (error) {
+    console.error('Error fetching document number:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
 

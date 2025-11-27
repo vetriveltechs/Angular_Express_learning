@@ -29,9 +29,11 @@ export class EmployeeComponent implements OnInit{
     selectedValue       : string = ''; // Variable to hold the selected value
     employeeRecords     : any[] = []; // Array to hold fetched LOV records
     showResults         : boolean = false; // Flag to control results visibility
+    organizationOptions : any[] = [];
     designationOptions  : any[] = [];
     userId              : number | null = null;
     roleId              : number | null = null;
+    organizationId      : number | null = null;
     dropdownOpen: { [key: string]: boolean } = {};
     constructor(
         private router: Router,
@@ -58,6 +60,7 @@ export class EmployeeComponent implements OnInit{
         });
 
         this.employeeDetailForm = this.fb.group({
+            organization_id     : ['', [Validators.required]],
             department_id       : ['', [Validators.required]],
             designation_id      : ['', [Validators.required]],
             date_of_joining     : [''],
@@ -135,6 +138,8 @@ export class EmployeeComponent implements OnInit{
                             blood_group         : employee.blood_group,
                         });
                         this.employeeDetailForm.patchValue({
+
+                            organization_id     : employee.organization_id,
                             department_id       : employee.department_id,
                             designation_id      : employee.designation_id,
                             date_of_joining     : employee.date_of_joining,
@@ -182,12 +187,11 @@ export class EmployeeComponent implements OnInit{
 
             this.loadDropdownOptions();
         });
-        this.userId = this.apiService.getUserId();
-        this.roleId = this.apiService.getRoleId();
+        this.userId         = this.apiService.getUserId();
+        this.roleId         = this.apiService.getRoleId();
+        this.organizationId = this.apiService.getOrganizationId();
 
-        console.log(`User ID: ${this.userId}, Role ID: ${this.roleId}`);
-
-
+        console.log(`User ID: ${this.userId}, Role ID: ${this.roleId},Organization ID: ${this.organizationId}`);
     }
 
     adjustDate(dateString: string): string {
@@ -196,7 +200,6 @@ export class EmployeeComponent implements OnInit{
         const localDate = new Date(date.getTime() - userTimezoneOffset);
         return localDate.toISOString().split('T')[0]; // Return only the date part in YYYY-MM-DD format
       }
-
 
 
     ngAfterViewInit(): void
@@ -245,6 +248,13 @@ export class EmployeeComponent implements OnInit{
 
         } else if (this.formType === 'employee_details') {
             this.fetchLovOptions('PAY FREQUENCY');
+
+            this.apiService.getOrganizationAll().subscribe(response =>
+            {
+                this.organizationOptions = response.data
+
+            });
+
             this.apiService.getDepartmentAll().subscribe(response =>
             {
                 this.departmentOptions = response

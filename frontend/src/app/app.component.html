@@ -54,6 +54,13 @@
                     </li>
 
                     <li class="nav-item" *ngIf="hasRole('Admin') || hasRole('Sales Manager')">
+                        <a routerLink="/staffDetails/default" class="nav-link" style="cursor: pointer;">
+                            <i class="fa fa-users menu-link"></i>
+                            <span>Staff Details</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" *ngIf="hasRole('Admin') || hasRole('Sales Manager')">
                         <a routerLink="/setups" class="nav-link" style="cursor: pointer;">
                             <i class="fa fa-cog menu-link"></i>
                             <span>Setups</span>

@@ -11,6 +11,7 @@ tr, td {
     position: relative;
 }
 
+
 /* Dropdown button styling */
 .dropdown-btn {
     background-color: transparent;
@@ -23,42 +24,8 @@ tr, td {
     border-radius: 0.125rem;
 }
 
-/* Dropdown content styling */
-.dropdown-content {
-    display: block;
-    position: absolute; /* This should align the dropdown correctly */
-    top: calc(100% + -57px); /* Move the dropdown above the button with some spacing */
-    left: 0;
-    background-color: #f9f9f9;
-    color: black;
-    width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 10px;
-    padding: 10px 0; /* Added padding for better spacing */
-}
 
-/* Dropdown item styling */
-/* .dropdown-content a {
-    color: black;
-    padding: 10px 15px;
-    display: block;
-    text-decoration: none;
-} */
 
-.dropdown-content a {
-    color: black;
-    padding: 8px 8px;
-    display: block;
-    text-decoration: none;
-    position: relative;
-    bottom: 0px;
-}
-
-.dropdown-content a:hover {
-    background-color: #1598e1;
-    color: white;
-}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -85,3 +52,54 @@ mat-select {
   .header-filters {
     display: flex;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    min-width: 180px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    border-radius: 8px;
+    z-index: 9999;
+  }
+
+  /* .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    min-height: 110px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    z-index: 9999;
+    display: none;
+  } */
+
+
+
+  .dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
+
+/* .table-container {
+    overflow: visible !important;
+    position: relative;
+    z-index: 1;
+  } */

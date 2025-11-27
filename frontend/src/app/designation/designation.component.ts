@@ -170,8 +170,16 @@ export class DesignationComponent implements OnInit {
     }
 
     toggleDropdown(id: string): void {
-        this.dropdownOpen[id] = !this.dropdownOpen[id]; // Toggle dropdown state
+      const isOpen = this.dropdownOpen[id];
+
+      // Close all
+      this.dropdownOpen = {};
+
+      // Toggle the clicked one
+      if (!isOpen) {
+        this.dropdownOpen[id] = true;
       }
+    }
 
       // Close dropdowns when clicking outside
       @HostListener('document:click', ['$event'])

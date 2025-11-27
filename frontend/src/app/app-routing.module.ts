@@ -1,3 +1,4 @@
+import { StaffDetailsComponent } from './staff-details/staff-details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EmployeeComponent } from './employee/employee.component'; // Adjust as necessary
@@ -42,6 +43,7 @@ const routes: Routes = [
     { path: 'city/:action', component: CityComponent,pathMatch: 'full' },
     { path: 'location/:action', component: LocationComponent,pathMatch: 'full' },
     { path: 'organization/:action', component: OrganizationComponent,pathMatch: 'full' },
+    { path: 'staffDetails/:action', component: StaffDetailsComponent,pathMatch: 'full' },
     { path: '**', redirectTo: '/employee' },
 
   ];

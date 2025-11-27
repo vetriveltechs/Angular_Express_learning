@@ -111,6 +111,8 @@ const documentNumbering = {
     const [results] = await pool.query(query);
     return results; // Return the first result or undefined if not found
 },
+
+
 };
 
 module.exports = { documentNumbering };

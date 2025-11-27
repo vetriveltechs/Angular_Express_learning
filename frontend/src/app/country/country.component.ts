@@ -20,7 +20,7 @@ export class CountryComponent implements OnInit
     countryRecords: any[]               = [];
     showResults                         : boolean = false;
     activeFlagOptions                   : any[] = [];
-    countryName                         : any[] = [];
+    countryOptions                      : any[] = [];
     dropdownOpen: { [key: string]       : boolean } = {};
 
     constructor
@@ -98,6 +98,7 @@ export class CountryComponent implements OnInit
     {
         this.apiService.getLov(listName).subscribe(response =>
             {
+
                 if (listName === 'ACTIVE STATUS')
                 {
                     this.activeFlagOptions = response;
@@ -122,32 +123,38 @@ export class CountryComponent implements OnInit
         this.apiService.getCountryAll().subscribe(
             response => {
 
-                this.countryName = response;
+                if (response && Array.isArray(response.data)) {
+                    this.countryOptions = response.data;
+                } else {
+                    console.error('Error: response.data is not an array', response.data);
+                    this.countryOptions = []; // Fallback to empty array
+                }
             },
             error => {
-                console.error('Error fetching options:', error);
+                console.error('Error fetching country options:', error);
+                this.countryOptions = [];
             }
         );
     }
 
 
-    searchCountryRecords()
-    {
-        const country_id        = this.searchForm.get('country_id')?.value || '';
-        const active_flag       = this.searchForm.get('active_flag')?.value || '';
+    searchCountryRecords() {
+        const country_id  = this.searchForm.get('country_id')?.value || '';
+        const active_flag = this.searchForm.get('active_flag')?.value || '';
 
-        this.apiService.getAllCountrys(country_id,active_flag).subscribe(
-        (data: any[]) => {
-            this.countryRecords = data;
-            this.showResults = true;
-        },
-        error => {
-            console.error('Error fetching country records:', error);
-            alert('Error fetching country records. Please try again later.');
-            this.showResults = true;
-        }
+        this.apiService.getAllCountrys(country_id, active_flag).subscribe(
+            (response: any) => {
+                this.countryRecords = response.data || [];
+                this.showResults = true;
+            },
+            error => {
+                console.error('Error fetching country records:', error);
+                alert('Error fetching country records. Please try again later.');
+                this.showResults = true;
+            }
         );
     }
+
 
     switchForm(action: 'default' | 'create' | 'edit' | 'view', country_id?: string)
     {
@@ -205,10 +212,17 @@ export class CountryComponent implements OnInit
         }
     }
 
-    toggleDropdown(id: string): void
-    {
-        this.dropdownOpen[id] = !this.dropdownOpen[id];
-    }
+    toggleDropdown(id: string): void {
+        const isOpen = this.dropdownOpen[id];
+
+        // Close all
+        this.dropdownOpen = {};
+
+        // Toggle the clicked one
+        if (!isOpen) {
+          this.dropdownOpen[id] = true;
+        }
+      }
 
     @HostListener('document:click', ['$event'])
         closeDropdownOnClickOutside(event: MouseEvent): void

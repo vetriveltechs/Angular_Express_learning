@@ -31,7 +31,9 @@ import { CountryComponent } from './country/country.component';
 import { StateComponent } from './state/state.component';
 import { CityComponent } from './city/city.component';
 import { CommonModulesModule } from './commonmodules/commonmodules.module';
-import { LocationComponent } from './location/location.component'; // Ensure the path is correct
+import { LocationComponent } from './location/location.component';
+import { StaffDetailsComponent } from './staff-details/staff-details.component';
+import { StudentDetailsComponent } from './student-details/student-details.component'; // Ensure the path is correct
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { LocationComponent } from './location/location.component'; // Ensure the
     CountryComponent,
     StateComponent,
     CityComponent,
-    LocationComponent
+    LocationComponent,
+    StaffDetailsComponent,
+    StudentDetailsComponent
   ],
   imports: [
     BrowserModule,
